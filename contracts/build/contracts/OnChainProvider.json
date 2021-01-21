@@ -1,0 +1,511 @@
+{
+  "contractName": "OnChainProvider",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "userQuery",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "endpointParams",
+          "type": "bytes32[]"
+        },
+        {
+          "internalType": "bool",
+          "name": "onchainSubscriber",
+          "type": "bool"
+        }
+      ],
+      "name": "receive",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"userQuery\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"endpoint\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32[]\",\"name\":\"endpointParams\",\"type\":\"bytes32[]\"},{\"internalType\":\"bool\",\"name\":\"onchainSubscriber\",\"type\":\"bool\"}],\"name\":\"receive\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"receive(uint256,string,bytes32,bytes32[],bool)\":{\"details\":\"function for requesting data from on-chain provider\",\"params\":{\"endpoint\":\"endpoint specifier ala 'smart_contract'\",\"endpointParams\":\"endpoint-specific params\",\"id\":\"request id\",\"userQuery\":\"query string\"}}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/otacon9000/work/zap_java/contracts/contracts/lib/platform/OnChainProvider.sol\":\"OnChainProvider\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/otacon9000/work/zap_java/contracts/contracts/lib/platform/OnChainProvider.sol\":{\"keccak256\":\"0x009e936ba15929a16696f489724a85bfe9641bc2b5d3e4abeab60050ed55c2d4\",\"urls\":[\"bzz-raw://34c2f0e7e4d89694e1cc427e5b808eb24848a126dfafd84679be943220a8ac05\",\"dweb:/ipfs/QmUjNnxii9J4CcZfEeVZZ1dZoTtQ8PbJL63Xpztqpw9y1e\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.5.1;\n\ncontract OnChainProvider {\n    /// @dev function for requesting data from on-chain provider\n    /// @param id request id\n    /// @param userQuery query string\n    /// @param endpoint endpoint specifier ala 'smart_contract'\n    /// @param endpointParams endpoint-specific params\n    function receive(uint256 id, string calldata userQuery, bytes32 endpoint, bytes32[] calldata endpointParams, bool onchainSubscriber) external;\n}\n",
+  "sourcePath": "/home/otacon9000/work/zap_java/contracts/contracts/lib/platform/OnChainProvider.sol",
+  "ast": {
+    "absolutePath": "/home/otacon9000/work/zap_java/contracts/contracts/lib/platform/OnChainProvider.sol",
+    "exportedSymbols": {
+      "OnChainProvider": [
+        10256
+      ]
+    },
+    "id": 10257,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10241,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".1"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:14"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 10256,
+        "linearizedBaseContracts": [
+          10256
+        ],
+        "name": "OnChainProvider",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev function for requesting data from on-chain provider\n @param id request id\n @param userQuery query string\n @param endpoint endpoint specifier ala 'smart_contract'\n @param endpointParams endpoint-specific params",
+            "id": 10255,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "receive",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10253,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10243,
+                  "name": "id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10255,
+                  "src": "324:10:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10242,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "324:7:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10245,
+                  "name": "userQuery",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10255,
+                  "src": "336:25:14",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 10244,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "336:6:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10247,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10255,
+                  "src": "363:16:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 10246,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "363:7:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10250,
+                  "name": "endpointParams",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10255,
+                  "src": "381:33:14",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_bytes32_$dyn_calldata_ptr",
+                    "typeString": "bytes32[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 10248,
+                      "name": "bytes32",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "381:7:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "id": 10249,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "381:9:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+                      "typeString": "bytes32[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10252,
+                  "name": "onchainSubscriber",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10255,
+                  "src": "416:22:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 10251,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "416:4:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "323:116:14"
+            },
+            "returnParameters": {
+              "id": 10254,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "448:0:14"
+            },
+            "scope": 10256,
+            "src": "307:142:14",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 10257,
+        "src": "25:426:14"
+      }
+    ],
+    "src": "0:452:14"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/otacon9000/work/zap_java/contracts/contracts/lib/platform/OnChainProvider.sol",
+      "exportedSymbols": {
+        "OnChainProvider": [
+          10256
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".1"
+          ]
+        },
+        "id": 10241,
+        "name": "PragmaDirective",
+        "src": "0:23:14"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            10256
+          ],
+          "name": "OnChainProvider",
+          "scope": 10257
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "documentation": "@dev function for requesting data from on-chain provider\n @param id request id\n @param userQuery query string\n @param endpoint endpoint specifier ala 'smart_contract'\n @param endpointParams endpoint-specific params",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "receive",
+              "scope": 10256,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "id",
+                      "scope": 10255,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 10242,
+                        "name": "ElementaryTypeName",
+                        "src": "324:7:14"
+                      }
+                    ],
+                    "id": 10243,
+                    "name": "VariableDeclaration",
+                    "src": "324:10:14"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "userQuery",
+                      "scope": 10255,
+                      "stateVariable": false,
+                      "storageLocation": "calldata",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 10244,
+                        "name": "ElementaryTypeName",
+                        "src": "336:6:14"
+                      }
+                    ],
+                    "id": 10245,
+                    "name": "VariableDeclaration",
+                    "src": "336:25:14"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "endpoint",
+                      "scope": 10255,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 10246,
+                        "name": "ElementaryTypeName",
+                        "src": "363:7:14"
+                      }
+                    ],
+                    "id": 10247,
+                    "name": "VariableDeclaration",
+                    "src": "363:16:14"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "endpointParams",
+                      "scope": 10255,
+                      "stateVariable": false,
+                      "storageLocation": "calldata",
+                      "type": "bytes32[]",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "length": null,
+                          "type": "bytes32[]"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "bytes32",
+                              "type": "bytes32"
+                            },
+                            "id": 10248,
+                            "name": "ElementaryTypeName",
+                            "src": "381:7:14"
+                          }
+                        ],
+                        "id": 10249,
+                        "name": "ArrayTypeName",
+                        "src": "381:9:14"
+                      }
+                    ],
+                    "id": 10250,
+                    "name": "VariableDeclaration",
+                    "src": "381:33:14"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "onchainSubscriber",
+                      "scope": 10255,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 10251,
+                        "name": "ElementaryTypeName",
+                        "src": "416:4:14"
+                      }
+                    ],
+                    "id": 10252,
+                    "name": "VariableDeclaration",
+                    "src": "416:22:14"
+                  }
+                ],
+                "id": 10253,
+                "name": "ParameterList",
+                "src": "323:116:14"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 10254,
+                "name": "ParameterList",
+                "src": "448:0:14"
+              }
+            ],
+            "id": 10255,
+            "name": "FunctionDefinition",
+            "src": "307:142:14"
+          }
+        ],
+        "id": 10256,
+        "name": "ContractDefinition",
+        "src": "25:426:14"
+      }
+    ],
+    "id": 10257,
+    "name": "SourceUnit",
+    "src": "0:452:14"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-01-21T19:56:36.916Z",
+  "devdoc": {
+    "methods": {
+      "receive(uint256,string,bytes32,bytes32[],bool)": {
+        "details": "function for requesting data from on-chain provider",
+        "params": {
+          "endpoint": "endpoint specifier ala 'smart_contract'",
+          "endpointParams": "endpoint-specific params",
+          "id": "request id",
+          "userQuery": "query string"
+        }
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
