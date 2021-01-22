@@ -17,7 +17,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ##### 1. Create Personal Access Token and select the scope 'read:packages' @ https://github.com/settings/tokens
 
-##### 2. Create or Add the following to your Maven settings.xml 
+##### 2. Create or Add the following to ~/.m2/settings.xml (or whereever you set your settings directory for Maven) 
 
 ```
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
