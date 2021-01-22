@@ -42,7 +42,7 @@
 		<repository>
 		<id>github</id>
 		<name>GitHub Packages</name>
-		<url>https://maven.pkg.github.com/zapprotocol/jzap</url>
+		<url>https://maven.pkg.github.com/zapproject/jzap</url>
 		</repository>
 	</distributionManagement>
 
