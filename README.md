@@ -4,13 +4,16 @@
 ZAP Oracles (introduction here)
 
 This repository provides Interface to Zap contracts and tools to use Zap platform with Java projects
+
 Each package is a public maven dependency that serve developer's needs to intergrate Zap platform
+
 
 # Development
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
 
 ### Prerequisites
+
 
 ##### 1. Create Personal Access Token and select the scope 'read:packages' @ https://github.com/settings/tokens
 
@@ -53,7 +56,6 @@ These instructions will get you a copy of the project up and running on your loc
     </server>
   </servers>
 </settings>
-
 ```
 
 ### Installing
@@ -98,4 +100,6 @@ See also the list of [contributors]()
 
 ## License
 
+
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
