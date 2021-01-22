@@ -1,10 +1,10 @@
-package com.zap.sdk;
+package zapprotocol.jzap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ZapSdkApplicationTests {
+class JZapApplicationTests {
 
 	@Test
 	void contextLoads() {
