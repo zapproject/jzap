@@ -1,13 +1,13 @@
-package com.zap.sdk;
+package zapprotocol.jzap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ZapSdkApplication {
+public class JZapApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ZapSdkApplication.class, args);
+		SpringApplication.run(JZapApplication.class, args);
 	}
 
 }
