@@ -1,1 +1,0 @@
-web3j run http://127.0.0.1:8545/ ~/.ethereum/testnet/keystore/UTC--2021-01-21T22-07-06.895688000Z--2456db5d22abcac4c89d9acdcc940a7382d4cfb9.json password
