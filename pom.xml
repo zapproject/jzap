@@ -55,7 +55,7 @@
 					</configuration>
 				</execution>
 				<execution>
-					<id>JSON to JAR</id>
+					<id>JSON to JAVA</id>
 					<phase>process-classes</phase>
 					<goals>
 							<goal>exec</goal>
