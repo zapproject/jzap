@@ -35578,7 +35578,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.906Z",
+  "updatedAt": "2021-01-25T21:42:50.174Z",
   "devdoc": {
     "methods": {
       "cancelQuery(uint256)": {

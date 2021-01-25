@@ -8652,7 +8652,7 @@
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 17746,
+                                "referencedDeclaration": 17718,
                                 "src": "8048:4:22",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_contract$_Bondage_$13330",
@@ -26945,7 +26945,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 17746,
+                                      "referencedDeclaration": 17718,
                                       "type": "contract Bondage",
                                       "value": "this"
                                     },
@@ -36985,7 +36985,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.869Z",
+  "updatedAt": "2021-01-25T21:42:50.135Z",
   "devdoc": {
     "methods": {
       "bond(address,bytes32,uint256)": {
