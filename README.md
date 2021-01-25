@@ -75,6 +75,63 @@ Add to your pom.xml
 ## Packages
 
 ## Usage
+### Prerequisites
+
+
+##### 1. Create Personal Access Token and select the scope 'read:packages' @ https://github.com/settings/tokens
+
+##### 2. Create or Add the following to ~/.m2/settings.xml (or whereever you set your settings directory for Maven) 
+
+```
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <activeProfiles>
+    <activeProfile>github</activeProfile>
+  </activeProfiles>
+
+  <profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        <repository>
+          <id>github</id>
+          <name>GitHub Zap Project Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/zapproject/jzap</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+  <servers>
+    <server>
+      <id>github</id>
+      <username>USERNAME</username> <!-- YOUR GITHUB USER NAME GOES HERE -->
+      <password>TOKEN</password> <!-- YOUR GITHUB PERSONAL ACCESS TOKEN GOES HERE -->
+    </server>
+  </servers>
+</settings>
+```
+
+### Installing
+
+Add to your pom.xml
+
+```
+		<dependency>
+			<groupId>zapprotocol</groupId>
+			<artifactId>jzap</artifactId>
+			<version>[0.0.0,)</version>
+		</dependency>
+```
 
 ##### Creating a Zap Provider oracle
 ```
