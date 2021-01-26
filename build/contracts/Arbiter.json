@@ -17461,7 +17461,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.852Z",
+  "updatedAt": "2021-01-25T21:42:50.122Z",
   "devdoc": {
     "methods": {
       "endSubscriptionProvider(address,bytes32)": {

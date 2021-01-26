@@ -4674,7 +4674,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.885Z",
+  "updatedAt": "2021-01-25T21:42:50.154Z",
   "devdoc": {
     "methods": {
       "_costOfNDots(address,bytes32,uint256,uint256)": {

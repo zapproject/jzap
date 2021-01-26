@@ -1073,7 +1073,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.779Z",
+  "updatedAt": "2021-01-25T21:42:50.094Z",
   "devdoc": {
     "methods": {
       "transferOwnership(address)": {

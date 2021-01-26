@@ -15,66 +15,33 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 
-##### 1. Create Personal Access Token and select the scope 'read:packages' @ https://github.com/settings/tokens
+##### 1. Install Maven @ https://maven.apache.org/install.html
+##### 2. Install Web3j @ http://docs.web3j.io/latest/quickstart/
 
-##### 2. Create or Add the following to ~/.m2/settings.xml (or whereever you set your settings directory for Maven) 
+##### 3. (OPTIONAL) Import your desired contracts into contracts/
 
-```
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
-
-  <activeProfiles>
-    <activeProfile>github</activeProfile>
-  </activeProfiles>
-
-  <profiles>
-    <profile>
-      <id>github</id>
-      <repositories>
-        <repository>
-          <id>central</id>
-          <url>https://repo1.maven.org/maven2</url>
-          <releases><enabled>true</enabled></releases>
-          <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-        <repository>
-          <id>github</id>
-          <name>GitHub Zap Project Apache Maven Packages</name>
-          <url>https://maven.pkg.github.com/zapproject/jzap</url>
-        </repository>
-      </repositories>
-    </profile>
-  </profiles>
-
-  <servers>
-    <server>
-      <id>github</id>
-      <username>USERNAME</username> <!-- YOUR GITHUB USER NAME GOES HERE -->
-      <password>TOKEN</password> <!-- YOUR GITHUB PERSONAL ACCESS TOKEN GOES HERE -->
-    </server>
-  </servers>
-</settings>
-```
-
-### Installing
-
-Add to your pom.xml
+##### 4. Compile and run using spring boot
 
 ```
-		<dependency>
-			<groupId>zapprotocol</groupId>
-			<artifactId>jzap</artifactId>
-			<version>[0.0.0,)</version>
-		</dependency>
+mvn spring-boot:run
 ```
+##### 5. Create a wallet using web3j
+```
+web3j wallet create
+```
+
+##### 5. Run the Web3j application on the developer network  @ https://github.com/zapproject/devnet
+```
+web3j run <HARDHAT NETWORK URI> <WALLET FILE> <WALLET PASSWORD>
+```
+
+
 
 ## Running build and tests
 
 ## Packages
 
-## Usage
+# Usage
 ### Prerequisites
 
 

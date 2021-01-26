@@ -12567,7 +12567,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.891Z",
+  "updatedAt": "2021-01-25T21:42:50.159Z",
   "devdoc": {
     "methods": {
       "transferOwnership(address)": {
