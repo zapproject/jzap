@@ -16,7 +16,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 
 ##### 1. Install Maven @ https://maven.apache.org/install.html
-##### 2. Install Web3j @ http://docs.web3j.io/latest/quickstart/
+##### 2. Install Web3j 
+```
+curl -L get.web3j.io | sh && source ~/.web3j/source.sh
+```
+Troubleshoot: @ http://docs.web3j.io/latest/quickstart/
 
 ##### 3. Install Truffle
 
