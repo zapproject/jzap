@@ -1,40 +1,38 @@
 package types;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class DefaultTx {
-	// byte[20] vs. org.we3j.abi.dataypes.generated.Bytes32
-	private byte[] from;
-	// BigDecimal is recommended for currency in docs - else Number is viable
-	private BigDecimal gas;
-	private BigDecimal gasPrice;	
+	private String from;
+	private BigInteger gas;
+	private BigInteger gasPrice;	
 	
-	public DefaultTx(byte[] from, BigDecimal gas, BigDecimal gasPrice) {
+	public DefaultTx(String from, BigInteger gas, BigInteger gasPrice) {
 		this.from = from;
 		this.gas = gas;
 		this.gasPrice = gasPrice;
 	}
 	
-	public byte[] getFrom() {
+	public String getFrom() {
 		return from;
 	}
 	
-	public void setFrom(byte[] from) {
+	public void setFrom(String from) {
 		this.from = from;
 	}
 	
-	public BigDecimal getGas() {
+	public BigInteger getGas() {
 		return gas;
 	}
 	
-	public void setGas(BigDecimal gas) {
+	public void setGas(BigInteger gas) {
 		this.gas = gas;
 	}
 	
-	public BigDecimal getGasPrice() {
+	public BigInteger getGasPrice() {
 		return gasPrice;
 	}
 	
-	public void setGasPrice(BigDecimal gasPrice) {
+	public void setGasPrice(BigInteger gasPrice) {
 		this.gasPrice = gasPrice;
 	}
 }

@@ -142,15 +142,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"contractName\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newAddress\",\"type\":\"address\"}],\"name\":\"addImmutableContract\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"string\",\"name\":\"contractName\",\"type\":\"string\"}],\"name\":\"getContract\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"getContractName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address payable\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"updateAllDependencies\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"contractName\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newAddress\",\"type\":\"address\"}],\"name\":\"updateContract\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"transferOwnership(address)\":{\"details\":\"Allows the current owner to transfer control of the contract to a newOwner.\",\"params\":{\"newOwner\":\"The address to transfer ownership to.\"}}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol\":\"ZapCoordinatorInterface\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Ownable.sol\":{\"keccak256\":\"0x7ddb93e39e484966c8c93d8f6317dbe779b625628ad264da1e8df533682d71ed\",\"urls\":[\"bzz-raw://6da50a76982a35da63d6259ca0fee4bbde0d59e17aabb35b7da6b9b82da9f99e\",\"dweb:/ipfs/Qmd1U27feKcbGSLck8YwoHxDG2NasBFznkHmWpDCQBcdbj\"]},\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol\":{\"keccak256\":\"0xeaac2bc24adcb51a4732deddd8e3d5ac6c837836c05e1b302395c2ade8b05739\",\"urls\":[\"bzz-raw://554d5737ac2c96697df2c33d730416af9365d3302c7b33740b8f5e7afc7aabb9\",\"dweb:/ipfs/Qmf4DPNok1t1DARBD6J2FpMLqkHZQ7PeHvqshSoBeSiwYT\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"contractName\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newAddress\",\"type\":\"address\"}],\"name\":\"addImmutableContract\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"string\",\"name\":\"contractName\",\"type\":\"string\"}],\"name\":\"getContract\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"getContractName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address payable\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"updateAllDependencies\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"contractName\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newAddress\",\"type\":\"address\"}],\"name\":\"updateContract\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"transferOwnership(address)\":{\"details\":\"Allows the current owner to transfer control of the contract to a newOwner.\",\"params\":{\"newOwner\":\"The address to transfer ownership to.\"}}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol\":\"ZapCoordinatorInterface\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/adoo/jzap/contracts/lib/ownership/Ownable.sol\":{\"keccak256\":\"0x7ddb93e39e484966c8c93d8f6317dbe779b625628ad264da1e8df533682d71ed\",\"urls\":[\"bzz-raw://6da50a76982a35da63d6259ca0fee4bbde0d59e17aabb35b7da6b9b82da9f99e\",\"dweb:/ipfs/Qmd1U27feKcbGSLck8YwoHxDG2NasBFznkHmWpDCQBcdbj\"]},\"/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol\":{\"keccak256\":\"0xeaac2bc24adcb51a4732deddd8e3d5ac6c837836c05e1b302395c2ade8b05739\",\"urls\":[\"bzz-raw://554d5737ac2c96697df2c33d730416af9365d3302c7b33740b8f5e7afc7aabb9\",\"dweb:/ipfs/Qmf4DPNok1t1DARBD6J2FpMLqkHZQ7PeHvqshSoBeSiwYT\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.5.1;\n\nimport \"./Ownable.sol\";\n\ncontract ZapCoordinatorInterface is Ownable {\n    function addImmutableContract(string calldata contractName, address newAddress) external;\n    function updateContract(string calldata contractName, address newAddress) external;\n    function getContractName(uint index) public view returns (string memory) ;\n    function getContract(string memory contractName) public view returns (address);\n    function updateAllDependencies() external;\n}\n",
-  "sourcePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
+  "sourcePath": "/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
   "ast": {
-    "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
+    "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
     "exportedSymbols": {
       "ZapCoordinatorInterface": [
         10175
@@ -171,7 +171,7 @@
         "src": "0:23:12"
       },
       {
-        "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Ownable.sol",
+        "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/Ownable.sol",
         "file": "./Ownable.sol",
         "id": 10141,
         "nodeType": "ImportDirective",
@@ -577,7 +577,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
+      "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
       "exportedSymbols": {
         "ZapCoordinatorInterface": [
           10175
@@ -601,7 +601,7 @@
       {
         "attributes": {
           "SourceUnit": 9886,
-          "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Ownable.sol",
+          "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/Ownable.sol",
           "file": "./Ownable.sol",
           "scope": 10176,
           "symbolAliases": [
@@ -1073,7 +1073,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.779Z",
+  "updatedAt": "2021-01-27T20:42:21.764Z",
   "devdoc": {
     "methods": {
       "transferOwnership(address)": {

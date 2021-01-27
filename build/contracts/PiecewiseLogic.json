@@ -1,15 +1,15 @@
 {
   "contractName": "PiecewiseLogic",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/PiecewiseLogic.sol\":\"PiecewiseLogic\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/PiecewiseLogic.sol\":{\"keccak256\":\"0x7d6caaee9c24faff66ce886b83423235be147aa0315145a08b29e277200af2bf\",\"urls\":[\"bzz-raw://97fcbe20c78de1e14e39186757f8b05496a80c3a90be1509afe84e4b12f7802a\",\"dweb:/ipfs/QmNRCsVovocbjWe432en9gPJjJiuJ2FP5Wb6TkHbubCkdY\"]}},\"version\":1}",
-  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158208ebf43920b53d75dc135b768e9411ce2dfbc314a81b8d3fef6bef4d8421c1eb064736f6c63430005100032",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158208ebf43920b53d75dc135b768e9411ce2dfbc314a81b8d3fef6bef4d8421c1eb064736f6c63430005100032",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/adoo/jzap/contracts/lib/platform/PiecewiseLogic.sol\":\"PiecewiseLogic\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/adoo/jzap/contracts/lib/platform/PiecewiseLogic.sol\":{\"keccak256\":\"0x7d6caaee9c24faff66ce886b83423235be147aa0315145a08b29e277200af2bf\",\"urls\":[\"bzz-raw://97fcbe20c78de1e14e39186757f8b05496a80c3a90be1509afe84e4b12f7802a\",\"dweb:/ipfs/QmNRCsVovocbjWe432en9gPJjJiuJ2FP5Wb6TkHbubCkdY\"]}},\"version\":1}",
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820bf864fd2a088fc380f4d7a3c380d9b4bbadc2d529b4f97cd7b5738e5f4b7dff264736f6c63430005100032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820bf864fd2a088fc380f4d7a3c380d9b4bbadc2d529b4f97cd7b5738e5f4b7dff264736f6c63430005100032",
   "sourceMap": "25:2380:15:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
   "deployedSourceMap": "25:2380:15:-;;;;;;;;",
   "source": "pragma solidity ^0.5.1;\n\nlibrary PiecewiseLogic {\n    function sumOfPowers(uint n, uint i) internal pure returns (uint) {\n        require(i <= 6 && i >= 0, \"Error: Invalid Piecewise Logic\");\n\n        if (i == 0) return n;\n        if (i == 1) return (n * (n + 1)) / 2;\n        if (i == 2) return (n * (n + 1) * (2 * n + 1)) / 6;\n        if (i == 3) return ((n * (n + 1)) / 2) ** 2;\n        if (i == 4) return (n * (n + 1) * (2 * n + 1) * (3 * n * n + 3 * n - 1)) / 30;\n        if (i == 5) return (n * (n + 1)) ** 2 * (2 * n ** 2 + 2 * n - 1);\n        if (i == 6) return (n * (n + 1) * (2 * n + 1) * (3 * n ** 4 + 6 * n ** 3 - 3 * n + 1)) / 42;\n\n        // impossible\n        return 0;\n    }\n\n    function evaluateFunction(int[] memory curve, uint a, uint b) internal pure returns (int) {\n        uint i = 0;\n        int sum = 0;\n\n        // Require to be within the dot limit\n        require(a + b <= uint(curve[curve.length - 1]), \"Error: Function not in dot limit\");\n\n        // Loop invariant: i should always point to the start of a piecewise piece (the length)\n        while (i < curve.length) {\n            uint l = uint(curve[i]);\n            uint end = uint(curve[i + l + 1]);\n\n            // Index of the next piece's end\n            uint nextIndex = i + l + 2;\n\n            if (a > end) { // move on to the next piece\n                i = nextIndex;\n                continue;\n            }\n\n            sum += evaluatePiece(curve, i, a, (a + b > end) ? end - a : b);\n\n            if (a + b <= end) {\n                // Entire calculation is within this piece\n                return sum;\n            }\n            else {\n                b -= end - a + 1; // Remove the dots we've already bound from b\n                a = end;          // Move a up to the end\n                i = nextIndex;    // Move index up\n            }\n        }\n    }\n\n    function evaluatePiece(int[] memory curve, uint index, uint a, uint b) internal pure returns (int) {\n        int sum = 0;\n        uint len = uint(curve[index]);\n        uint base = index + 1;\n        uint end = base + len; // index of last term\n\n        // iterate between index+1 and the end of this piece\n        for (uint i = base; i < end; i++) {\n            sum += curve[i] * int(sumOfPowers(a + b, i - base) - sumOfPowers(a - 1, i - base));\n        }\n\n        require(sum >= 0, \"Error: Cost must be greater than zero\");\n        return sum;\n    }\n}\n",
-  "sourcePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/PiecewiseLogic.sol",
+  "sourcePath": "/home/adoo/jzap/contracts/lib/platform/PiecewiseLogic.sol",
   "ast": {
-    "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/PiecewiseLogic.sol",
+    "absolutePath": "/home/adoo/jzap/contracts/lib/platform/PiecewiseLogic.sol",
     "exportedSymbols": {
       "PiecewiseLogic": [
         10653
@@ -5871,7 +5871,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/PiecewiseLogic.sol",
+      "absolutePath": "/home/adoo/jzap/contracts/lib/platform/PiecewiseLogic.sol",
       "exportedSymbols": {
         "PiecewiseLogic": [
           10653
@@ -12021,7 +12021,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.819Z",
+  "updatedAt": "2021-01-27T20:42:21.780Z",
   "devdoc": {
     "methods": {}
   },

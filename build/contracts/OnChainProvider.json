@@ -37,15 +37,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"userQuery\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"endpoint\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32[]\",\"name\":\"endpointParams\",\"type\":\"bytes32[]\"},{\"internalType\":\"bool\",\"name\":\"onchainSubscriber\",\"type\":\"bool\"}],\"name\":\"receive\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"receive(uint256,string,bytes32,bytes32[],bool)\":{\"details\":\"function for requesting data from on-chain provider\",\"params\":{\"endpoint\":\"endpoint specifier ala 'smart_contract'\",\"endpointParams\":\"endpoint-specific params\",\"id\":\"request id\",\"userQuery\":\"query string\"}}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/OnChainProvider.sol\":\"OnChainProvider\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/OnChainProvider.sol\":{\"keccak256\":\"0x009e936ba15929a16696f489724a85bfe9641bc2b5d3e4abeab60050ed55c2d4\",\"urls\":[\"bzz-raw://34c2f0e7e4d89694e1cc427e5b808eb24848a126dfafd84679be943220a8ac05\",\"dweb:/ipfs/QmUjNnxii9J4CcZfEeVZZ1dZoTtQ8PbJL63Xpztqpw9y1e\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"userQuery\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"endpoint\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32[]\",\"name\":\"endpointParams\",\"type\":\"bytes32[]\"},{\"internalType\":\"bool\",\"name\":\"onchainSubscriber\",\"type\":\"bool\"}],\"name\":\"receive\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"receive(uint256,string,bytes32,bytes32[],bool)\":{\"details\":\"function for requesting data from on-chain provider\",\"params\":{\"endpoint\":\"endpoint specifier ala 'smart_contract'\",\"endpointParams\":\"endpoint-specific params\",\"id\":\"request id\",\"userQuery\":\"query string\"}}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/adoo/jzap/contracts/lib/platform/OnChainProvider.sol\":\"OnChainProvider\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/adoo/jzap/contracts/lib/platform/OnChainProvider.sol\":{\"keccak256\":\"0x009e936ba15929a16696f489724a85bfe9641bc2b5d3e4abeab60050ed55c2d4\",\"urls\":[\"bzz-raw://34c2f0e7e4d89694e1cc427e5b808eb24848a126dfafd84679be943220a8ac05\",\"dweb:/ipfs/QmUjNnxii9J4CcZfEeVZZ1dZoTtQ8PbJL63Xpztqpw9y1e\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.5.1;\n\ncontract OnChainProvider {\n    /// @dev function for requesting data from on-chain provider\n    /// @param id request id\n    /// @param userQuery query string\n    /// @param endpoint endpoint specifier ala 'smart_contract'\n    /// @param endpointParams endpoint-specific params\n    function receive(uint256 id, string calldata userQuery, bytes32 endpoint, bytes32[] calldata endpointParams, bool onchainSubscriber) external;\n}\n",
-  "sourcePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/OnChainProvider.sol",
+  "sourcePath": "/home/adoo/jzap/contracts/lib/platform/OnChainProvider.sol",
   "ast": {
-    "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/OnChainProvider.sol",
+    "absolutePath": "/home/adoo/jzap/contracts/lib/platform/OnChainProvider.sol",
     "exportedSymbols": {
       "OnChainProvider": [
         10256
@@ -255,7 +255,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/platform/OnChainProvider.sol",
+      "absolutePath": "/home/adoo/jzap/contracts/lib/platform/OnChainProvider.sol",
       "exportedSymbols": {
         "OnChainProvider": [
           10256
@@ -491,7 +491,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.816Z",
+  "updatedAt": "2021-01-27T20:42:21.776Z",
   "devdoc": {
     "methods": {
       "receive(uint256,string,bytes32,bytes32[],bool)": {

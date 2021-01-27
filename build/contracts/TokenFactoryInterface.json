@@ -28,15 +28,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_symbol\",\"type\":\"string\"}],\"name\":\"create\",\"outputs\":[{\"internalType\":\"contract FactoryTokenInterface\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/token/TokenFactoryInterface.sol\":\"TokenFactoryInterface\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Ownable.sol\":{\"keccak256\":\"0x7ddb93e39e484966c8c93d8f6317dbe779b625628ad264da1e8df533682d71ed\",\"urls\":[\"bzz-raw://6da50a76982a35da63d6259ca0fee4bbde0d59e17aabb35b7da6b9b82da9f99e\",\"dweb:/ipfs/Qmd1U27feKcbGSLck8YwoHxDG2NasBFznkHmWpDCQBcdbj\"]},\"/home/otacon9000/work/zap_java/jzap/contracts/lib/token/FactoryTokenInterface.sol\":{\"keccak256\":\"0x702a31c407ffba0152b3d6115ac03cc26ed772e4994d90ef58175aa1edc8c93c\",\"urls\":[\"bzz-raw://ed6dadcd3469e9418ba5b30b6404ce17c64da871a25f4ec365b0a8fb08d82a3b\",\"dweb:/ipfs/QmcTyak89Wf8XZBzeHrenisND1ETGtPkamsU5PG2PzKErt\"]},\"/home/otacon9000/work/zap_java/jzap/contracts/lib/token/TokenFactoryInterface.sol\":{\"keccak256\":\"0xe77915254af416a5fe14869abb8f33193b13992404fad7f0029bc382565dad3b\",\"urls\":[\"bzz-raw://20a29271c69966ea72016fce7d879e5dd6f1cd5c11bfb12743a83bcad0a6e018\",\"dweb:/ipfs/QmTHUHbKTYb8qR9CyLDVB7RECA3peWQ2Da8suB95QcwK24\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_symbol\",\"type\":\"string\"}],\"name\":\"create\",\"outputs\":[{\"internalType\":\"contract FactoryTokenInterface\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/adoo/jzap/contracts/lib/token/TokenFactoryInterface.sol\":\"TokenFactoryInterface\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/adoo/jzap/contracts/lib/ownership/Ownable.sol\":{\"keccak256\":\"0x7ddb93e39e484966c8c93d8f6317dbe779b625628ad264da1e8df533682d71ed\",\"urls\":[\"bzz-raw://6da50a76982a35da63d6259ca0fee4bbde0d59e17aabb35b7da6b9b82da9f99e\",\"dweb:/ipfs/Qmd1U27feKcbGSLck8YwoHxDG2NasBFznkHmWpDCQBcdbj\"]},\"/home/adoo/jzap/contracts/lib/token/FactoryTokenInterface.sol\":{\"keccak256\":\"0x702a31c407ffba0152b3d6115ac03cc26ed772e4994d90ef58175aa1edc8c93c\",\"urls\":[\"bzz-raw://ed6dadcd3469e9418ba5b30b6404ce17c64da871a25f4ec365b0a8fb08d82a3b\",\"dweb:/ipfs/QmcTyak89Wf8XZBzeHrenisND1ETGtPkamsU5PG2PzKErt\"]},\"/home/adoo/jzap/contracts/lib/token/TokenFactoryInterface.sol\":{\"keccak256\":\"0xe77915254af416a5fe14869abb8f33193b13992404fad7f0029bc382565dad3b\",\"urls\":[\"bzz-raw://20a29271c69966ea72016fce7d879e5dd6f1cd5c11bfb12743a83bcad0a6e018\",\"dweb:/ipfs/QmTHUHbKTYb8qR9CyLDVB7RECA3peWQ2Da8suB95QcwK24\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.5.1;\n\nimport \"./FactoryTokenInterface.sol\";\n\ncontract TokenFactoryInterface {\n    function create(string memory _name, string memory _symbol) public returns (FactoryTokenInterface);\n}\n",
-  "sourcePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/token/TokenFactoryInterface.sol",
+  "sourcePath": "/home/adoo/jzap/contracts/lib/token/TokenFactoryInterface.sol",
   "ast": {
-    "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/token/TokenFactoryInterface.sol",
+    "absolutePath": "/home/adoo/jzap/contracts/lib/token/TokenFactoryInterface.sol",
     "exportedSymbols": {
       "TokenFactoryInterface": [
         11454
@@ -57,7 +57,7 @@
         "src": "0:23:19"
       },
       {
-        "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/token/FactoryTokenInterface.sol",
+        "absolutePath": "/home/adoo/jzap/contracts/lib/token/FactoryTokenInterface.sol",
         "file": "./FactoryTokenInterface.sol",
         "id": 11444,
         "nodeType": "ImportDirective",
@@ -198,7 +198,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/token/TokenFactoryInterface.sol",
+      "absolutePath": "/home/adoo/jzap/contracts/lib/token/TokenFactoryInterface.sol",
       "exportedSymbols": {
         "TokenFactoryInterface": [
           11454
@@ -222,7 +222,7 @@
       {
         "attributes": {
           "SourceUnit": 10721,
-          "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/token/FactoryTokenInterface.sol",
+          "absolutePath": "/home/adoo/jzap/contracts/lib/token/FactoryTokenInterface.sol",
           "file": "./FactoryTokenInterface.sol",
           "scope": 11455,
           "symbolAliases": [
@@ -384,7 +384,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.848Z",
+  "updatedAt": "2021-01-27T20:42:21.849Z",
   "devdoc": {
     "methods": {}
   },

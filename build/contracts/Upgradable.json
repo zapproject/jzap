@@ -23,15 +23,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"c\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"constant\":false,\"inputs\":[],\"name\":\"updateDependencies\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Upgradable.sol\":\"Upgradable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Ownable.sol\":{\"keccak256\":\"0x7ddb93e39e484966c8c93d8f6317dbe779b625628ad264da1e8df533682d71ed\",\"urls\":[\"bzz-raw://6da50a76982a35da63d6259ca0fee4bbde0d59e17aabb35b7da6b9b82da9f99e\",\"dweb:/ipfs/Qmd1U27feKcbGSLck8YwoHxDG2NasBFznkHmWpDCQBcdbj\"]},\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Upgradable.sol\":{\"keccak256\":\"0x89558f64b028d3d57fa1adec54eac34035098e8673262c8f14a4e90fe6adff6c\",\"urls\":[\"bzz-raw://569b2479cd9b6d65982a64ab644157792277bce9b4ffd827e33e100a340099f3\",\"dweb:/ipfs/QmWbVcKVHaDvwPC6dprJkuSaGFUKVe7xdTvsmNSiYvwEd9\"]},\"/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol\":{\"keccak256\":\"0xeaac2bc24adcb51a4732deddd8e3d5ac6c837836c05e1b302395c2ade8b05739\",\"urls\":[\"bzz-raw://554d5737ac2c96697df2c33d730416af9365d3302c7b33740b8f5e7afc7aabb9\",\"dweb:/ipfs/Qmf4DPNok1t1DARBD6J2FpMLqkHZQ7PeHvqshSoBeSiwYT\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"c\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"constant\":false,\"inputs\":[],\"name\":\"updateDependencies\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/adoo/jzap/contracts/lib/ownership/Upgradable.sol\":\"Upgradable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/adoo/jzap/contracts/lib/ownership/Ownable.sol\":{\"keccak256\":\"0x7ddb93e39e484966c8c93d8f6317dbe779b625628ad264da1e8df533682d71ed\",\"urls\":[\"bzz-raw://6da50a76982a35da63d6259ca0fee4bbde0d59e17aabb35b7da6b9b82da9f99e\",\"dweb:/ipfs/Qmd1U27feKcbGSLck8YwoHxDG2NasBFznkHmWpDCQBcdbj\"]},\"/home/adoo/jzap/contracts/lib/ownership/Upgradable.sol\":{\"keccak256\":\"0x89558f64b028d3d57fa1adec54eac34035098e8673262c8f14a4e90fe6adff6c\",\"urls\":[\"bzz-raw://569b2479cd9b6d65982a64ab644157792277bce9b4ffd827e33e100a340099f3\",\"dweb:/ipfs/QmWbVcKVHaDvwPC6dprJkuSaGFUKVe7xdTvsmNSiYvwEd9\"]},\"/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol\":{\"keccak256\":\"0xeaac2bc24adcb51a4732deddd8e3d5ac6c837836c05e1b302395c2ade8b05739\",\"urls\":[\"bzz-raw://554d5737ac2c96697df2c33d730416af9365d3302c7b33740b8f5e7afc7aabb9\",\"dweb:/ipfs/Qmf4DPNok1t1DARBD6J2FpMLqkHZQ7PeHvqshSoBeSiwYT\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.5.1;\n\nimport \"./ZapCoordinatorInterface.sol\";\n\ncontract Upgradable {\n\n    address coordinatorAddr;\n    ZapCoordinatorInterface coordinator;\n\n    constructor(address c) public{\n        coordinatorAddr = c;\n        coordinator = ZapCoordinatorInterface(c);\n    }\n\n    function updateDependencies() external coordinatorOnly {\n        _updateDependencies();\n    }\n\n    function _updateDependencies() internal;\n\n    modifier coordinatorOnly() {\n        require(msg.sender == coordinatorAddr, \"Error: Coordinator Only Function\");\n        _;\n    }\n}\n",
-  "sourcePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Upgradable.sol",
+  "sourcePath": "/home/adoo/jzap/contracts/lib/ownership/Upgradable.sol",
   "ast": {
-    "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Upgradable.sol",
+    "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/Upgradable.sol",
     "exportedSymbols": {
       "Upgradable": [
         9933
@@ -52,7 +52,7 @@
         "src": "0:23:10"
       },
       {
-        "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
+        "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
         "file": "./ZapCoordinatorInterface.sol",
         "id": 9888,
         "nodeType": "ImportDirective",
@@ -596,7 +596,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/Upgradable.sol",
+      "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/Upgradable.sol",
       "exportedSymbols": {
         "Upgradable": [
           9933
@@ -620,7 +620,7 @@
       {
         "attributes": {
           "SourceUnit": 10176,
-          "absolutePath": "/home/otacon9000/work/zap_java/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
+          "absolutePath": "/home/adoo/jzap/contracts/lib/ownership/ZapCoordinatorInterface.sol",
           "file": "./ZapCoordinatorInterface.sol",
           "scope": 9934,
           "symbolAliases": [
@@ -1264,7 +1264,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-25T18:34:57.774Z",
+  "updatedAt": "2021-01-27T20:42:21.758Z",
   "devdoc": {
     "methods": {}
   },
