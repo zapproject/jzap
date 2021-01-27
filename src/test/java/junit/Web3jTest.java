@@ -1,9 +1,9 @@
-package zapprotocol.jzap;
+package junit;
 
-import org.web3j.protocol.Web3j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.mockito.Mockito.mock;
+import org.web3j.protocol.Web3j;
 
 class Web3jTest {	
 	@Test

@@ -25,3 +25,7 @@ target
 
 # Eclipse IDE Files
 .project
+
+# VS code files
+*.history
+.classpath

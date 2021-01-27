@@ -1,3 +1,4 @@
+package types;
 import java.math.BigDecimal;
 
 public class DefaultTx {
