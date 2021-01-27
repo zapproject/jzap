@@ -18,19 +18,25 @@ These instructions will get you a copy of the project up and running on your loc
 ##### 1. Install Maven @ https://maven.apache.org/install.html
 ##### 2. Install Web3j @ http://docs.web3j.io/latest/quickstart/
 
-##### 3. (OPTIONAL) Import your desired contracts into contracts/
+##### 3. Install Truffle
 
-##### 4. Compile and run using spring boot
+```
+npm i -g truffle
+```
+
+##### 4. (OPTIONAL) Import your desired contracts into contracts/
+
+##### 5. Compile and run using spring boot
 
 ```
 mvn spring-boot:run
 ```
-##### 5. Create a wallet using web3j
+##### 6. Create a wallet using web3j
 ```
 web3j wallet create
 ```
 
-##### 5. Run the Web3j application on the developer network  @ https://github.com/zapproject/devnet
+##### 7. Run the Web3j application on the developer network  @ https://github.com/zapproject/devnet
 ```
 web3j run <HARDHAT NETWORK URI> <WALLET FILE> <WALLET PASSWORD>
 ```
