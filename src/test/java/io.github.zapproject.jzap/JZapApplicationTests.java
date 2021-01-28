@@ -1,4 +1,4 @@
-package zapprotocol.jzap;
+package io.github.zapproject.jzap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

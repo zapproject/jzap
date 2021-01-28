@@ -1,4 +1,4 @@
-package types;
+package io.github.zapproject.types;
 import java.math.BigInteger;
 
 public class DefaultTx {
