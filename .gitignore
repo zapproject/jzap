@@ -31,4 +31,4 @@ target
 .classpath
 
 # Compiled Java Contract JSON
-build/contracts
+build/contracts/
