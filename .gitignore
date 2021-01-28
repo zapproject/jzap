@@ -29,3 +29,6 @@ target
 # VS code files
 *.history
 .classpath
+
+# Compiled Java Contract JSON
+build/contracts
