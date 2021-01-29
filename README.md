@@ -35,15 +35,6 @@ npm i -g truffle
 ```
 mvn spring-boot:run
 ```
-##### 6. Create a wallet using web3j
-```
-web3j wallet create
-```
-
-##### 7. Run the Web3j application on the developer network  @ https://github.com/zapproject/devnet
-```
-web3j run <HARDHAT NETWORK URI> <WALLET FILE> <WALLET PASSWORD>
-```
 
 
 
