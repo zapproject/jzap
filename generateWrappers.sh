@@ -1,6 +1,8 @@
 generateWrapper(){
-    curl -L get.web3j.io | sh && source ~/.web3j/source.sh
+    curl -L get.web3j.io | sh 
+    source ~/.web3j/source.sh
     source $HOME/.web3j/source.sh
+    ls -a ~
     echo "Generating Wrappers...."
     for FILE in build/contracts/*
     do
