@@ -1,4 +1,5 @@
 generateWrapper(){
+    source $HOME/.web3j/source.sh
     echo "Generating Wrappers...."
     for FILE in build/contracts/*
     do
