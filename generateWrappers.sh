@@ -12,7 +12,7 @@ generateWrapper(){
         echo "Already exists"
     else
         echo "GENERATING WRAPPER FOR $FILE"
-        ./$HOME/.web3j/web3j generate truffle generate --truffle-json=$FILE --outputDir=./target/classes --package=io.github.zapproject.jzap.wrappers
+        .$HOME/.web3j/web3j generate truffle generate --truffle-json=$FILE --outputDir=./target/classes --package=io.github.zapproject.jzap.wrappers
     fi
     done
 }
