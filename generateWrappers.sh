@@ -1,4 +1,5 @@
 generateWrapper(){
+    curl -L get.web3j.io | sh && source ~/.web3j/source.sh
     source $HOME/.web3j/source.sh
     echo "Generating Wrappers...."
     for FILE in build/contracts/*
@@ -11,7 +12,7 @@ generateWrapper(){
         echo "Already exists"
     else
         echo "GENERATING WRAPPER FOR $FILE"
-        web3j generate truffle generate --truffle-json=$FILE --outputDir=./target/classes --package=io.github.zapproject.jzap.wrappers
+        ./$HOME/.web3j/web3j generate truffle generate --truffle-json=$FILE --outputDir=./target/classes --package=io.github.zapproject.jzap.wrappers
     fi
     done
 }
