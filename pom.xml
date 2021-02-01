@@ -110,10 +110,14 @@
 			</plugin>
 
 	<!-- Javadoc plugin -->
-          <!-- <plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.10.4</version>
+            <version>3.2.0</version>
+			<configuration>
+			      <source>11</source>
+  				<failOnError>false</failOnError>
+			</configuration>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -122,7 +126,7 @@
                 </goals>
               </execution>
             </executions>
-          </plugin> -->
+          </plugin>
 
 		<!-- GPG plugin -->
 		<plugin>
@@ -149,6 +153,15 @@
 				  </plugins>
 			  </build>
 		</profile>
+		<profile>
+        <id>jdk-11-config</id>
+        <activation>
+            <jdk>11</jdk>
+        </activation>
+        <properties>
+            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+        </properties>
+    </profile>
 	</profiles>
 
 	<distributionManagement>
