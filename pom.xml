@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.github.zapproject</groupId>
 	<artifactId>jzap</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>JZap</name>
 	<description>Java ZAP API to allow Java developers to interact with the ZAP Smart contract</description>
 	<properties>
@@ -85,6 +85,11 @@
 				</execution>
 		</executions>
       </plugin>
+	<plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-release-plugin</artifactId>
+        	<version>3.0.0-M1</version>
+      	</plugin>
 	     <!--  <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-source-plugin</artifactId>
