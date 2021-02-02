@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: Mudlet/xmlstarlet-action@master
+        with:
+          args: edit --inplace -N a="http://maven.apache.org/POM/4.0.0" --update '/a:project/a:version' --value '0.0.$GITHUB_RUN_NUMBER' pom.xml 
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 12
       - run: npm i -g truffle
-      - uses: Mudlet/xmlstarlet-action@master
-        with:
-          args: edit --inplace -N a="http://maven.apache.org/POM/4.0.0" --update '/a:project/a:version' --value '0.0.$GITHUB_RUN_NUMBER' $GITHUB_WORKSPACE/pom.xml 
       - name: Set up Maven Central Repository
         uses: actions/setup-java@v1
         with:
