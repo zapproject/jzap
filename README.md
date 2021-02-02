@@ -89,7 +89,7 @@ mvn spring-boot:run
 </settings>
 ```
 
-### Installing
+## Installing
 
 Add to your pom.xml
 
