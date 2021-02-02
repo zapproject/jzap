@@ -12,8 +12,8 @@ jobs:
       - name: Install xmlstarlet
         run: sudo apt-get install xmlstarlet
       - name: Replace version number xmlstarlet
-        run: xmlstarlet ed --update '/_:project/_:version' --value '0.0.$GITHUB_RUN_NUMBER' pom.xml
-      - run: cat po.xml
+        run: xmlstarlet ed -L --update '/_:project/_:version' --value '0.0.${{GITHUB_RUN_NUMBER}}' pom.xml
+      - run: cat pom.xml
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
