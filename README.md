@@ -97,7 +97,7 @@ Add to your pom.xml
 		<dependency>
 			<groupId>io.github.zapproject</groupId>
 			<artifactId>jzap</artifactId>
-			<version>[0.0.0,)</version>
+			<version>LATEST</version>
 		</dependency>
 ```
 
