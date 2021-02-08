@@ -1,4 +1,4 @@
-package types;
+package zapprotocol.jzap;
 
 import java.math.BigInteger;
 import org.junit.jupiter.api.DisplayName;
