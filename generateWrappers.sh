@@ -1,1 +1,20 @@
-for FILE in build/contracts/*; do web3j generate truffle generate --truffle-json=$FILE --outputDir=./target/classes --package=zapprotocol.jzap.wrappers; done
+generateWrapper(){
+    curl -L get.web3j.io | sh 
+    export PATH=$PATH:$HOME/.web3j
+    echo "Generating Wrappers...."
+    for FILE in build/contracts/*
+    do
+    echo "Opening $FILE"
+    fbname=$(basename "$FILE" | cut -d. -f1)
+    echo "CHECKING TARGET FOLDER"
+    if (ls ./target/classes/io/github/zapproject/jzap/wrappers |  grep -q  "$fbname.java")
+    then
+        echo "Already exists"
+    else
+        echo "GENERATING WRAPPER FOR $FILE"
+        web3j generate truffle generate --truffle-json=$FILE --outputDir=./target/classes --package=io.github.zapproject.jzap.wrappers
+    fi
+    done
+}
+
+generateWrapper

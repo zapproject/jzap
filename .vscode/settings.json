@@ -1,0 +1,9 @@
+{
+    "bracketPairColorizer.excludedLanguages": [
+    
+    ],
+
+    "files.exclude": {
+        "**/.git": false
+   }
+}
