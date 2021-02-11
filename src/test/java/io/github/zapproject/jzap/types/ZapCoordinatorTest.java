@@ -130,7 +130,8 @@ class ZapCoordinatorTest {
 
     @Test
     void testZapCoordinatorGetContract() throws Exception {
-        assertNotNull("GetContract(): " + coordinator.getContract("ZapCoordinator").send());
+        assertNotNull(coordinator.getContract("ZapCoordinator"));
+        System.out.println("GetContract(): " + coordinator.getContract("ZapCoordinator"));
     }
 
     @Test
@@ -142,7 +143,7 @@ class ZapCoordinatorTest {
     void testZapCoordinatorGetOwnershipTransferredEvents() {
         List eventResponse = coordinator.getOwnershipTransferredEvents(txReceipt);
         assertNotNull(eventResponse);
-        System.out.println("getOwnershipTransferredEvents(): " + eventResponse.size());
+        // System.out.println("getOwnershipTransferredEvents(): " + eventResponse.size());
     }
 
     @Test
@@ -151,7 +152,7 @@ class ZapCoordinatorTest {
         DefaultBlockParameterName.LATEST, coord2.getContractAddress());
         Flowable eventResponse = coordinator.ownershipTransferredEventFlowable(filter);
         assertNotNull(eventResponse);
-        System.out.println("OwnershipTranferredEventsFlowable(): " + eventResponse.count());
+        // System.out.println("OwnershipTranferredEventsFlowable(): " + eventResponse.count());
 
         assertNotNull(coordinator.ownershipTransferredEventFlowable(DefaultBlockParameterName.EARLIEST,
         DefaultBlockParameterName.LATEST));
@@ -161,7 +162,7 @@ class ZapCoordinatorTest {
     void testZapCooridnatorGetUpdateContractEvents() {
         List eventResponse = coordinator.getUpdatedContractEvents(txReceipt);
         assertNotNull(eventResponse);
-        System.out.println("GetUpdateContractEvents(): " + eventResponse.size());
+        // System.out.println("GetUpdateContractEvents(): " + eventResponse.size());
     }
 
     @Test
@@ -170,7 +171,7 @@ class ZapCoordinatorTest {
         DefaultBlockParameterName.LATEST, coord2.getContractAddress());
         Flowable eventResponse = coordinator.updatedContractEventFlowable(filter);
         assertNotNull(eventResponse);
-        System.out.println("UpdatedContractEventFlowable(): " + eventResponse.count());
+        // System.out.println("UpdatedContractEventFlowable(): " + eventResponse.count());
 
         assertNotNull(coordinator.updatedContractEventFlowable(DefaultBlockParameterName.EARLIEST,
         DefaultBlockParameterName.LATEST));

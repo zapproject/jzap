@@ -251,20 +251,18 @@ public class ZapCoordinator extends Contract {
             new org.web3j.abi.datatypes.Address(newAddress)), 
             Collections.<TypeReference<?>>emptyList());
 
+        String owner = this.owner().send().toString();
         String encodedFunction = FunctionEncoder.encode(function);
         ContractGasProvider gasPro = new org.web3j.tx.gas.DefaultGasProvider();
-        Credentials creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
-
-        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(creds.getAddress(), DefaultBlockParameterName.LATEST).send();
+        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(owner, DefaultBlockParameterName.LATEST).send();
         BigInteger nonce = ethGetTransactionCount.getTransactionCount();
         Transaction transaction = Transaction.createFunctionCallTransaction(
-                        // hard coded address for account in hardhat
-                        creds.getAddress(), 
+                        owner, 
                         nonce, 
                         gasPro.getGasPrice(), 
                         gasPro.getGasLimit(), 
                         // hard coded address in hardhat
-                        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", 
+                        this.contractAddress, 
                         encodedFunction);
         
         org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(transaction).sendAsync().get();
@@ -288,11 +286,39 @@ public class ZapCoordinator extends Contract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
-    public RemoteFunctionCall<String> getContract(String contractName) {
-        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETCONTRACT, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(contractName)), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
-        return executeRemoteCallSingleValueReturn(function, String.class);
+    // public RemoteFunctionCall<String> getContract(String contractName) {
+    //     final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETCONTRACT, 
+    //             Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(contractName)), 
+    //             Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
+    //     return executeRemoteCallSingleValueReturn(function, String.class);
+    // }
+
+    public EthSendTransaction getContract(String contractName) throws IOException , InterruptedException , ExecutionException , Exception {
+        org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
+            FUNC_GETCONTRACT,
+            Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(contractName)), 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
+
+        String owner = this.owner().send().toString();
+        String encodedFunction = FunctionEncoder.encode(function);
+        ContractGasProvider gasPro = new org.web3j.tx.gas.DefaultGasProvider();
+        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
+            owner, 
+            DefaultBlockParameterName.LATEST).send();
+
+        BigInteger nonce = ethGetTransactionCount.getTransactionCount();
+         Transaction transaction = Transaction.createFunctionCallTransaction(
+                        owner, 
+                        nonce, gasPro.getGasPrice(), 
+                        gasPro.getGasLimit(), 
+                        // hard coded ZapCoordinator contract address - hardhat
+                        this.contractAddress, 
+                        encodedFunction);
+        
+        org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(
+            transaction).sendAsync().get();
+
+        return transactionResponse;
     }
 
     // Original wrapper function - fails
@@ -304,29 +330,25 @@ public class ZapCoordinator extends Contract {
     //     return executeRemoteCallTransaction(function);
     // }
 
-    public EthSendTransaction updateAllDependencies() throws InterruptedException , ExecutionException , IOException {
+    public EthSendTransaction updateAllDependencies() throws InterruptedException , ExecutionException , IOException , Exception {
         org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
             FUNC_UPDATEALLDEPENDENCIES,
             Arrays.<Type>asList(), 
             Collections.<TypeReference<?>>emptyList());
 
+        String owner = this.owner().send().toString();
         String encodedFunction = FunctionEncoder.encode(function);
         ContractGasProvider gasPro = new org.web3j.tx.gas.DefaultGasProvider();
-        Credentials creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
-        
-        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
-            creds.getAddress(), 
-            DefaultBlockParameterName.LATEST).send();
+        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(owner, DefaultBlockParameterName.LATEST).send();
 
         BigInteger nonce = ethGetTransactionCount.getTransactionCount();
         
         Transaction transaction = Transaction.createFunctionCallTransaction(
-                        // hard coded account address
-                        creds.getAddress(), 
+                        owner, 
                         nonce, gasPro.getGasPrice(), 
                         gasPro.getGasLimit(), 
                         // hard coded ZapCoordinator contract address - hardhat
-                        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", 
+                        this.contractAddress, 
                         encodedFunction);
         
         org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(
