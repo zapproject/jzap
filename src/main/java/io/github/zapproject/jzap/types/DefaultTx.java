@@ -1,7 +1,9 @@
 package io.github.zapproject.types;
-import java.math.BigInteger;
 
-public class DefaultTx {
+import java.math.BigInteger;
+import io.github.zapproject.jzap.types.typesInterfaces.DefaultTxInterface;
+
+public class DefaultTx implements DefaultTxInterface {
 	private String from;
 	private BigInteger gas;
 	private BigInteger gasPrice;	
