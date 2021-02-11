@@ -1,10 +1,14 @@
 package zapprotocol.jzap.wrappers;
 
+import io.reactivex.Flowable;
 import java.math.BigInteger;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -132,5 +136,60 @@ class ZapCoordinatorTest {
     @Test
     void testZapCoordinatorLoadedContracts() throws Exception {
         assertNotNull("LoadedContracts(): " + coordinator.loadedContracts(BigInteger.valueOf(0)).send());
+    }
+
+    @Test
+    void testZapCoordinatorGetOwnershipTransferredEvents() {
+        List eventResponse = coordinator.getOwnershipTransferredEvents(txReceipt);
+        assertNotNull(eventResponse);
+        System.out.println("getOwnershipTransferredEvents(): " + eventResponse.size());
+    }
+
+    @Test
+    void testZapCoordinatorOwnershipTransferredEventsFlowable() {
+        EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST, coord2.getContractAddress());
+        Flowable eventResponse = coordinator.ownershipTransferredEventFlowable(filter);
+        assertNotNull(eventResponse);
+        System.out.println("OwnershipTranferredEventsFlowable(): " + eventResponse.count());
+
+        assertNotNull(coordinator.ownershipTransferredEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
+    }
+
+    @Test
+    void testZapCooridnatorGetUpdateContractEvents() {
+        List eventResponse = coordinator.getUpdatedContractEvents(txReceipt);
+        assertNotNull(eventResponse);
+        System.out.println("GetUpdateContractEvents(): " + eventResponse.size());
+    }
+
+    @Test
+    void testZapCoordinatorUpdatedContractEventFlowable() {
+        EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST, coord2.getContractAddress());
+        Flowable eventResponse = coordinator.updatedContractEventFlowable(filter);
+        assertNotNull(eventResponse);
+        System.out.println("UpdatedContractEventFlowable(): " + eventResponse.count());
+
+        assertNotNull(coordinator.updatedContractEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
+    }
+
+    @Test
+    void testZapCoordinatorGetUpdatedDependenciesEvents() {
+        List eventResponse = coordinator.getUpdatedDependenciesEvents(txReceipt);
+        assertNotNull(eventResponse);
+    }
+
+    @Test
+    void testZapCoordinatorUpdateDependenciesEventFlowable() {
+        EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST, coord2.getContractAddress());
+        Flowable eventResponse = coordinator.updatedDependenciesEventFlowable(filter);
+        assertNotNull(eventResponse);
+
+        assertNotNull(coordinator.updatedDependenciesEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
     }
 }
