@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -35,7 +37,6 @@ class RegistryTest {
         database = Database.load("0xdc64a140aa3e981100a9beca4e685f962f0cf6c9" , web3j, creds, gasPro);
         coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
         registry = Registry.load("0xa513e6e4b8f2a923d98304ec87f64353c4d5c853", web3j, creds, gasPro);
-        // coordinator = ZapCoordinator.deploy(web3j, creds, gasPro).send();
         reg1 = Registry.deploy(web3j, creds, gasPro, coordinator.getContractAddress()).send();
         
         byte [] bvalue = "testProvider".getBytes(); 
@@ -45,9 +46,7 @@ class RegistryTest {
     // endpoint: 'Ramanujan',
     // curve: [ 3, 0, 0, 1, 122 ],
     // address: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
-  
-      
-
+    
     @Test
     void testRegistryTransferOwnership() throws Exception {
         Registry reg2 = Registry.deploy(web3j, creds, gasPro, coordinator.getContractAddress()).send();
@@ -59,19 +58,19 @@ class RegistryTest {
     //     assertNotNull(registry.initiateProvider(BigInteger.valueOf(12321), title).send());
     // }
 
-    @SuppressWarnings("unchecked")
-    @Test
-    void testRegistryInitiateProviderCurve() throws Exception {
-        List curve = new ArrayList<BigInteger>();
-        curve.add(BigInteger.valueOf(3));
-        curve.add(BigInteger.valueOf(0));
-        curve.add(BigInteger.valueOf(2));
-        curve.add(BigInteger.valueOf(1));
-        curve.add(BigInteger.valueOf(100));
-        byte[] endpoint = new byte[32];
-        System.arraycopy("testEndpoint".getBytes(), 0, endpoint, 0, 12);
-        assertNotNull(registry.initiateProviderCurve(endpoint, curve, emptyBroker).send());
-    }
+    // @SuppressWarnings("unchecked")
+    // @Test
+    // void testRegistryInitiateProviderCurve() throws Exception {
+    //     List curve = new ArrayList<BigInteger>();
+    //     curve.add(BigInteger.valueOf(3));
+    //     curve.add(BigInteger.valueOf(0));
+    //     curve.add(BigInteger.valueOf(2));
+    //     curve.add(BigInteger.valueOf(1));
+    //     curve.add(BigInteger.valueOf(100));
+    //     byte[] endpoint = new byte[32];
+    //     System.arraycopy("testEndpoint".getBytes(), 0, endpoint, 0, 12);
+    //     assertNotNull(registry.initiateProviderCurve(endpoint, curve, emptyBroker).send());
+    // }
 
     @Test
     void testRegistryStringToBytes32() throws Exception {
@@ -116,7 +115,7 @@ class RegistryTest {
 
     @Test
     void testRegistrySetProviderTitle() throws Exception {
-        assertNotNull(registry.setProviderTitle(title).send());
+        assertNotNull(txReceipt = registry.setProviderTitle(title).send());
     }
 
     @Test
@@ -192,4 +191,53 @@ class RegistryTest {
     // void testRegistrySelfDestruct() throws Exception {
     //     assertNotNull(registry.selfDestruct().send());
     // }
+
+    // @Test
+    // void testRegistryGetNewCurveEvents() {
+    //     assertNotNull(registry.getNewCurveEvents(txReceipt));
+    // }
+
+    @Test
+    void testRegistryNewCurveEventFlowable() {
+        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST, coordinator.getContractAddress());
+        assertNotNull(registry.newCurveEventFlowable(filter));
+    }
+
+    @Test
+    void testRegistryNewCurveEventFlowableBlocks() {
+        assertNotNull(registry.newCurveEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
+    }
+
+    // @Test
+    // void testRegistryGetNewProviderEvents() {
+    //     assertNotNull(registry.getNewCurveEvents(txReceipt));
+    // }
+
+    @Test
+    void testRegistryNewProviderEventFlowable() {
+        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST, coordinator.getContractAddress());
+        assertNotNull(registry.newProviderEventFlowable(filter));
+    }
+
+    @Test
+    void testRegistryNewProviderEventFlowableBlocks() {
+        assertNotNull(registry.newCurveEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
+    }
+
+    @Test
+    void testRegistryOwnershipTransferredEventFlowable() {
+        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST, coordinator.getContractAddress());
+        assertNotNull(registry.ownershipTransferredEventFlowable(filter));
+    }
+
+    @Test
+    void testRegistryOwnershipTransferredEventFlowableBlocks() {
+        assertNotNull(registry.ownershipTransferredEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
+    }
 }
