@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -53,24 +54,24 @@ class RegistryTest {
         assertNotNull(reg1.transferOwnership(reg2.getContractAddress()).send());
     }
 
-    // @Test
-    // void testRegistryInitiateProvider() throws Exception {
-    //     assertNotNull(registry.initiateProvider(BigInteger.valueOf(12321), title).send());
-    // }
+    @Disabled
+    void testRegistryInitiateProvider() throws Exception {
+        assertNotNull(registry.initiateProvider(BigInteger.valueOf(12321), title).send());
+    }
 
-    // @SuppressWarnings("unchecked")
-    // @Test
-    // void testRegistryInitiateProviderCurve() throws Exception {
-    //     List curve = new ArrayList<BigInteger>();
-    //     curve.add(BigInteger.valueOf(3));
-    //     curve.add(BigInteger.valueOf(0));
-    //     curve.add(BigInteger.valueOf(2));
-    //     curve.add(BigInteger.valueOf(1));
-    //     curve.add(BigInteger.valueOf(100));
-    //     byte[] endpoint = new byte[32];
-    //     System.arraycopy("testEndpoint".getBytes(), 0, endpoint, 0, 12);
-    //     assertNotNull(registry.initiateProviderCurve(endpoint, curve, emptyBroker).send());
-    // }
+    @SuppressWarnings("unchecked")
+    @Test
+    void testRegistryInitiateProviderCurve() throws Exception {
+        List curve = new ArrayList<BigInteger>();
+        curve.add(BigInteger.valueOf(3));
+        curve.add(BigInteger.valueOf(0));
+        curve.add(BigInteger.valueOf(2));
+        curve.add(BigInteger.valueOf(1));
+        curve.add(BigInteger.valueOf(100));
+        byte[] endpoint = new byte[32];
+        System.arraycopy("testEndpoint".getBytes(), 0, endpoint, 0, 12);
+        assertNotNull(registry.initiateProviderCurve(endpoint, curve, emptyBroker).send());
+    }
 
     @Test
     void testRegistryStringToBytes32() throws Exception {
@@ -187,15 +188,15 @@ class RegistryTest {
         assertNotNull(registry.getAllOracles().send());
     }
 
-    // @Test
-    // void testRegistrySelfDestruct() throws Exception {
-    //     assertNotNull(registry.selfDestruct().send());
-    // }
+    @Test
+    void testRegistrySelfDestruct() throws Exception {
+        assertNotNull(registry.selfDestruct().send());
+    }
 
-    // @Test
-    // void testRegistryGetNewCurveEvents() {
-    //     assertNotNull(registry.getNewCurveEvents(txReceipt));
-    // }
+    @Disabled
+    void testRegistryGetNewCurveEvents() {
+        assertNotNull(registry.getNewCurveEvents(txReceipt));
+    }
 
     @Test
     void testRegistryNewCurveEventFlowable() {
@@ -210,10 +211,10 @@ class RegistryTest {
         DefaultBlockParameterName.LATEST));
     }
 
-    // @Test
-    // void testRegistryGetNewProviderEvents() {
-    //     assertNotNull(registry.getNewCurveEvents(txReceipt));
-    // }
+    @Disabled
+    void testRegistryGetNewProviderEvents() {
+        assertNotNull(registry.getNewCurveEvents(txReceipt));
+    }
 
     @Test
     void testRegistryNewProviderEventFlowable() {
