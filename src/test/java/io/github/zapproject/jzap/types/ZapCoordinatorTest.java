@@ -131,7 +131,7 @@ class ZapCoordinatorTest {
     @Test
     void testZapCoordinatorGetContract() throws Exception {
         assertNotNull(coordinator.getContract("ZapCoordinator"));
-        System.out.println("GetContract(): " + coordinator.getContract("ZapCoordinator"));
+        // System.out.println("GetContract(): " + coordinator.getContract("ZapCoordinator"));
     }
 
     @Test

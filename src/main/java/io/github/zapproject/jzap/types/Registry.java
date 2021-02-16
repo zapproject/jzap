@@ -292,8 +292,8 @@ public class Registry extends Contract {
                 FUNC_INITIATEPROVIDERCURVE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(endpoint), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.generated.Int256>(
-                        org.web3j.abi.datatypes.generated.Int256.class,
-                        org.web3j.abi.Utils.typeMap(curve, org.web3j.abi.datatypes.generated.Int256.class)), 
+        org.web3j.abi.datatypes.generated.Int256.class,
+        org.web3j.abi.Utils.typeMap(curve, org.web3j.abi.datatypes.generated.Int256.class)),
                 new org.web3j.abi.datatypes.Address(broker)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
@@ -533,6 +533,7 @@ public class Registry extends Contract {
         return deployRemoteCall(Registry.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }
