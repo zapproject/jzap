@@ -261,7 +261,6 @@ public class ZapCoordinator extends Contract {
                         nonce, 
                         gasPro.getGasPrice(), 
                         gasPro.getGasLimit(), 
-                        // hard coded address in hardhat
                         this.contractAddress, 
                         encodedFunction);
         
@@ -311,7 +310,6 @@ public class ZapCoordinator extends Contract {
                         owner, 
                         nonce, gasPro.getGasPrice(), 
                         gasPro.getGasLimit(), 
-                        // hard coded ZapCoordinator contract address - hardhat
                         this.contractAddress, 
                         encodedFunction);
         
@@ -347,7 +345,6 @@ public class ZapCoordinator extends Contract {
                         owner, 
                         nonce, gasPro.getGasPrice(), 
                         gasPro.getGasLimit(), 
-                        // hard coded ZapCoordinator contract address - hardhat
                         this.contractAddress, 
                         encodedFunction);
         
