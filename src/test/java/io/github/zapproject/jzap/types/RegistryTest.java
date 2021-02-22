@@ -64,6 +64,7 @@ class RegistryTest {
     }
 
     @Disabled
+    @Order(1)
     void testRegistryInitiateProvider() throws Exception {
         assertNotNull(registry.initiateProvider(BigInteger.valueOf(100), title).send());
     }
