@@ -1,5 +1,6 @@
 package zapprotocol.jzap.wrappers;
 
+import io.reactivex.Flowable;
 import java.math.BigInteger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -40,19 +40,36 @@ class ZapTokenTest {
     @Test
     @Order(1)
     void testZapTokenIncreaseApproval() throws Exception {
-        assertNotNull(token.increaseApproval(creds2.getAddress(), BigInteger.valueOf(1000)).send());
+        assertNotNull(txApprove = token.increaseApproval(creds2.getAddress(), BigInteger.valueOf(1000)).send());
+        // System.out.println("#### APPROVAL ####: " + txApprove.getLogs());
+
+        assertNotNull(token.getApprovalEvents(txApprove));
+
+        Flowable flow;
+        assertNotNull(flow = token.approvalEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
     @Order(2)
     void testZapTokenFinishMinting() throws Exception {
         assertNotNull(txFinish = token.finishMinting().send());
+
+        assertNotNull(token.getMintFinishedEvents(txFinish));
+
+        assertNotNull(token.mintFinishedEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
     }
 
     @Test
     @Order(3)
     void testZapTokenAllocate() throws Exception {
-        assertNotNull(token.allocate(creds.getAddress(), new BigInteger("100")).send());
+        assertNotNull(txMint = token.allocate(creds.getAddress(), new BigInteger("100")).send());
+    
+        assertNotNull(token.getMintEvents(txMint));
+
+        assertNotNull(token.mintEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -83,59 +100,5 @@ class ZapTokenTest {
     @Order(8)
     void testZapTokenTransferFrom() throws Exception {
         assertNotNull(token.transferFrom(creds2.getAddress(), creds.getAddress(), BigInteger.valueOf(0)).send());
-    }
-
-    @Disabled
-    void testZapTokenGetApprovalEvents() {
-        assertNotNull(token.getApprovalEvents(txApprove));
-    }
-
-    @Test
-    void testZapTokenApprovalEventFlowable() {
-        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST, token.getContractAddress());
-        assertNotNull(token.approvalEventFlowable(filter));
-    }
-
-    @Test
-    void testZapTokenApprovalEventFlowableBlock() {
-        assertNotNull(token.approvalEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
-    }
-
-    @Disabled
-    void testZapTokenGetMintEvents() {
-        assertNotNull(token.getMintEvents(txMint));
-    }
-
-    @Test
-    void testZapTokenMintEventFlowable() {
-        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST, token.getContractAddress());
-        assertNotNull(token.mintEventFlowable(filter));
-    }
-
-    @Test
-    void testZapTokenMintEventFlowableBlock() {
-        assertNotNull(token.mintEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
-    }
-
-    @Disabled
-    void testZapTokenGetMintableFinishedEvents() {
-        assertNotNull(token.getMintFinishedEvents(txFinish));
-    }
-
-    @Test
-    void testZapTokenMintFinishedFlowable() {
-        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST, token.getContractAddress());
-        assertNotNull(token.mintFinishedEventFlowable(filter));
-    }
-
-    @Test
-    void testZapTokenMintFinishedFlowableBlock() {
-        assertNotNull(token.mintFinishedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 }

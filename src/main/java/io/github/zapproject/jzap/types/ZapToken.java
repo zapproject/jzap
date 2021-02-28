@@ -458,6 +458,7 @@ public class ZapToken extends Contract {
         return deployRemoteCall(ZapToken.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }

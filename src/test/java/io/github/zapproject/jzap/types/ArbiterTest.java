@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -36,6 +35,7 @@ class ArbiterTest {
 
     private TransactionReceipt txPurchase;
     private TransactionReceipt txEnd;
+    private TransactionReceipt txParams;
 
     @SuppressWarnings("unchecked")
     @BeforeAll
@@ -57,10 +57,6 @@ class ArbiterTest {
         subscriber = creds.getAddress();
     }
     
-    // @Test
-    // void test() {
-        
-    // }
     // @Test
     // @Order(1)
     // void testArbiterUpdateDependencies() throws Exception {
@@ -90,6 +86,11 @@ class ArbiterTest {
         assertNotNull(txPurchase = arbiter.initiateSubscription(
             creds.getAddress(), endpoint, 
             params, BigInteger.valueOf(100), BigInteger.valueOf(10)).send());
+
+        assertNotNull(arbiter.getDataPurchaseEvents(txPurchase));
+
+        assertNotNull(arbiter.dataPurchaseEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -116,52 +117,34 @@ class ArbiterTest {
         assertNotNull(arbiter.getPreBlockEnd(creds.getAddress(), subscriber, endpoint).send());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     @Order(7)
-    void testArbiterEndSubscriptionSubscriber() throws Exception {
-        assertNotNull(txEnd = arbiter.endSubscriptionSubscriber(creds.getAddress(), endpoint).send());
-    }
+    void testArbiterPassParams() throws Exception {
+        byte[] param1 = new byte[32];
+        byte[] param2 = new byte[32];
+        System.arraycopy("param1".getBytes(), 0, param1, 0, 6);
+        System.arraycopy("param2".getBytes(), 0, param2, 0, 6);
+        List params = new ArrayList<byte[]>();
+        params.add(param1);
+        params.add(param2);
 
-    @Disabled
-    void testArbiterGetDataPurchaseEvents() {
-        assertNotNull(arbiter.getDataPurchaseEvents(txPurchase));
-    }
+        assertNotNull(arbiter.passParams(creds.getAddress(), endpoint, params).send());
+        
+        // assertNotNull(arbiter.getParamsPassedEvents(txParams));
 
-    @Test
-    void testArbiterDataPurchaseEventFlowable() {
-        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST, arbiter.getContractAddress());
-        assertNotNull(arbiter.dataPurchaseEventFlowable(filter));
-    }
-
-    @Test
-    void testArbiterDataPurchaseEventFlowableBlocks() {
-        assertNotNull(arbiter.dataPurchaseEventFlowable(DefaultBlockParameterName.EARLIEST,
+        assertNotNull(arbiter.paramsPassedEventFlowable(DefaultBlockParameterName.EARLIEST,
         DefaultBlockParameterName.LATEST));
     }
 
-    @Disabled
-    void testArbiterGetDataSubscriptionEndEvents() {
+    @Test
+    @Order(8)
+    void testArbiterEndSubscriptionSubscriber() throws Exception {
+        assertNotNull(txEnd = arbiter.endSubscriptionSubscriber(creds.getAddress(), endpoint).send());
+
         assertNotNull(arbiter.getDataSubscriptionEndEvents(txEnd));
-    }
 
-    @Test
-    void testArbiterDataSubscriptionEndEventFlowable() {
-        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST, arbiter.getContractAddress());
-        assertNotNull(arbiter.dataSubscriptionEndEventFlowable(filter));
-    }
-
-    @Test
-    void testArbiterParamsPassedEventFlowable() {
-        EthFilter filter =  new EthFilter(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST, arbiter.getContractAddress());
-        assertNotNull(arbiter.paramsPassedEventFlowable(filter));
-    }
-
-    @Test
-    void testArbiterParamsPassedEventFlowableBlocks() {
-        assertNotNull(arbiter.paramsPassedEventFlowable(DefaultBlockParameterName.EARLIEST,
+        assertNotNull(arbiter.dataSubscriptionEndEventFlowable(DefaultBlockParameterName.EARLIEST,
         DefaultBlockParameterName.LATEST));
     }
 
