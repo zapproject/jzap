@@ -17,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class BondageTest {
     private static Bondage bondage;
-    private static ZapCoordinator coordinator;
-    private static Arbiter arbiter;
     
     private static Web3j web3j;
     private static Credentials creds;
@@ -40,9 +38,7 @@ class BondageTest {
         creds2 = Credentials.create("0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a");
         gasPro = new DefaultGasProvider();
 
-        coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
         bondage = Bondage.load("0x8a791620dd6260079bf849dc5567adc3f2fdc318", web3j, creds, gasPro);
-        arbiter = Arbiter.load("0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0", web3j, creds, gasPro);
         
         System.arraycopy("Ramanujan".getBytes(), 0, endpoint, 0, 9);
     }
@@ -51,18 +47,6 @@ class BondageTest {
     @Order(1)
     void testBondageBond() throws Exception {
         assertNotNull(txBound = bondage.bond(creds.getAddress(), endpoint, new BigInteger("100")).send());
-        
-        // byte[] param1 = new byte[32];
-        // byte[] param2 = new byte[32];
-        // List<byte[]> params = new ArrayList<byte[]>();
-        // System.arraycopy("A".getBytes(), 0, param1, 0, 1);
-        // System.arraycopy("B".getBytes(), 0, param2, 0, 1);
-        // params.add(param1);
-        // params.add(param2);
-        
-        // arbiter.initiateSubscription(
-        //     creds.getAddress(), endpoint, 
-        //     params, BigInteger.valueOf(100), BigInteger.valueOf(10)).send();
 
         assertNotNull(bondage.getBoundEvents(txBound));
         

@@ -22,6 +22,7 @@ class ZapTokenTest {
     private static Credentials creds;
     private static Credentials creds2;
     private static ContractGasProvider gasPro;
+    
     TransactionReceipt txApprove;
     TransactionReceipt txMint;
     TransactionReceipt txFinish;

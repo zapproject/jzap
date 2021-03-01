@@ -58,32 +58,6 @@ class ZapCoordinatorTest {
     @Test 
     void testZapCoordinatorUpdateAllDependencies() throws Exception {
         assertNotNull(coordinator.updateAllDependencies());
-
-        // Function function = new Function(
-        //     "updateAllDependencies",
-        //     Arrays.<Type>asList(), 
-        //     Collections.<TypeReference<?>>emptyList());
-
-        // String encodedFunction = FunctionEncoder.encode(function);
-        
-        // EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
-        //     creds.getAddress(), 
-        //     DefaultBlockParameterName.LATEST).send();
-
-        // BigInteger nonce = ethGetTransactionCount.getTransactionCount();
-        
-        // Transaction transaction = Transaction.createFunctionCallTransaction(
-        //                 creds.getAddress(), 
-        //                 nonce, gasPro.getGasPrice(), 
-        //                 gasPro.getGasLimit(), 
-        //                 "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", 
-        //                 encodedFunction);
-        
-        // org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(
-        //     transaction).sendAsync().get();
-        
-        // String transactionHash = transactionResponse.getTransactionHash();
-        // System.out.println(transactionHash);
     }
     
     @Test 
@@ -97,32 +71,6 @@ class ZapCoordinatorTest {
     void testZapCoordinatorAddImmutableContract() throws Exception {
         // not using assertEquals as web3j deploy functions deploy unrecognized contracts
         assertNotNull(coordinator.addImmutableContract("NewDatabase", database.getContractAddress()));
-
-        // Function function = new Function(
-        //     "addImmutableContract",
-        //     Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String("NewDatabase"), 
-        //     new org.web3j.abi.datatypes.Address(database.getContractAddress())), 
-        //     Collections.<TypeReference<?>>emptyList());
-
-        // String encodedFunction = FunctionEncoder.encode(function);
-        
-        // EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
-        //     creds.getAddress(), 
-        //     DefaultBlockParameterName.LATEST).send();
-
-        // BigInteger nonce = ethGetTransactionCount.getTransactionCount();
-        
-        // Transaction transaction = Transaction.createFunctionCallTransaction(
-        //                 creds.getAddress(), 
-        //                 nonce, gasPro.getGasPrice(), 
-        //                 gasPro.getGasLimit(), 
-        //                 "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", 
-        //                 encodedFunction);
-        
-        // org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(
-        //     transaction).sendAsync().get();
-        
-        // String transactionHash = transactionResponse.getTransactionHash();
     }
 
     @Test
@@ -152,12 +100,6 @@ class ZapCoordinatorTest {
 
     @Test
     void testZapCoordinatorOwnershipTransferredEventsFlowable() {
-        // EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST, coord2.getContractAddress());
-        // Flowable eventResponse = coordinator.ownershipTransferredEventFlowable(filter);
-        // assertNotNull(eventResponse);
-        // System.out.println("OwnershipTranferredEventsFlowable(): " + eventResponse.subscribe());
-
         assertNotNull(coordinator.ownershipTransferredEventFlowable(DefaultBlockParameterName.EARLIEST,
         DefaultBlockParameterName.LATEST));
     }
@@ -171,12 +113,6 @@ class ZapCoordinatorTest {
 
     @Test
     void testZapCoordinatorUpdatedContractEventFlowable() {
-        // EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST, coord2.getContractAddress());
-        // Flowable eventResponse = coordinator.updatedContractEventFlowable(filter);
-        // assertNotNull(eventResponse);
-        // System.out.println("UpdatedContractEventFlowable(): " + eventResponse.count());
-
         assertNotNull(coordinator.updatedContractEventFlowable(DefaultBlockParameterName.EARLIEST,
         DefaultBlockParameterName.LATEST));
     }
@@ -189,11 +125,6 @@ class ZapCoordinatorTest {
 
     @Test
     void testZapCoordinatorUpdateDependenciesEventFlowable() {
-        // EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST, coord2.getContractAddress());
-        // Flowable eventResponse = coordinator.updatedDependenciesEventFlowable(filter);
-        // assertNotNull(eventResponse);
-
         assertNotNull(coordinator.updatedDependenciesEventFlowable(DefaultBlockParameterName.EARLIEST,
         DefaultBlockParameterName.LATEST));
     }
