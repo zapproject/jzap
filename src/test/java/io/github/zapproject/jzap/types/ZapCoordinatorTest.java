@@ -35,7 +35,7 @@ class ZapCoordinatorTest {
         coord1 = ZapCoordinator.deploy(web3j, creds, gasPro).send();
         coord2 = ZapCoordinator.deploy(web3j, creds, gasPro).send();
         bondage = Bondage.deploy(web3j, creds, gasPro, coord2.getContractAddress()).send();
-        coordinator = new ZapCoordinator("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
+        coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
     }
 
     @Test
@@ -56,7 +56,7 @@ class ZapCoordinatorTest {
     }
 
     @Test 
-    void testZapCoordinatorUpdateAllDependencies() throws Exception {
+    void testZapCoordinatorUpdateAllDependencies() {
         assertNotNull(coordinator.updateAllDependencies());
     }
     
@@ -70,7 +70,7 @@ class ZapCoordinatorTest {
     @Test
     void testZapCoordinatorAddImmutableContract() throws Exception {
         // not using assertEquals as web3j deploy functions deploy unrecognized contracts
-        assertNotNull(coordinator.addImmutableContract("NewDatabase", database.getContractAddress()));
+        assertNotNull(coordinator.addImmutableContract("NewDatabase", database.getContractAddress()).send());
     }
 
     @Test
@@ -81,7 +81,7 @@ class ZapCoordinatorTest {
 
     @Test
     void testZapCoordinatorGetContract() throws Exception {
-        assertNotNull(coordinator.getContract("ZapCoordinator"));
+        assertNotNull(coordinator.getContract("ARBITER").send());
         // System.out.println("#### GetContract()####: " + coordinator.getContract("ZapCoordinator").getTransactionHash());
     }
 

@@ -4,18 +4,21 @@ import java.math.BigInteger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+// import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 class TypesTest extends DefaultTx{
 	TypesTest () {
-		super("test address", new BigInteger("10"), new BigInteger("1"));
+		super();
 	}
 
 	@Test
 	@DisplayName("Testing DefaultTx Type") // @displayName is not working properly
 	void defaultTxTest() {
 		TypesTest test = new TypesTest();
-		assertEquals(test.getGas().getClass().getSimpleName(), "BigInteger", "Number class type for gas is not matching");
+		test.gas = new BigInteger("1");
+		assertEquals(test.gas.getClass().getSimpleName(), "BigInteger");
 	}
+
 
 }
