@@ -4,11 +4,11 @@ import java.math.BigInteger;
 
 
 abstract class Filter {
-	BigInteger id;
-	BigInteger fromBlock;
-	BigInteger toBlock;
-	String provider;
-	String subscriber;
-	String terminator;
-	byte[] endpoint;
+	public BigInteger id;
+	public BigInteger fromBlock;
+	public BigInteger toBlock;
+	public String provider;
+	public String subscriber;
+	public String terminator;
+	public byte[] endpoint;
 }
