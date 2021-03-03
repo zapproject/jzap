@@ -2,13 +2,16 @@ package zapprotocol.jzap.wrappers;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import org.web3j.abi.EventEncoder;
+import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Event;
@@ -18,9 +21,14 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
 import org.web3j.protocol.core.methods.request.EthFilter;
+import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
+import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
@@ -318,7 +326,7 @@ public class ZapCoordinator extends Contract {
     //             Arrays.<Type>asList(), 
     //             Collections.<TypeReference<?>>emptyList());
     //     return executeRemoteCallTransaction(function);
-    }
+    // }
 
     public EthSendTransaction updateAllDependencies() throws InterruptedException , ExecutionException , IOException , Exception {
         org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(

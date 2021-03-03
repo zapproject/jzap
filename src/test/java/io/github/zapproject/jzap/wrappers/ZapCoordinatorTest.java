@@ -56,7 +56,7 @@ class ZapCoordinatorTest {
     }
 
     @Test 
-    void testZapCoordinatorUpdateAllDependencies() {
+    void testZapCoordinatorUpdateAllDependencies() throws Exception {
         assertNotNull(coordinator.updateAllDependencies());
     }
     

@@ -17,6 +17,4 @@ class TypesTest extends DefaultTx{
 		test.gas = new BigInteger("1");
 		assertEquals(test.gas.getClass().getSimpleName(), "BigInteger");
 	}
-
-
 }
