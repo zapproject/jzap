@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -168,6 +168,7 @@ public class BasicToken extends Contract {
         return deployRemoteCall(BasicToken.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }

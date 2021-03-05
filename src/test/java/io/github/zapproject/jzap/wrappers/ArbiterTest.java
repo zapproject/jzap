@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -39,7 +39,8 @@ class ArbiterTest {
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         gasPro = new DefaultGasProvider();
 
-        coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
+        // coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
+        // coordinator = ZapCoordinator.load(new BaseContractType("", "ZAPCOORDINATOR", 3117, "", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
         arbiter = Arbiter.load("0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0", web3j, creds, gasPro);
         bondage = Bondage.load("0x8a791620dd6260079bf849dc5567adc3f2fdc318", web3j, creds, gasPro);
 

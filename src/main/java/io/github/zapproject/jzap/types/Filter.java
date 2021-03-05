@@ -1,4 +1,4 @@
-package io.github.zapproject.jzap.types;
+package io.github.zapproject.jzap;
 
 import java.math.BigInteger;
 

@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -507,6 +507,7 @@ public class Database extends Contract {
         return deployRemoteCall(Database.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }

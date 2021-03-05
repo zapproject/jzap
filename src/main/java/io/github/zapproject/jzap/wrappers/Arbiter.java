@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;

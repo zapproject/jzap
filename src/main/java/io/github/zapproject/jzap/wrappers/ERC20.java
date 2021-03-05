@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -268,6 +268,7 @@ public class ERC20 extends Contract {
         return deployRemoteCall(ERC20.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }

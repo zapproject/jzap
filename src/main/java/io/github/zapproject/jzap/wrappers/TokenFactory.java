@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -100,6 +100,7 @@ public class TokenFactory extends Contract {
         return deployRemoteCall(TokenFactory.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }

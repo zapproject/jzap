@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -104,6 +104,7 @@ public class Upgradable extends Contract {
         return deployRemoteCall(Upgradable.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }

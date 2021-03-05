@@ -1,4 +1,4 @@
-package zapprotocol.jzap.wrappers;
+package io.github.zapproject.jzap;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -82,6 +82,7 @@ public class PiecewiseLogic extends Contract {
         return deployRemoteCall(PiecewiseLogic.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
+    @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
     }
