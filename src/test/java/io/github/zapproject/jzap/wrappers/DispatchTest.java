@@ -30,7 +30,7 @@ class DispatchTest {
     String query = "query"; 
 
     @BeforeAll
-    static void setup() {
+    static void setup() throws Exception {
         web3j = Web3j.build(new HttpService());
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         gasPro = new DefaultGasProvider();
