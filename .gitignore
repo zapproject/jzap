@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+logs
 
 # BlueJ files
 *.ctxt
@@ -30,6 +31,7 @@ build
 # VS code files
 *.history
 .classpath
+.vscode/
 
 # Compiled Java Contract JSON
 # build/contracts/
