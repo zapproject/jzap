@@ -49,9 +49,6 @@ class BondageTest {
         assertNotNull(txBound = bondage.bond(creds.getAddress(), endpoint, new BigInteger("100")).send());
 
         assertNotNull(bondage.getBoundEvents(txBound));
-        
-        // assertNotNull(bondage.boundEventFlowable(DefaultBlockParameterName.EARLIEST,
-        //         DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -60,9 +57,6 @@ class BondageTest {
         assertNotNull(txUnbound = bondage.unbond(creds.getAddress(), endpoint, new BigInteger("10")).send());
         
         assertNotNull(bondage.getUnboundEvents(txUnbound));
-
-        // assertNotNull(bondage.unboundEventFlowable(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -176,4 +170,15 @@ class BondageTest {
         assertNotNull(bondage.getOracleAddress(creds.getAddress(), new BigInteger("0")).send());
     }
 
+    @Disabled
+    void testBondageBondEventFlowable() {
+        assertNotNull(bondage.boundEventFlowable(DefaultBlockParameterName.EARLIEST,
+                DefaultBlockParameterName.LATEST));
+    }
+
+    @Disabled
+    void testBondageUnbondEventFlowable() {
+        assertNotNull(bondage.unboundEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
+    }
 }

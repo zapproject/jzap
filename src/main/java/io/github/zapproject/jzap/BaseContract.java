@@ -2,7 +2,6 @@ package io.github.zapproject.jzap;
 
 import org.web3j.protocol.Web3j;
 import org.web3j.tx.Contract;
-import org.web3j.tx.gas.DefaultGasProvider;
 
 public abstract class BaseContract extends Contract {
     public String provider;
@@ -23,7 +22,7 @@ public abstract class BaseContract extends Contract {
             type.address,
             type.web3j,
             type.credentials,
-            new DefaultGasProvider()
+            type.contractGasProvider
         ); 
         
         // Below this is unecessary if class instances do not have to be accessed.

@@ -102,7 +102,7 @@ public class ZapCoordinator extends BaseContract {
     }
 
     protected ZapCoordinator(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
-        super(new BaseContractType(BINARY, contractAddress, web3j, credentials));
+        super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));
     }
 
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {

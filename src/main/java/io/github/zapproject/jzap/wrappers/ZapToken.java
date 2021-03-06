@@ -125,7 +125,7 @@ public class ZapToken extends BaseContract {
     }
 
     protected ZapToken(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
-        super(new BaseContractType(BINARY, contractAddress, web3j, credentials));
+        super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));
     }
 
     public List<ApprovalEventResponse> getApprovalEvents(TransactionReceipt transactionReceipt) {

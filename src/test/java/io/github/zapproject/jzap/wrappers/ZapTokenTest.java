@@ -44,10 +44,6 @@ class ZapTokenTest {
         // System.out.println("#### APPROVAL ####: " + txApprove.getLogs());
 
         assertNotNull(token.getApprovalEvents(txApprove));
-
-        // Flowable flow;
-        // assertNotNull(flow = token.approvalEventFlowable(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
@@ -67,9 +63,6 @@ class ZapTokenTest {
         assertNotNull(txMint = token.allocate(creds.getAddress(), new BigInteger("100")).send());
     
         assertNotNull(token.getMintEvents(txMint));
-
-        // assertNotNull(token.mintEventFlowable(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -100,5 +93,17 @@ class ZapTokenTest {
     @Order(8)
     void testZapTokenTransferFrom() throws Exception {
         assertNotNull(token.transferFrom(creds2.getAddress(), creds.getAddress(), BigInteger.valueOf(0)).send());
+    }
+
+    @Disabled
+    void testZapTokenApprovalEventFlowable() {
+        assertNotNull(token.approvalEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
+    }
+
+    @Disabled
+    void testZapTokenMintEventFlowable() {
+        assertNotNull(token.mintEventFlowable(DefaultBlockParameterName.EARLIEST,
+        DefaultBlockParameterName.LATEST));
     }
 }

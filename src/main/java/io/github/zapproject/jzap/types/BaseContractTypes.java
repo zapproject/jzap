@@ -3,6 +3,7 @@ package io.github.zapproject.jzap;
 import java.math.BigInteger;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.tx.gas.ContractGasProvider;
 
 class BaseContractType {
     // public String artifactDir;
@@ -15,6 +16,7 @@ class BaseContractType {
     public String address;
     public Web3j web3j;
     public Credentials credentials;
+    public ContractGasProvider contractGasProvider;
 
     BaseContractType(
         // String dir, String name, Contract contract, 
@@ -23,7 +25,8 @@ class BaseContractType {
         // String provider, 
         // String coord, 
         String add, 
-        Web3j web, Credentials credentials){
+        Web3j web, Credentials credentials,
+        ContractGasProvider contractGasProvider){
             // this.artifactDir = dir;
             // this.artifactName = name;
             // this.contract = contract;
@@ -34,6 +37,7 @@ class BaseContractType {
             this.address = add;
             this.web3j = web;
             this.credentials = credentials;
+            this.contractGasProvider = contractGasProvider;
     }
 }
 

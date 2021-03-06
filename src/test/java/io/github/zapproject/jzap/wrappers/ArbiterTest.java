@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -70,17 +71,15 @@ class ArbiterTest {
         params.add(param1);
         params.add(param2);
 
-        // token.allocate(creds.getAddress(), new BigInteger("150000000000")).send();
         bondage.bond(creds.getAddress(), endpoint, new BigInteger("100")).send();
         
         assertNotNull(txPurchase = arbiter.initiateSubscription(
             creds.getAddress(), endpoint, 
             params, BigInteger.valueOf(100), BigInteger.valueOf(10)).send());
 
-        assertNotNull(arbiter.getDataPurchaseEvents(txPurchase));
-
-        // assertNotNull(arbiter.dataPurchaseEventFlowable(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST));
+        List<Arbiter.DataPurchaseEventResponse> events = arbiter.getDataPurchaseEvents(txPurchase);
+        assertNotNull(events.get(0).provider);
+        // System.out.println("######### EVENT _ PROVIDER #######: " + events.get(0).provider);
     }
 
     @Test
@@ -127,7 +126,7 @@ class ArbiterTest {
         // DefaultBlockParameterName.LATEST));
     }
 
-    @Test
+    @Disabled
     @Order(8)
     void testArbiterEndSubscriptionSubscriber() throws Exception {
         assertNotNull(txEnd = arbiter.endSubscriptionSubscriber(creds.getAddress(), endpoint).send());
@@ -141,5 +140,11 @@ class ArbiterTest {
     @Disabled
     void testArbiterEndSubscriptionProvider() throws Exception {
         assertNotNull(arbiter.endSubscriptionProvider(subscriber, endpoint).send());
+    }
+
+    @Disabled
+    void testArbiterDataPurchseEventFlowable() {
+        arbiter.dataPurchaseEventFlowable(DefaultBlockParameterName.EARLIEST,
+            DefaultBlockParameterName.LATEST);
     }
 }
