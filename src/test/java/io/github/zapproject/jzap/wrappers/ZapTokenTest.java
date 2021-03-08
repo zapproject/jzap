@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -52,9 +51,6 @@ class ZapTokenTest {
         assertNotNull(txFinish = token.finishMinting().send());
 
         assertNotNull(token.getMintFinishedEvents(txFinish));
-
-        assertNotNull(token.mintFinishedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -93,17 +89,5 @@ class ZapTokenTest {
     @Order(8)
     void testZapTokenTransferFrom() throws Exception {
         assertNotNull(token.transferFrom(creds2.getAddress(), creds.getAddress(), BigInteger.valueOf(0)).send());
-    }
-
-    @Disabled
-    void testZapTokenApprovalEventFlowable() {
-        assertNotNull(token.approvalEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
-    }
-
-    @Disabled
-    void testZapTokenMintEventFlowable() {
-        assertNotNull(token.mintEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 }

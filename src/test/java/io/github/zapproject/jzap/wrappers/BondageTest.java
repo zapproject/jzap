@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -71,9 +70,6 @@ class BondageTest {
         assertNotNull(txEscrow = bondage.escrowDots(creds.getAddress(), creds.getAddress(), endpoint, new BigInteger("10")).send());
 
         assertNotNull(bondage.getEscrowedEvents(txEscrow));
-
-        assertNotNull(bondage.escrowedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
@@ -82,9 +78,6 @@ class BondageTest {
         assertNotNull(txReleased = bondage.releaseDots(creds.getAddress(), creds.getAddress(), endpoint, new BigInteger("10")).send());
         
         assertNotNull(bondage.getReleasedEvents(txReleased));
-
-        assertNotNull(bondage.releasedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
@@ -93,9 +86,6 @@ class BondageTest {
         assertNotNull(txReturned = bondage.returnDots(creds.getAddress(), creds.getAddress(), endpoint, new BigInteger("10")).send());
         
         assertNotNull(bondage.getReturnedEvents(txReturned));
-
-        assertNotNull(bondage.returnedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -168,17 +158,5 @@ class BondageTest {
     @Order(17)
     void testBondageGetOracleAddress() throws Exception {
         assertNotNull(bondage.getOracleAddress(creds.getAddress(), new BigInteger("0")).send());
-    }
-
-    @Disabled
-    void testBondageBondEventFlowable() {
-        assertNotNull(bondage.boundEventFlowable(DefaultBlockParameterName.EARLIEST,
-                DefaultBlockParameterName.LATEST));
-    }
-
-    @Disabled
-    void testBondageUnbondEventFlowable() {
-        assertNotNull(bondage.unboundEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 }

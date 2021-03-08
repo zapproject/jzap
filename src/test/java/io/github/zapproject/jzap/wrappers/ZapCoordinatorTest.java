@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -104,23 +103,5 @@ class ZapCoordinatorTest {
     void testZapCoordinatorGetUpdatedDependenciesEvents() {
         List eventResponse = coordinator.getUpdatedDependenciesEvents(txDependencies);
         assertNotNull(eventResponse);
-    }
-
-    @Disabled
-    void testZapCoordinatorUpdateDependenciesEventFlowable() {
-        assertNotNull(coordinator.updatedDependenciesEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
-    }
-
-    @Disabled
-    void testZapCoordinatorOwnershipTransferredEventFlowable() {
-        assertNotNull(coord1.ownershipTransferredEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
-    }
-
-    @Disabled
-    void testZapCoordinatorUpdateContractEventFlowable() {
-        assertNotNull(coordinator.updatedContractEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 }
