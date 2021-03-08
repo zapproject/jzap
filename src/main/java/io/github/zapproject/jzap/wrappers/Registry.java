@@ -1,7 +1,5 @@
 package io.github.zapproject.jzap;
 
-import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +7,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
-import org.web3j.abi.EventEncoder;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -23,12 +20,9 @@ import org.web3j.abi.datatypes.generated.Int256;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
-import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
-import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
@@ -119,18 +113,8 @@ public class Registry extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // @Deprecated
-    // protected Registry(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
     // protected Registry(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
     //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // @Deprecated
-    // protected Registry(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, gasPrice, gasLimit);
     // }
 
     // protected Registry(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
@@ -160,28 +144,6 @@ public class Registry extends BaseContract {
         return responses;
     }
 
-    public Flowable<NewCurveEventResponse> newCurveEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, NewCurveEventResponse>() {
-            @Override
-            public NewCurveEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(NEWCURVE_EVENT, log);
-                NewCurveEventResponse typedResponse = new NewCurveEventResponse();
-                typedResponse.log = log;
-                typedResponse.provider = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(1).getValue();
-                typedResponse.broker = (String) eventValues.getIndexedValues().get(2).getValue();
-                typedResponse.curve = (List<BigInteger>) eventValues.getNonIndexedValues().get(0).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<NewCurveEventResponse> newCurveEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(NEWCURVE_EVENT));
-        return newCurveEventFlowable(filter);
-    }
-
     public List<NewProviderEventResponse> getNewProviderEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(NEWPROVIDER_EVENT, transactionReceipt);
         ArrayList<NewProviderEventResponse> responses = new ArrayList<NewProviderEventResponse>(valueList.size());
@@ -195,26 +157,6 @@ public class Registry extends BaseContract {
         return responses;
     }
 
-    public Flowable<NewProviderEventResponse> newProviderEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, NewProviderEventResponse>() {
-            @Override
-            public NewProviderEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(NEWPROVIDER_EVENT, log);
-                NewProviderEventResponse typedResponse = new NewProviderEventResponse();
-                typedResponse.log = log;
-                typedResponse.provider = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.title = (byte[]) eventValues.getIndexedValues().get(1).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<NewProviderEventResponse> newProviderEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(NEWPROVIDER_EVENT));
-        return newProviderEventFlowable(filter);
-    }
-
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, transactionReceipt);
         ArrayList<OwnershipTransferredEventResponse> responses = new ArrayList<OwnershipTransferredEventResponse>(valueList.size());
@@ -226,26 +168,6 @@ public class Registry extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
-    }
-
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, OwnershipTransferredEventResponse>() {
-            @Override
-            public OwnershipTransferredEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, log);
-                OwnershipTransferredEventResponse typedResponse = new OwnershipTransferredEventResponse();
-                typedResponse.log = log;
-                typedResponse.previousOwner = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.newOwner = (String) eventValues.getIndexedValues().get(1).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(OWNERSHIPTRANSFERRED_EVENT));
-        return ownershipTransferredEventFlowable(filter);
     }
 
     public RemoteFunctionCall<String> db() {
@@ -500,16 +422,6 @@ public class Registry extends BaseContract {
                     }
                 });
     }
-
-    // @Deprecated
-    // public static Registry load(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Registry(contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
-    // @Deprecated
-    // public static Registry load(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Registry(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
-    // }
 
     public static Registry load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Registry(contractAddress, web3j, credentials, contractGasProvider);

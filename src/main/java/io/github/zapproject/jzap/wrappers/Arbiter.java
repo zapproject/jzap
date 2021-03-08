@@ -1,7 +1,5 @@
 package io.github.zapproject.jzap;
 
-import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +7,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
-import org.web3j.abi.EventEncoder;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -23,12 +20,9 @@ import org.web3j.abi.datatypes.generated.Uint8;
 import org.web3j.abi.datatypes.generated.Uint96;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
-import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
-import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple3;
 import org.web3j.tx.Contract;
@@ -98,18 +92,8 @@ public class Arbiter extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // @Deprecated
-    // protected Arbiter(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
     // protected Arbiter(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
     //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // @Deprecated
-    // protected Arbiter(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, gasPrice, gasLimit);
     // }
 
     // protected Arbiter(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
@@ -141,30 +125,6 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
-    public Flowable<DataPurchaseEventResponse> dataPurchaseEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, DataPurchaseEventResponse>() {
-            @Override
-            public DataPurchaseEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(DATAPURCHASE_EVENT, log);
-                DataPurchaseEventResponse typedResponse = new DataPurchaseEventResponse();
-                typedResponse.log = log;
-                typedResponse.provider = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
-                typedResponse.amount = (BigInteger) eventValues.getIndexedValues().get(2).getValue();
-                typedResponse.publicKey = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
-                typedResponse.endpointParams = (List<byte[]>) eventValues.getNonIndexedValues().get(1).getValue();
-                typedResponse.endpoint = (byte[]) eventValues.getNonIndexedValues().get(2).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<DataPurchaseEventResponse> dataPurchaseEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(DATAPURCHASE_EVENT));
-        return dataPurchaseEventFlowable(filter);
-    }
-
     public List<DataSubscriptionEndEventResponse> getDataSubscriptionEndEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(DATASUBSCRIPTIONEND_EVENT, transactionReceipt);
         ArrayList<DataSubscriptionEndEventResponse> responses = new ArrayList<DataSubscriptionEndEventResponse>(valueList.size());
@@ -179,27 +139,6 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
-    public Flowable<DataSubscriptionEndEventResponse> dataSubscriptionEndEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, DataSubscriptionEndEventResponse>() {
-            @Override
-            public DataSubscriptionEndEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(DATASUBSCRIPTIONEND_EVENT, log);
-                DataSubscriptionEndEventResponse typedResponse = new DataSubscriptionEndEventResponse();
-                typedResponse.log = log;
-                typedResponse.provider = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
-                typedResponse.terminator = (BigInteger) eventValues.getIndexedValues().get(2).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<DataSubscriptionEndEventResponse> dataSubscriptionEndEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(DATASUBSCRIPTIONEND_EVENT));
-        return dataSubscriptionEndEventFlowable(filter);
-    }
-
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, transactionReceipt);
         ArrayList<OwnershipTransferredEventResponse> responses = new ArrayList<OwnershipTransferredEventResponse>(valueList.size());
@@ -211,26 +150,6 @@ public class Arbiter extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
-    }
-
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, OwnershipTransferredEventResponse>() {
-            @Override
-            public OwnershipTransferredEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, log);
-                OwnershipTransferredEventResponse typedResponse = new OwnershipTransferredEventResponse();
-                typedResponse.log = log;
-                typedResponse.previousOwner = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.newOwner = (String) eventValues.getIndexedValues().get(1).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(OWNERSHIPTRANSFERRED_EVENT));
-        return ownershipTransferredEventFlowable(filter);
     }
 
     public List<ParamsPassedEventResponse> getParamsPassedEvents(TransactionReceipt transactionReceipt) {
@@ -247,29 +166,7 @@ public class Arbiter extends BaseContract {
         }
         return responses;
     }
-
-    public Flowable<ParamsPassedEventResponse> paramsPassedEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, ParamsPassedEventResponse>() {
-            @Override
-            public ParamsPassedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(PARAMSPASSED_EVENT, log);
-                ParamsPassedEventResponse typedResponse = new ParamsPassedEventResponse();
-                typedResponse.log = log;
-                typedResponse.sender = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.receiver = (String) eventValues.getIndexedValues().get(1).getValue();
-                typedResponse.endpoint = (byte[]) eventValues.getNonIndexedValues().get(0).getValue();
-                typedResponse.params = (List<byte[]>) eventValues.getNonIndexedValues().get(1).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<ParamsPassedEventResponse> paramsPassedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(PARAMSPASSED_EVENT));
-        return paramsPassedEventFlowable(filter);
-    }
-
+    
     public RemoteFunctionCall<String> bondageAddress() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_BONDAGEADDRESS, 
                 Arrays.<Type>asList(), 

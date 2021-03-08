@@ -1,14 +1,11 @@
 package io.github.zapproject.jzap;
 
-import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import org.web3j.abi.EventEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Bool;
@@ -18,12 +15,9 @@ import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
-import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
-import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
@@ -102,18 +96,8 @@ public class ZapToken extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // @Deprecated
-    // protected ZapToken(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
     // protected ZapToken(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
     //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // @Deprecated
-    // protected ZapToken(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, gasPrice, gasLimit);
     // }
 
     // protected ZapToken(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
@@ -142,27 +126,6 @@ public class ZapToken extends BaseContract {
         return responses;
     }
 
-    public Flowable<ApprovalEventResponse> approvalEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, ApprovalEventResponse>() {
-            @Override
-            public ApprovalEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(APPROVAL_EVENT, log);
-                ApprovalEventResponse typedResponse = new ApprovalEventResponse();
-                typedResponse.log = log;
-                typedResponse.owner = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.spender = (String) eventValues.getIndexedValues().get(1).getValue();
-                typedResponse.value = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<ApprovalEventResponse> approvalEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(APPROVAL_EVENT));
-        return approvalEventFlowable(filter);
-    }
-
     public List<MintEventResponse> getMintEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(MINT_EVENT, transactionReceipt);
         ArrayList<MintEventResponse> responses = new ArrayList<MintEventResponse>(valueList.size());
@@ -176,26 +139,6 @@ public class ZapToken extends BaseContract {
         return responses;
     }
 
-    public Flowable<MintEventResponse> mintEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, MintEventResponse>() {
-            @Override
-            public MintEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(MINT_EVENT, log);
-                MintEventResponse typedResponse = new MintEventResponse();
-                typedResponse.log = log;
-                typedResponse.to = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.amount = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<MintEventResponse> mintEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(MINT_EVENT));
-        return mintEventFlowable(filter);
-    }
-
     public List<MintFinishedEventResponse> getMintFinishedEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(MINTFINISHED_EVENT, transactionReceipt);
         ArrayList<MintFinishedEventResponse> responses = new ArrayList<MintFinishedEventResponse>(valueList.size());
@@ -205,24 +148,6 @@ public class ZapToken extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
-    }
-
-    public Flowable<MintFinishedEventResponse> mintFinishedEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, MintFinishedEventResponse>() {
-            @Override
-            public MintFinishedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(MINTFINISHED_EVENT, log);
-                MintFinishedEventResponse typedResponse = new MintFinishedEventResponse();
-                typedResponse.log = log;
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<MintFinishedEventResponse> mintFinishedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(MINTFINISHED_EVENT));
-        return mintFinishedEventFlowable(filter);
     }
 
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {
@@ -238,26 +163,6 @@ public class ZapToken extends BaseContract {
         return responses;
     }
 
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, OwnershipTransferredEventResponse>() {
-            @Override
-            public OwnershipTransferredEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, log);
-                OwnershipTransferredEventResponse typedResponse = new OwnershipTransferredEventResponse();
-                typedResponse.log = log;
-                typedResponse.previousOwner = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.newOwner = (String) eventValues.getIndexedValues().get(1).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(OWNERSHIPTRANSFERRED_EVENT));
-        return ownershipTransferredEventFlowable(filter);
-    }
-
     public List<TransferEventResponse> getTransferEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(TRANSFER_EVENT, transactionReceipt);
         ArrayList<TransferEventResponse> responses = new ArrayList<TransferEventResponse>(valueList.size());
@@ -270,27 +175,6 @@ public class ZapToken extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
-    }
-
-    public Flowable<TransferEventResponse> transferEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, TransferEventResponse>() {
-            @Override
-            public TransferEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(TRANSFER_EVENT, log);
-                TransferEventResponse typedResponse = new TransferEventResponse();
-                typedResponse.log = log;
-                typedResponse.from = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.to = (String) eventValues.getIndexedValues().get(1).getValue();
-                typedResponse.value = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<TransferEventResponse> transferEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(TRANSFER_EVENT));
-        return transferEventFlowable(filter);
     }
 
     public RemoteFunctionCall<BigInteger> allowance(String _owner, String _spender) {
@@ -429,16 +313,6 @@ public class ZapToken extends BaseContract {
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
-
-    // @Deprecated
-    // public static ZapToken load(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new ZapToken(contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
-    // @Deprecated
-    // public static ZapToken load(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new ZapToken(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
-    // }
 
     public static ZapToken load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new ZapToken(contractAddress, web3j, credentials, contractGasProvider);

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -121,9 +120,6 @@ class ArbiterTest {
         assertNotNull(arbiter.passParams(creds.getAddress(), endpoint, params).send());
         
         // assertNotNull(arbiter.getParamsPassedEvents(txParams));
-
-        // assertNotNull(arbiter.paramsPassedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
@@ -132,19 +128,10 @@ class ArbiterTest {
         assertNotNull(txEnd = arbiter.endSubscriptionSubscriber(creds.getAddress(), endpoint).send());
 
         assertNotNull(arbiter.getDataSubscriptionEndEvents(txEnd));
-
-        // assertNotNull(arbiter.dataSubscriptionEndEventFlowable(DefaultBlockParameterName.EARLIEST,
-        // DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
     void testArbiterEndSubscriptionProvider() throws Exception {
         assertNotNull(arbiter.endSubscriptionProvider(subscriber, endpoint).send());
-    }
-
-    @Disabled
-    void testArbiterDataPurchseEventFlowable() {
-        arbiter.dataPurchaseEventFlowable(DefaultBlockParameterName.EARLIEST,
-            DefaultBlockParameterName.LATEST);
     }
 }

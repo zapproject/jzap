@@ -1,15 +1,12 @@
 package io.github.zapproject.jzap;
 
 // import io.github.zapproject.jzap.BaseContractType;
-import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import org.web3j.abi.EventEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Event;
@@ -18,12 +15,9 @@ import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
-import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
-import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
@@ -118,26 +112,6 @@ public class ZapCoordinator extends BaseContract {
         return responses;
     }
 
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, OwnershipTransferredEventResponse>() {
-            @Override
-            public OwnershipTransferredEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, log);
-                OwnershipTransferredEventResponse typedResponse = new OwnershipTransferredEventResponse();
-                typedResponse.log = log;
-                typedResponse.previousOwner = (String) eventValues.getIndexedValues().get(0).getValue();
-                typedResponse.newOwner = (String) eventValues.getIndexedValues().get(1).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<OwnershipTransferredEventResponse> ownershipTransferredEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(OWNERSHIPTRANSFERRED_EVENT));
-        return ownershipTransferredEventFlowable(filter);
-    }
-
     public List<UpdatedContractEventResponse> getUpdatedContractEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(UPDATEDCONTRACT_EVENT, transactionReceipt);
         ArrayList<UpdatedContractEventResponse> responses = new ArrayList<UpdatedContractEventResponse>(valueList.size());
@@ -152,27 +126,6 @@ public class ZapCoordinator extends BaseContract {
         return responses;
     }
 
-    public Flowable<UpdatedContractEventResponse> updatedContractEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, UpdatedContractEventResponse>() {
-            @Override
-            public UpdatedContractEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(UPDATEDCONTRACT_EVENT, log);
-                UpdatedContractEventResponse typedResponse = new UpdatedContractEventResponse();
-                typedResponse.log = log;
-                typedResponse.name = (String) eventValues.getNonIndexedValues().get(0).getValue();
-                typedResponse.previousAddr = (String) eventValues.getNonIndexedValues().get(1).getValue();
-                typedResponse.newAddr = (String) eventValues.getNonIndexedValues().get(2).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<UpdatedContractEventResponse> updatedContractEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(UPDATEDCONTRACT_EVENT));
-        return updatedContractEventFlowable(filter);
-    }
-
     public List<UpdatedDependenciesEventResponse> getUpdatedDependenciesEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(UPDATEDDEPENDENCIES_EVENT, transactionReceipt);
         ArrayList<UpdatedDependenciesEventResponse> responses = new ArrayList<UpdatedDependenciesEventResponse>(valueList.size());
@@ -185,27 +138,6 @@ public class ZapCoordinator extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
-    }
-
-    public Flowable<UpdatedDependenciesEventResponse> updatedDependenciesEventFlowable(EthFilter filter) {
-        return web3j.ethLogFlowable(filter).map(new Function<Log, UpdatedDependenciesEventResponse>() {
-            @Override
-            public UpdatedDependenciesEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(UPDATEDDEPENDENCIES_EVENT, log);
-                UpdatedDependenciesEventResponse typedResponse = new UpdatedDependenciesEventResponse();
-                typedResponse.log = log;
-                typedResponse.timestamp = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
-                typedResponse.contractName = (String) eventValues.getNonIndexedValues().get(1).getValue();
-                typedResponse.contractAddr = (String) eventValues.getNonIndexedValues().get(2).getValue();
-                return typedResponse;
-            }
-        });
-    }
-
-    public Flowable<UpdatedDependenciesEventResponse> updatedDependenciesEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
-        filter.addSingleTopic(EventEncoder.encode(UPDATEDDEPENDENCIES_EVENT));
-        return updatedDependenciesEventFlowable(filter);
     }
 
     public RemoteFunctionCall<String> db() {
