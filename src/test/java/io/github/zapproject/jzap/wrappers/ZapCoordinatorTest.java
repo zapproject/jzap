@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -33,7 +32,7 @@ class ZapCoordinatorTest {
 
     
     @BeforeAll
-    static void testDeployZapCoordinator() throws Exception {
+    static void setup() throws Exception {
         web3j = Web3j.build(new HttpService());
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         gasPro = new DefaultGasProvider();
@@ -42,7 +41,7 @@ class ZapCoordinatorTest {
         coord2 = ZapCoordinator.deploy(web3j, creds, gasPro).send();
         bondage = Bondage.deploy(web3j, creds, gasPro, coord2.getContractAddress()).send();
         coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
-        // coordinator = ZapCoordinator.load(new BaseContractType("", "ZAPCOORDINATOR", 3117, "", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
+        // coordinator = ZapCoordinator.load(new BaseContractType(ZapCoordinator.BINARY, 3117, "", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
     }
 
     @Test
@@ -60,9 +59,6 @@ class ZapCoordinatorTest {
         assertNotNull(txTransfer = coord1.transferOwnership(coord2.getContractAddress()).send());
 
         assertNotNull(coord1.getOwnershipTransferredEvents(txTransfer));
-
-        assertNotNull(coord1.ownershipTransferredEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
         // System.out.println("#### TRANSFER OWNERSHIP ####: " + txReceipt.getTransactionHash());
     }
 
@@ -77,9 +73,6 @@ class ZapCoordinatorTest {
         // assertNotNull(txReceipt.getLogs());
         // System.out.println("#### UPDATECONTRACTS ####: " + coordinator.getContract("NewZapCoordinator").getResult());
         assertNotNull(coordinator.getUpdatedContractEvents(txUpdate));
-
-        assertNotNull(coordinator.updatedContractEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
     
     @Test
@@ -110,11 +103,5 @@ class ZapCoordinatorTest {
     void testZapCoordinatorGetUpdatedDependenciesEvents() {
         List eventResponse = coordinator.getUpdatedDependenciesEvents(txDependencies);
         assertNotNull(eventResponse);
-    }
-
-    @Disabled
-    void testZapCoordinatorUpdateDependenciesEventFlowable() {
-        assertNotNull(coordinator.updatedDependenciesEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 }

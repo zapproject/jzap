@@ -1,6 +1,5 @@
 package io.github.zapproject.jzap;
 
-import io.reactivex.Flowable;
 import java.math.BigInteger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -28,7 +26,7 @@ class ZapTokenTest {
     TransactionReceipt txFinish;
 
     @BeforeAll
-    static void setup() {
+    static void setup() throws Exception {
         web3j = Web3j.build(new HttpService());
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         creds2 = Credentials.create("0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6");
@@ -45,10 +43,6 @@ class ZapTokenTest {
         // System.out.println("#### APPROVAL ####: " + txApprove.getLogs());
 
         assertNotNull(token.getApprovalEvents(txApprove));
-
-        Flowable flow;
-        assertNotNull(flow = token.approvalEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
@@ -57,9 +51,6 @@ class ZapTokenTest {
         assertNotNull(txFinish = token.finishMinting().send());
 
         assertNotNull(token.getMintFinishedEvents(txFinish));
-
-        assertNotNull(token.mintFinishedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -68,9 +59,6 @@ class ZapTokenTest {
         assertNotNull(txMint = token.allocate(creds.getAddress(), new BigInteger("100")).send());
     
         assertNotNull(token.getMintEvents(txMint));
-
-        assertNotNull(token.mintEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Test

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -32,7 +31,7 @@ class BondageTest {
     private static byte[] endpoint = new byte[32];
 
     @BeforeAll
-    static void setup() {
+    static void setup() throws Exception {
         web3j = Web3j.build(new HttpService());
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         creds2 = Credentials.create("0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a");
@@ -49,9 +48,6 @@ class BondageTest {
         assertNotNull(txBound = bondage.bond(creds.getAddress(), endpoint, new BigInteger("100")).send());
 
         assertNotNull(bondage.getBoundEvents(txBound));
-        
-        assertNotNull(bondage.boundEventFlowable(DefaultBlockParameterName.EARLIEST,
-                DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -60,9 +56,6 @@ class BondageTest {
         assertNotNull(txUnbound = bondage.unbond(creds.getAddress(), endpoint, new BigInteger("10")).send());
         
         assertNotNull(bondage.getUnboundEvents(txUnbound));
-
-        assertNotNull(bondage.unboundEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -77,9 +70,6 @@ class BondageTest {
         assertNotNull(txEscrow = bondage.escrowDots(creds.getAddress(), creds.getAddress(), endpoint, new BigInteger("10")).send());
 
         assertNotNull(bondage.getEscrowedEvents(txEscrow));
-
-        assertNotNull(bondage.escrowedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
@@ -88,9 +78,6 @@ class BondageTest {
         assertNotNull(txReleased = bondage.releaseDots(creds.getAddress(), creds.getAddress(), endpoint, new BigInteger("10")).send());
         
         assertNotNull(bondage.getReleasedEvents(txReleased));
-
-        assertNotNull(bondage.releasedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Disabled
@@ -99,9 +86,6 @@ class BondageTest {
         assertNotNull(txReturned = bondage.returnDots(creds.getAddress(), creds.getAddress(), endpoint, new BigInteger("10")).send());
         
         assertNotNull(bondage.getReturnedEvents(txReturned));
-
-        assertNotNull(bondage.returnedEventFlowable(DefaultBlockParameterName.EARLIEST,
-        DefaultBlockParameterName.LATEST));
     }
 
     @Test
@@ -175,5 +159,4 @@ class BondageTest {
     void testBondageGetOracleAddress() throws Exception {
         assertNotNull(bondage.getOracleAddress(creds.getAddress(), new BigInteger("0")).send());
     }
-
 }
