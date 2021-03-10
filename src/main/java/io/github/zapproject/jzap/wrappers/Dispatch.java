@@ -142,8 +142,8 @@ public class Dispatch extends BaseContract {
     //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    protected Dispatch(BaseContractType type) throws Exception {
-        super(type);
+    protected Dispatch(NetworkProviderOptions type) throws Exception {
+        super(BINARY, type, "DISPATCH");
     }
 
     protected Dispatch(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
@@ -414,7 +414,7 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> respond1(BigInteger id, String response) {
+    public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND1, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id), 
@@ -423,7 +423,7 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> respond2(BigInteger id, String response1, String response2) {
+    public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response1, String response2) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND2, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id), 
@@ -433,7 +433,7 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> respond3(BigInteger id, String response1, String response2, String response3) {
+    public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response1, String response2, String response3) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND3, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id), 
@@ -444,7 +444,7 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> respond4(BigInteger id, String response1, String response2, String response3, String response4) {
+    public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response1, String response2, String response3, String response4) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND4, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id), 
@@ -513,7 +513,7 @@ public class Dispatch extends BaseContract {
     //     return new Dispatch(contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    public static Dispatch load(BaseContractType type) throws Exception {
+    public static Dispatch load(NetworkProviderOptions type) throws Exception {
         return new Dispatch(type);
     }
 

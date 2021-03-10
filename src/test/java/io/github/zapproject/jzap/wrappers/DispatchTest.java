@@ -81,25 +81,25 @@ class DispatchTest {
     @Test
     // @Order(2)
     void testDispatchResponse1() throws Exception {
-        assertNotNull(dispatch.respond1(id, "reponse1").send());
+        assertNotNull(dispatch.respond(id, "reponse1").send());
     }
 
     @Disabled
     // @Order(5)
     void testDispatchResponse2() throws Exception {
-        assertNotNull(dispatch.respond2(id, "reponse1", "response2").send());
+        assertNotNull(dispatch.respond(id, "reponse1", "response2").send());
     }
    
     @Disabled
     // @Order(6)
     void testDispatchResponse3() throws Exception {
-        assertNotNull(dispatch.respond3(id, "response1", "response2", "response3").send());
+        assertNotNull(dispatch.respond(id, "response1", "response2", "response3").send());
     }
 
     @Disabled
     // @Order(7)
     void testDispatchResponse4() throws Exception {
-        assertNotNull(dispatch.respond4(id, "response1", "response2", "response3", "response4").send());
+        assertNotNull(dispatch.respond(id, "response1", "response2", "response3", "response4").send());
     }
 
     @Disabled

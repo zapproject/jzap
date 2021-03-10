@@ -49,4 +49,13 @@ public abstract class BaseContract extends Contract {
         // }
     }
 
+    BaseContract(String bytecode, NetworkProviderOptions type, String artifactName) throws Exception {
+        super(
+            bytecode,
+            new Artifacts().getAddress(artifactName, type.networkId),
+            type.web3j,
+            type.credentials,
+            type.contractGasProvider
+        );
+    }
 }

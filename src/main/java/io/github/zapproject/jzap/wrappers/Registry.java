@@ -121,8 +121,8 @@ public class Registry extends BaseContract {
     //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    protected Registry(BaseContractType type) throws Exception {
-        super(type);
+    protected Registry(NetworkProviderOptions type) throws Exception {
+        super(BINARY, type, "REGISTRY");
     }
 
     protected Registry(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
@@ -431,7 +431,7 @@ public class Registry extends BaseContract {
     //     return new Registry(contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    public static Registry load(BaseContractType type) throws Exception {
+    public static Registry load(NetworkProviderOptions type) throws Exception {
         return new Registry(type);
     }
 

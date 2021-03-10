@@ -1,9 +1,8 @@
 package io.github.zapproject.jzap;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.FileInputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
+import java.io.File;
+import java.util.LinkedHashMap;
+
 
 
 public class Artifacts {
@@ -46,11 +45,14 @@ public class Artifacts {
     //     }
     // }
 
-    public HashMap<String,String> getMap(String name) throws Exception {
+    public String getAddress(String name, int networkID) throws Exception {
         ObjectMapper om = new ObjectMapper();
         String path;
         boolean dir = false;
-        
+        String networks;
+        String address;
+        LinkedHashMap map;
+
 
         switch (name) {
             case "ARBITER" : path = "Arbiter"; break;
@@ -75,9 +77,26 @@ public class Artifacts {
         }
 
         if (dir)
-            return om.readValue(new FileInputStream(path), HashMap.class);
+            map = om.readValue(new File(path), LinkedHashMap.class);
         else{
-            return om.readValue(Files.readAllBytes(Paths.get("src/main/java/io/github/zapproject/jzap/artifacts/contracts/" + path + ".json")), HashMap.class);
+            map =  om.readValue(new File("src/main/java/io/github/zapproject/jzap/artifacts/contracts/" + path + ".json"), 
+                LinkedHashMap.class);
         }
+        /*
+            ObjectMapper is having issues with type reference as it expects Objects that are of same data type
+            but abi is an array and the rest of the objects are mappings.@interface
+
+            Manually converted networks object to string and parsed for address.
+        */
+        networks = map.get("networks").toString();
+        address = networks.substring(networks.indexOf(String.valueOf(networkID)), networks.length());
+        address = address.split("address")[1].split("=")[1];
+        
+        if (address.contains(","))
+            address = address.substring(0, address.indexOf(","));
+        else
+            address = address.substring(0, address.indexOf("}"));
+
+        return address;
     }
 }

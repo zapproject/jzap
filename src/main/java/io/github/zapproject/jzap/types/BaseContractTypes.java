@@ -24,8 +24,9 @@ class BaseContractType {
         // int netId, 
         // String provider, 
         // String coord, 
-        String add, 
-        Web3j web, Credentials credentials,
+        String address, 
+        Web3j web3j, 
+        Credentials credentials,
         ContractGasProvider contractGasProvider){
             // this.artifactDir = dir;
             // this.artifactName = name;
@@ -34,8 +35,8 @@ class BaseContractType {
             // this.networkId = netId;
             // this.networkProvider = provider;
             // this.coordinator = coord;
-            this.address = add;
-            this.web3j = web;
+            this.address = address;
+            this.web3j = web3j;
             this.credentials = credentials;
             this.contractGasProvider = contractGasProvider;
     }
@@ -44,10 +45,12 @@ class BaseContractType {
 class NetworkProviderOptions {
     // public String artifactDir;
     public int networkId;
-    public String networkProvider;
-    public String coordinator;
-    public String address;
+    // public String networkProvider;
+    // public String coordinator;
     public Web3j web3j;
+    public Credentials credentials;
+    public ContractGasProvider contractGasProvider;
+    // public String coordinator;
 }
 
 class TransferType extends DefaultTx {

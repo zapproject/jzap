@@ -49,8 +49,6 @@ class ArbiterTest {
 
         System.arraycopy("Ramanujan".getBytes(), 0, endpoint, 0, 9);
         subscriber = creds.getAddress();
-
-        // if (registry.getProviderCurve(creds.getAddress(), endpoint))
     }
     
     // @Test
