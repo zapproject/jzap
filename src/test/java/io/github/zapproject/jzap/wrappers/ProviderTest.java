@@ -94,11 +94,7 @@ class ProviderTest {
         init.endpoint = endpoint;
         init.term = curve;
 
-        // if (provider.getCurve(endpoint).curve.size() == 0) {
-        //     System.out.println("Curve is already initiated");
-        // } else {
-            assertNotNull(provider.initiateProviderCurve(init));
-        // }
+        assertNotNull(provider.initiateProviderCurve(init));
     }
 
     @Test
@@ -187,19 +183,6 @@ class ProviderTest {
         args.queryID = new BigInteger("0");
         args.responseParams = new ArrayList<String>();
         args.responseParams.add("respond1");
-
-        // Credentials creds2 = Credentials.create("0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6");
-        // Bondage bond = Bondage.load("0x8a791620dd6260079bf849dc5567adc3f2fdc318", web3j, creds2, gasPro);
-        
-        // bond.bond(creds.getAddress(), endpoint, new BigInteger("100")).send();
-
-        // Arbiter arb = Arbiter.load("0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0", web3j, creds2, gasPro);
-                
-        // arb.initiateSubscription(
-        //     creds.getAddress(), endpoint, 
-        //     params, BigInteger.valueOf(100), BigInteger.valueOf(10)
-        // ).send();
-
         Dispatch dis = Dispatch.load("0x5fc8d32690cc91d4c39d9d3abcbd16989f875707", web3j, creds, gasPro);
     
         txQueries = dis.query(creds.getAddress(), "query", endpoint2, params).send();

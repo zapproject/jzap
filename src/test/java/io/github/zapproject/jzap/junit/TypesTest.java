@@ -1,112 +1,112 @@
-package io.github.zapproject.jzap;
+// package io.github.zapproject.jzap;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.web3j.crypto.Credentials;
+// import java.math.BigInteger;
+// import java.util.ArrayList;
+// import java.util.List;
+// import org.junit.jupiter.api.BeforeAll;
+// import org.junit.jupiter.api.Test;
+// import org.web3j.crypto.Credentials;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+// import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TypesTest extends DefaultTx{
-	static String provider;
-	static byte[] endpoint = new byte[32];
-	static List <byte[]> params = new ArrayList<byte[]>();
-	static List <BigInteger> cur = new ArrayList<BigInteger>();
+// class TypesTest extends DefaultTx{
+// 	static String provider;
+// 	static byte[] endpoint = new byte[32];
+// 	static List <byte[]> params = new ArrayList<byte[]>();
+// 	static List <BigInteger> cur = new ArrayList<BigInteger>();
 
-	TypesTest () {
-		super();
-	}
+// 	TypesTest () {
+// 		super();
+// 	}
 
-	@BeforeAll
-	static void setup() {
-		provider = "provider";
-		System.arraycopy("endpoint".getBytes(), 0, endpoint, 0, 8);
-		params.add(endpoint);
-		cur.add(new BigInteger("1"));
-	}
+// 	@BeforeAll
+// 	static void setup() {
+// 		provider = "provider";
+// 		System.arraycopy("endpoint".getBytes(), 0, endpoint, 0, 8);
+// 		params.add(endpoint);
+// 		cur.add(new BigInteger("1"));
+// 	}
 
-	@Test
-	void defaultTxTest() {
-		TypesTest test = new TypesTest();
-		test.credentials = Credentials.create("1");
-		assertEquals(test.credentials.getClass().getSimpleName(), "Credentials");
-	}
+// 	@Test
+// 	void defaultTxTest() {
+// 		TypesTest test = new TypesTest();
+// 		test.credentials = Credentials.create("1");
+// 		assertEquals(test.credentials.getClass().getSimpleName(), "Credentials");
+// 	}
 
-	@Test
-	void testArbiterTypes() {
-		SubscriptionInit subInit = new SubscriptionInit();
-		subInit.provider = provider;
-		subInit.endpoint = endpoint;
-		subInit.endpointParams = params;
-		subInit.blocks = new BigInteger("1");
-		subInit.pubKey = new BigInteger("1");
+// 	@Test
+// 	void testArbiterTypes() {
+// 		SubscriptionInit subInit = new SubscriptionInit();
+// 		subInit.provider = provider;
+// 		subInit.endpoint = endpoint;
+// 		subInit.endpointParams = params;
+// 		subInit.blocks = new BigInteger("1");
+// 		subInit.pubKey = new BigInteger("1");
 
-		assertEquals(provider, subInit.provider);
-		assertEquals(endpoint, subInit.endpoint);
-		assertEquals(params.get(0)[0], subInit.endpointParams.get(0)[0]);
-		assertEquals(1, subInit.blocks.intValue());
-		assertEquals(1, subInit.pubKey.intValue());
-	}
+// 		assertEquals(provider, subInit.provider);
+// 		assertEquals(endpoint, subInit.endpoint);
+// 		assertEquals(params.get(0)[0], subInit.endpointParams.get(0)[0]);
+// 		assertEquals(1, subInit.blocks.intValue());
+// 		assertEquals(1, subInit.pubKey.intValue());
+// 	}
 
-	@Test
-	void testBondageTypes() {
-		TokenBondType tb = new TokenBondType();
-		tb.endpoint = endpoint;
-		tb.dots = new BigInteger("1");
+// 	@Test
+// 	void testBondageTypes() {
+// 		TokenBondType tb = new TokenBondType();
+// 		tb.endpoint = endpoint;
+// 		tb.dots = new BigInteger("1");
 
-		assertEquals(endpoint, tb.endpoint);
-		assertEquals(1, tb.dots.intValue());
-	}
+// 		assertEquals(endpoint, tb.endpoint);
+// 		assertEquals(1, tb.dots.intValue());
+// 	}
 
-	@Test
-	void testCurveTypes() {
-		CurveType curve = new CurveType();
-		curve.curve = cur;
+// 	@Test
+// 	void testCurveTypes() {
+// 		CurveType curve = new CurveType();
+// 		curve.curve = cur;
 		
-		assertEquals(1, curve.curve.get(0).intValue());
-	}
+// 		assertEquals(1, curve.curve.get(0).intValue());
+// 	}
 
-	@Test
-	void testDispatchTypes() {
-		List<String> list = new ArrayList<String>();
-		list.add("response");
-		ResponseArgs args = new ResponseArgs();
-		args.queryID = new BigInteger("1");
-		args.responseParams = list;
-		args.dynamic = true;
+// 	@Test
+// 	void testDispatchTypes() {
+// 		List<String> list = new ArrayList<String>();
+// 		list.add("response");
+// 		ResponseArgs args = new ResponseArgs();
+// 		args.queryID = new BigInteger("1");
+// 		args.responseParams = list;
+// 		args.dynamic = true;
 
-		assertEquals(1, args.queryID.intValue());
-		assertEquals("response", args.responseParams.get(0));
-		assertEquals(true, args.dynamic);
-	}
+// 		assertEquals(1, args.queryID.intValue());
+// 		assertEquals("response", args.responseParams.get(0));
+// 		assertEquals(true, args.dynamic);
+// 	}
 
-	@Test
-	void testProviderTypes() {
-		InitProvider prov = new InitProvider();
-		prov.publicKey = new BigInteger("1");
-		prov.title = "title".getBytes();
+// 	@Test
+// 	void testProviderTypes() {
+// 		InitProvider prov = new InitProvider();
+// 		prov.publicKey = new BigInteger("1");
+// 		prov.title = "title".getBytes();
 
-		assertEquals(1, prov.publicKey.intValue());
-		assertEquals("title".getBytes()[0], prov.title[0]);
-	}
+// 		assertEquals(1, prov.publicKey.intValue());
+// 		assertEquals("title".getBytes()[0], prov.title[0]);
+// 	}
 
-	@Test
-	void testRegistryTest() {
-		Endpoint ep = new Endpoint();
-		ep.endpoint = endpoint;
+// 	@Test
+// 	void testRegistryTest() {
+// 		Endpoint ep = new Endpoint();
+// 		ep.endpoint = endpoint;
 
-		assertEquals(endpoint, ep.endpoint);
-	}
+// 		assertEquals(endpoint, ep.endpoint);
+// 	}
 
-	@Test
-	void testTokenDotFactoryTypes() {
-		NextEndpoint next = new NextEndpoint();
-		next.provider = provider;
-		next.endpoint = endpoint;
+// 	@Test
+// 	void testTokenDotFactoryTypes() {
+// 		NextEndpoint next = new NextEndpoint();
+// 		next.provider = provider;
+// 		next.endpoint = endpoint;
 
-		assertEquals(provider, next.provider);
-		assertEquals(endpoint, next.endpoint);
-	}
-}
+// 		assertEquals(provider, next.provider);
+// 		assertEquals(endpoint, next.endpoint);
+// 	}
+// }
