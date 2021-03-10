@@ -3,6 +3,7 @@ package io.github.zapproject.jzap;
 import org.web3j.protocol.Web3j;
 import org.web3j.tx.Contract;
 
+
 public abstract class BaseContract extends Contract {
     public String provider;
     public String name;
@@ -12,12 +13,8 @@ public abstract class BaseContract extends Contract {
     public ZapCoordinator coordinator;
     public Artifacts artifact = new Artifacts();
 
-    BaseContract(BaseContractType type) throws Exception {
+    BaseContract(BaseContractType type) {
         super(
-            // new Artifacts().getMap(type.artifactDir.isEmpty() ? 
-            //     type.artifactName.toUpperCase() : 
-            //     type.artifactDir
-            //     ).get("bytecode"),
             type.bytecode,
             type.address,
             type.web3j,
@@ -49,4 +46,13 @@ public abstract class BaseContract extends Contract {
         // }
     }
 
+    BaseContract(String bytecode, NetworkProviderOptions type, String artifactName) throws Exception {
+        super(
+            bytecode,
+            new Artifacts().getAddress(artifactName, type.networkId),
+            type.web3j,
+            type.credentials,
+            type.contractGasProvider
+        );
+    }
 }

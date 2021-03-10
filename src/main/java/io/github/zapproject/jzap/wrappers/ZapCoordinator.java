@@ -91,8 +91,8 @@ public class ZapCoordinator extends BaseContract {
     //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    protected ZapCoordinator(BaseContractType type) throws Exception {
-        super(type);
+    protected ZapCoordinator(NetworkProviderOptions type) throws Exception {
+        super(BINARY, type, "ZAPCOORDINATOR");
     }
 
     protected ZapCoordinator(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
@@ -307,7 +307,7 @@ public class ZapCoordinator extends BaseContract {
     //     return new ZapCoordinator(contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    public static ZapCoordinator load(BaseContractType type) throws Exception {
+    public static ZapCoordinator load(NetworkProviderOptions type) throws Exception {
         return new ZapCoordinator(type);
     }
 

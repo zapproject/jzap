@@ -104,8 +104,8 @@ public class ZapToken extends BaseContract {
     //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    protected ZapToken(BaseContractType type) throws Exception {
-        super(type);
+    protected ZapToken(NetworkProviderOptions type) throws Exception {
+        super(BINARY, type, "ZAPTOKEN");
     }
 
     protected ZapToken(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
@@ -322,7 +322,7 @@ public class ZapToken extends BaseContract {
     //     return new ZapToken(contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    public static ZapToken load(BaseContractType type) throws Exception {
+    public static ZapToken load(NetworkProviderOptions type) throws Exception {
         return new ZapToken(type);
     }
 

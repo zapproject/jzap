@@ -6,7 +6,7 @@ import java.util.List;
 
 class ResponseArgs extends DefaultTx {
     public BigInteger queryID;
-    public List<BigInteger> responseParams;
+    public List<String> responseParams;
     public boolean dynamic;
 }
 

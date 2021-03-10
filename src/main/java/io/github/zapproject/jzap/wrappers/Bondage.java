@@ -126,8 +126,8 @@ public class Bondage extends BaseContract {
     //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    protected Bondage(BaseContractType type) throws Exception {
-        super(type);
+    protected Bondage(NetworkProviderOptions type) throws Exception {
+        super(BINARY, type, "BONDAGE");
     }
 
     protected Bondage(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
@@ -456,7 +456,7 @@ public class Bondage extends BaseContract {
     //     return new Bondage(contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    public static Bondage load(BaseContractType type) throws Exception {
+    public static Bondage load(NetworkProviderOptions type) throws Exception {
         return new Bondage(type);
     }
 

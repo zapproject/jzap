@@ -4,9 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
@@ -18,11 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ArbiterTest {
     private static Arbiter arbiter;
-    private static ZapCoordinator coordinator;
     private static Bondage bondage;
+    private static Registry registry;
 
     private static Web3j web3j;
     private static Credentials creds;
+    private static Credentials creds2;
     private static ContractGasProvider gasPro;
     private static byte[] endpoint = new byte[32];
     private static String subscriber;
@@ -36,31 +34,24 @@ class ArbiterTest {
     static void setup() throws Exception {
         web3j = Web3j.build(new HttpService());
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
+        creds2 = Credentials.create("0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6");
         gasPro = new DefaultGasProvider();
 
-        // coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
-        // coordinator = ZapCoordinator.load(new BaseContractType("", "ZAPCOORDINATOR", 3117, "", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
-        arbiter = Arbiter.load("0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0", web3j, creds, gasPro);
-        bondage = Bondage.load("0x8a791620dd6260079bf849dc5567adc3f2fdc318", web3j, creds, gasPro);
+        registry = Registry.load("0xa513e6e4b8f2a923d98304ec87f64353c4d5c853", web3j, creds, gasPro);
+        arbiter = Arbiter.load("0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0", web3j, creds2, gasPro);
+        bondage = Bondage.load("0x8a791620dd6260079bf849dc5567adc3f2fdc318", web3j, creds2, gasPro);
 
         System.arraycopy("Ramanujan".getBytes(), 0, endpoint, 0, 9);
         subscriber = creds.getAddress();
     }
-    
-    // @Test
-    // @Order(1)
-    // void testArbiterUpdateDependencies() throws Exception {
-    //     assertNotNull(coordinator.updateAllDependencies());
-    // }
 
-    @Test
-    @Order(1)
+    // @Test
     void testArbiterDB() throws Exception {
         assertNotNull(arbiter.db().send());
     }
 
-    @Test
-    @Order(1)
+    // @Test
+    // @Order(1)
     void testArbiterInitiateSubscription() throws Exception {
         byte[] param1 = new byte[32];
         byte[] param2 = new byte[32];
@@ -70,7 +61,7 @@ class ArbiterTest {
         params.add(param1);
         params.add(param2);
 
-        bondage.bond(creds.getAddress(), endpoint, new BigInteger("100")).send();
+        bondage.bond(creds.getAddress(), endpoint, new BigInteger("500")).send();
         
         assertNotNull(txPurchase = arbiter.initiateSubscription(
             creds.getAddress(), endpoint, 
@@ -81,33 +72,33 @@ class ArbiterTest {
         // System.out.println("######### EVENT _ PROVIDER #######: " + events.get(0).provider);
     }
 
-    @Test
-    @Order(3)
+    // @Test
+    // @Order(3)
     void testArbiterGetSubscription() throws Exception {
         assertNotNull(arbiter.getSubscription(creds.getAddress(), subscriber, endpoint).send());
     }
 
-    @Test
-    @Order(4)
+    // @Test
+    // @Order(4)
     void testArbiterGetDots() throws Exception {
         assertNotNull(arbiter.getDots(creds.getAddress(), subscriber, endpoint).send());
     }
 
-    @Test
-    @Order(5)
+    // @Test
+    // @Order(5)
     void testArbiterGetBlockStart() throws Exception {
         assertNotNull(arbiter.getBlockStart(creds.getAddress(), subscriber, endpoint).send());
     }
 
-    @Test
-    @Order(6)
+    // @Test
+    // @Order(6)
     void testArbiterGetPreBlockEnd() throws Exception {
         assertNotNull(arbiter.getPreBlockEnd(creds.getAddress(), subscriber, endpoint).send());
     }
 
     @SuppressWarnings("unchecked")
-    @Test
-    @Order(7)
+    // @Test
+    // @Order(7)
     void testArbiterPassParams() throws Exception {
         byte[] param1 = new byte[32];
         byte[] param2 = new byte[32];
@@ -122,15 +113,14 @@ class ArbiterTest {
         // assertNotNull(arbiter.getParamsPassedEvents(txParams));
     }
 
-    @Disabled
-    @Order(8)
+    // @Disabled
     void testArbiterEndSubscriptionSubscriber() throws Exception {
         assertNotNull(txEnd = arbiter.endSubscriptionSubscriber(creds.getAddress(), endpoint).send());
 
         assertNotNull(arbiter.getDataSubscriptionEndEvents(txEnd));
     }
 
-    @Disabled
+    // @Disabled
     void testArbiterEndSubscriptionProvider() throws Exception {
         assertNotNull(arbiter.endSubscriptionProvider(subscriber, endpoint).send());
     }

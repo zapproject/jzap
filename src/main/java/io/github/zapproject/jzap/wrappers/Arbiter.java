@@ -100,8 +100,8 @@ public class Arbiter extends BaseContract {
     //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    protected Arbiter(BaseContractType type) throws Exception {
-        super(type);
+    protected Arbiter(NetworkProviderOptions type) throws Exception {
+        super(BINARY, type, "ARBITER");
     }
 
     protected Arbiter(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
@@ -320,7 +320,7 @@ public class Arbiter extends BaseContract {
     //     return new Arbiter(contractAddress, web3j, transactionManager, contractGasProvider);
     // }
 
-    public static Arbiter load(BaseContractType type) throws Exception {
+    public static Arbiter load(NetworkProviderOptions type) throws Exception {
         return new Arbiter(type);
     }
 

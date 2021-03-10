@@ -5,7 +5,7 @@ import java.util.List;
 
 
 class InitProvider extends DefaultTx {
-    public String publicKey;
+    public BigInteger publicKey;
     public byte[] title;
 }
 

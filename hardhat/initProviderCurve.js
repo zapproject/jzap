@@ -54,7 +54,7 @@ task("initiateProviderCurve", "Initializes the first 20 provider accounts with a
             [3, 0, 0, 1, 333833500],
             [3, 0, 0, 1, 10000],
             [3, 0, 0, 1, 1222],
-            [1, 100, 1000],
+            [1, 100, 333833500],
             [3, 0, 2, 1, 100],
             [2, 0, 0, 10000],
             [1, 1000, 10000],
