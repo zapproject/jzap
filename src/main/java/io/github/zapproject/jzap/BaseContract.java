@@ -10,7 +10,6 @@ public abstract class BaseContract extends Contract {
     public String address;
     public Web3j web3j;
     public int networkId;
-    public ZapCoordinator coordinator;
     public Artifacts artifact = new Artifacts();
 
     BaseContract(BaseContractType type) {
@@ -21,29 +20,10 @@ public abstract class BaseContract extends Contract {
             type.credentials,
             type.contractGasProvider
         ); 
-        
-        // Below this is unecessary if class instances do not have to be accessed.
-        // HashMap zapArtifact = new Artifacts().getMap("ZAPCOORDINATOR");
-        
-        // // this.name = type.artifactName;
-        // this.provider = type.networkProvider;
-        // this.networkId = type.networkId;
-        // this.address = type.address;
 
-        // Credentials creds = Credentials.create(type.accountKey);
-        // ContractGasProvider gasPro = new DefaultGasProvider();
-
-        // if (type.web3j != null) {
-        //     this.web3j = type.web3j;   
-        // } else {
-        //     this.web3j = Web3j.build(new HttpService());
-        // }
-
-        // if (!type.coordinator.isEmpty()){
-            // this.coordinator = ZapCoordinator.load(type);
-        // } else {
-        //     this.coordinator = ZapCoordinator.load(ZapCoordinator.BINARY, web3j, creds, gasPro);
-        // }
+        this.provider = type.credentials.getAddress();
+        this.address = type.address;
+        this.web3j = type.web3j;
     }
 
     BaseContract(String bytecode, NetworkProviderOptions type, String artifactName) throws Exception {
@@ -54,5 +34,11 @@ public abstract class BaseContract extends Contract {
             type.credentials,
             type.contractGasProvider
         );
+
+        this.provider = type.credentials.getAddress();
+        this.name = artifactName;
+        this.address = artifact.getAddress(artifactName, type.networkId);
+        this.web3j = type.web3j;
+        this.networkId = type.networkId;
     }
 }

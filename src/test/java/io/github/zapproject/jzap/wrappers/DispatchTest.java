@@ -52,7 +52,6 @@ class DispatchTest {
         assertNotNull(txIncoming = dispatch.query(creds.getAddress(), query, endpoint, params).send());
         
         List <Dispatch.IncomingEventResponse> list = dispatch.getIncomingEvents(txIncoming);
-        // System.out.println("##### EVENT #####: " + list.get(list.size()-1).id);
         id = list.get(0).id;
     }
 
@@ -118,7 +117,6 @@ class DispatchTest {
     // @Order(10)
     void testDispatchGetEndpoint() throws Exception {
         assertNotNull(dispatch.getEndpoint(id).send());
-        // System.out.println("##### ENDPOINT #####: " + new String(dispatch.getEndpoint(new BigInteger("0")).send(), StandardCharsets.UTF_8));
     }
 
     @Test
@@ -143,7 +141,6 @@ class DispatchTest {
     // @Order(14)
     void testDispatchGetSubscriberOnchain() throws Exception {
         assertNotNull(dispatch.getSubscriberOnchain(id).send());
-        // System.out.println("##### subONCHAIN #####: " + dispatch.getSubscriberOnchain(new BigInteger("0")).send());
     }
 
     @Disabled

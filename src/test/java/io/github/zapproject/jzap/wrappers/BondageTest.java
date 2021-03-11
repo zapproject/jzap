@@ -92,14 +92,12 @@ class BondageTest {
     @Order(7)
     void testBondageZapForDots() throws Exception {
         assertNotNull(bondage.calcZapForDots(creds.getAddress(), endpoint, new BigInteger("1")).send());
-        // System.out.println("#### ZAPFORDOTS #####: " + bondage.calcZapForDots(creds.getAddress(), endpoint, new BigInteger("1")).send());
     }
 
     @Test
     @Order(8)
     void testBondageCurrentCostOfDots() throws Exception {
         assertNotNull(bondage.currentCostOfDot(creds.getAddress(), endpoint, new BigInteger("100")).send());
-        // System.out.println("##### COSTOFDOTS #####: " + bondage.currentCostOfDot(creds.getAddress(), endpoint, new BigInteger("100")).send());
     }
 
     @Test
@@ -112,7 +110,6 @@ class BondageTest {
     @Order(10)
     void testBondageDotLimit() throws Exception {
         assertNotNull(bondage.dotLimit(creds.getAddress(), endpoint).send());
-        // System.out.println("##### DOTLIMIT ####: " + bondage.dotLimit(creds.getAddress(), endpoint).send());
     }
 
     @Test

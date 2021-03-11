@@ -96,14 +96,6 @@ public class ZapToken extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // protected ZapToken(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected ZapToken(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     protected ZapToken(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "ZAPTOKEN");
     }
@@ -318,10 +310,6 @@ public class ZapToken extends BaseContract {
         return new ZapToken(contractAddress, web3j, credentials, contractGasProvider);
     }
 
-    // public static ZapToken load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new ZapToken(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     public static ZapToken load(NetworkProviderOptions type) throws Exception {
         return new ZapToken(type);
     }
@@ -330,18 +318,8 @@ public class ZapToken extends BaseContract {
         return deployRemoteCall(ZapToken.class, web3j, credentials, contractGasProvider, BINARY, "");
     }
 
-    @Deprecated
-    public static RemoteCall<ZapToken> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-        return deployRemoteCall(ZapToken.class, web3j, credentials, gasPrice, gasLimit, BINARY, "");
-    }
-
     public static RemoteCall<ZapToken> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
         return deployRemoteCall(ZapToken.class, web3j, transactionManager, contractGasProvider, BINARY, "");
-    }
-
-    @Deprecated
-    public static RemoteCall<ZapToken> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-        return deployRemoteCall(ZapToken.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
     @Override

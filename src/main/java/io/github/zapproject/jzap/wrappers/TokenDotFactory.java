@@ -98,14 +98,6 @@ public class TokenDotFactory extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // protected TokenDotFactory(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected TokenDotFactory(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     protected TokenDotFactory(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "TOKENDOTFACTORY");
     }
@@ -377,10 +369,6 @@ public class TokenDotFactory extends BaseContract {
         return new TokenDotFactory(contractAddress, web3j, credentials, contractGasProvider);
     }
 
-    // public static TokenDotFactory load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new TokenDotFactory(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     public static TokenDotFactory load(NetworkProviderOptions type) throws Exception {
         return new TokenDotFactory(type);
     }
@@ -399,24 +387,6 @@ public class TokenDotFactory extends BaseContract {
                 new org.web3j.abi.datatypes.generated.Uint256(providerPubKey), 
                 new org.web3j.abi.datatypes.generated.Bytes32(providerTitle)));
         return deployRemoteCall(TokenDotFactory.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<TokenDotFactory> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String coordinator, String factory, BigInteger providerPubKey, byte[] providerTitle) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(coordinator), 
-                new org.web3j.abi.datatypes.Address(factory), 
-                new org.web3j.abi.datatypes.generated.Uint256(providerPubKey), 
-                new org.web3j.abi.datatypes.generated.Bytes32(providerTitle)));
-        return deployRemoteCall(TokenDotFactory.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<TokenDotFactory> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String coordinator, String factory, BigInteger providerPubKey, byte[] providerTitle) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(coordinator), 
-                new org.web3j.abi.datatypes.Address(factory), 
-                new org.web3j.abi.datatypes.generated.Uint256(providerPubKey), 
-                new org.web3j.abi.datatypes.generated.Bytes32(providerTitle)));
-        return deployRemoteCall(TokenDotFactory.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
     @Override

@@ -73,24 +73,6 @@ public class ZapCoordinator extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // @Deprecated
-    // protected ZapCoordinator(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
-    // protected ZapCoordinator(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // @Deprecated
-    // protected ZapCoordinator(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, gasPrice, gasLimit);
-    // }
-
-    // protected ZapCoordinator(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     protected ZapCoordinator(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "ZAPCOORDINATOR");
     }
@@ -169,7 +151,6 @@ public class ZapCoordinator extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
-    // Original wrapper function - fails
     public RemoteFunctionCall<TransactionReceipt> addImmutableContract(String contractName, String newAddress) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDIMMUTABLECONTRACT, 
@@ -178,31 +159,6 @@ public class ZapCoordinator extends BaseContract {
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
-
-    // public EthSendTransaction addImmutableContract(String contractName, String newAddress) throws IOException , InterruptedException , ExecutionException , Exception {
-    //     org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
-    //         FUNC_ADDIMMUTABLECONTRACT,
-    //         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(contractName),
-    //         new org.web3j.abi.datatypes.Address(newAddress)), 
-    //         Collections.<TypeReference<?>>emptyList());
-
-    //     String owner = this.owner().send().toString();
-    //     String encodedFunction = FunctionEncoder.encode(function);
-    //     ContractGasProvider gasPro = new org.web3j.tx.gas.DefaultGasProvider();
-    //     EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(owner, DefaultBlockParameterName.LATEST).send();
-    //     BigInteger nonce = ethGetTransactionCount.getTransactionCount();
-    //     Transaction transaction = Transaction.createFunctionCallTransaction(
-    //                     owner, 
-    //                     nonce, 
-    //                     gasPro.getGasPrice(), 
-    //                     gasPro.getGasLimit(), 
-    //                     this.contractAddress, 
-    //                     encodedFunction);
-        
-    //     org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(transaction).sendAsync().get();
-        
-    //     return transactionResponse;
-    // }
 
     public RemoteFunctionCall<TransactionReceipt> updateContract(String contractName, String newAddress) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
@@ -227,34 +183,6 @@ public class ZapCoordinator extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
-    // public EthSendTransaction getContract(String contractName) throws IOException , InterruptedException , ExecutionException , Exception {
-    //     org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
-    //         FUNC_GETCONTRACT,
-    //         Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(contractName)), 
-    //         Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
-
-    //     String owner = this.owner().send().toString();
-    //     String encodedFunction = FunctionEncoder.encode(function);
-    //     ContractGasProvider gasPro = new org.web3j.tx.gas.DefaultGasProvider();
-    //     EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
-    //         owner, 
-    //         DefaultBlockParameterName.LATEST).send();
-
-    //     BigInteger nonce = ethGetTransactionCount.getTransactionCount();
-    //      Transaction transaction = Transaction.createFunctionCallTransaction(
-    //                     owner, 
-    //                     nonce, gasPro.getGasPrice(), 
-    //                     gasPro.getGasLimit(), 
-    //                     this.contractAddress, 
-    //                     encodedFunction);
-        
-    //     org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(
-    //         transaction).sendAsync().get();
-
-    //     return transactionResponse;
-    // }
-
-    // Original wrapper function - fails
     public RemoteFunctionCall<TransactionReceipt> updateAllDependencies() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_UPDATEALLDEPENDENCIES, 
@@ -263,49 +191,9 @@ public class ZapCoordinator extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
-    // public EthSendTransaction updateAllDependencies() throws InterruptedException , ExecutionException , IOException , Exception {
-    //     org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
-    //         FUNC_UPDATEALLDEPENDENCIES,
-    //         Arrays.<Type>asList(), 
-    //         Collections.<TypeReference<?>>emptyList());
-
-    //     String owner = this.owner().send().toString();
-    //     String encodedFunction = FunctionEncoder.encode(function);
-    //     ContractGasProvider gasPro = new org.web3j.tx.gas.DefaultGasProvider();
-    //     EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(owner, DefaultBlockParameterName.LATEST).send();
-
-    //     BigInteger nonce = ethGetTransactionCount.getTransactionCount();
-        
-    //     Transaction transaction = Transaction.createFunctionCallTransaction(
-    //                     owner, 
-    //                     nonce, gasPro.getGasPrice(), 
-    //                     gasPro.getGasLimit(), 
-    //                     this.contractAddress, 
-    //                     encodedFunction);
-        
-    //     org.web3j.protocol.core.methods.response.EthSendTransaction transactionResponse = web3j.ethSendTransaction(
-    //         transaction).sendAsync().get();
-
-    //     return transactionResponse;
-    // }
-
-    // @Deprecated
-    // public static ZapCoordinator load(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new ZapCoordinator(contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
-    // @Deprecated
-    // public static ZapCoordinator load(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new ZapCoordinator(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
-    // }
-
     public static ZapCoordinator load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new ZapCoordinator(contractAddress, web3j, credentials, contractGasProvider);
     }
-
-    // public static ZapCoordinator load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new ZapCoordinator(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
 
     public static ZapCoordinator load(NetworkProviderOptions type) throws Exception {
         return new ZapCoordinator(type);
@@ -315,18 +203,8 @@ public class ZapCoordinator extends BaseContract {
         return deployRemoteCall(ZapCoordinator.class, web3j, credentials, contractGasProvider, BINARY, "");
     }
 
-    @Deprecated
-    public static RemoteCall<ZapCoordinator> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-        return deployRemoteCall(ZapCoordinator.class, web3j, credentials, gasPrice, gasLimit, BINARY, "");
-    }
-
     public static RemoteCall<ZapCoordinator> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
         return deployRemoteCall(ZapCoordinator.class, web3j, transactionManager, contractGasProvider, BINARY, "");
-    }
-
-    @Deprecated
-    public static RemoteCall<ZapCoordinator> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-        return deployRemoteCall(ZapCoordinator.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
     @Override

@@ -40,7 +40,6 @@ class ZapTokenTest {
     @Order(1)
     void testZapTokenIncreaseApproval() throws Exception {
         assertNotNull(txApprove = token.increaseApproval(creds2.getAddress(), BigInteger.valueOf(1000)).send());
-        // System.out.println("#### APPROVAL ####: " + txApprove.getLogs());
 
         assertNotNull(token.getApprovalEvents(txApprove));
     }

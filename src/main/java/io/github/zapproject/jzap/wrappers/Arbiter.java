@@ -30,13 +30,7 @@ import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 
 /**
- * <p>Auto generated code.
- * <p><strong>Do not modify!</strong>
- * <p>Please use the <a href="https://docs.web3j.io/command_line.html">web3j command line tools</a>,
- * or the org.web3j.codegen.SolidityFunctionWrapperGenerator in the 
- * <a href="https://github.com/web3j/web3j/tree/master/codegen">codegen module</a> to update.
- *
- * <p>Generated with web3j version 1.4.0.
+ * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
  */
 @SuppressWarnings("rawtypes")
 public class Arbiter extends BaseContract {
@@ -91,23 +85,27 @@ public class Arbiter extends BaseContract {
     static {
         _addresses = new HashMap<String, String>();
     }
-
-    // protected Arbiter(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected Arbiter(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    
+    /***
+     * Initializes a subclass of BaseContract that can access the methods of the Arbiter contract.
+     * @param type      wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
+     */
     protected Arbiter(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "ARBITER");
     }
 
+    /***
+     * Initializes a subclass of BaseContract that can access the methods of the Arbiter contract.
+     * @param contractAddress       Deployed Arbiter contract address
+     * @param web3j                 Web3j instance to interact with contracts
+     * @param credentials           Credentials acount 
+     * @param contractGasProvider   Contract gas data
+     */
     protected Arbiter(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));
     }
 
+    @SuppressWarnings("unchecked")
     public List<DataPurchaseEventResponse> getDataPurchaseEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(DATAPURCHASE_EVENT, transactionReceipt);
         ArrayList<DataPurchaseEventResponse> responses = new ArrayList<DataPurchaseEventResponse>(valueList.size());
@@ -152,6 +150,7 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
+    @SuppressWarnings("unchecked")
     public List<ParamsPassedEventResponse> getParamsPassedEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(PARAMSPASSED_EVENT, transactionReceipt);
         ArrayList<ParamsPassedEventResponse> responses = new ArrayList<ParamsPassedEventResponse>(valueList.size());
@@ -224,6 +223,15 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /***
+     * Initializes a subscription with a given provider, endpoint, and endpoint parameters.
+     * @param {SubscriptionInit} r.  {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS}
+     * @param {address} r.provider - Address of the data provider
+     * @param {string} r.endpoint - Data endpoint of the provider
+     * @param {Array<string>} r.endpoint_params - Params passed to endpoint
+     * @param {number} r.blocks - Number of blocks that the subscription will last for
+     * @param {number} r.provider - Public key of provider
+     */
     public RemoteFunctionCall<TransactionReceipt> initiateSubscription(String providerAddress, byte[] endpoint, List<byte[]> endpointParams, BigInteger publicKey, BigInteger blocks) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_INITIATESUBSCRIPTION, 
@@ -302,23 +310,9 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
-    // @Deprecated
-    // public static Arbiter load(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Arbiter(contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
-    // @Deprecated
-    // public static Arbiter load(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Arbiter(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
-    // }
-
     public static Arbiter load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Arbiter(contractAddress, web3j, credentials, contractGasProvider);
     }
-
-    // public static Arbiter load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new Arbiter(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
 
     public static Arbiter load(NetworkProviderOptions type) throws Exception {
         return new Arbiter(type);
@@ -332,23 +326,6 @@ public class Arbiter extends BaseContract {
     public static RemoteCall<Arbiter> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Arbiter.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Arbiter> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Arbiter.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Arbiter> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Arbiter.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Override
-    protected String getStaticDeployedAddress(String networkId) {
-        return _addresses.get(networkId);
     }
 
     public static String getPreviouslyDeployedAddress(String networkId) {

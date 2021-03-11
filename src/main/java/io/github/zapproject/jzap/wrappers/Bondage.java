@@ -117,15 +117,6 @@ public class Bondage extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-
-    // protected Bondage(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected Bondage(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     protected Bondage(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "BONDAGE");
     }
@@ -438,23 +429,9 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
-    // @Deprecated
-    // public static Bondage load(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Bondage(contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
-    // @Deprecated
-    // public static Bondage load(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Bondage(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
-    // }
-
     public static Bondage load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Bondage(contractAddress, web3j, credentials, contractGasProvider);
     }
-
-    // public static Bondage load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new Bondage(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
 
     public static Bondage load(NetworkProviderOptions type) throws Exception {
         return new Bondage(type);
@@ -468,18 +445,6 @@ public class Bondage extends BaseContract {
     public static RemoteCall<Bondage> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Bondage.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Bondage> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Bondage.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Bondage> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Bondage.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
     @Override

@@ -39,15 +39,10 @@ class SubscriberTest {
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         gasPro = new DefaultGasProvider();
 
-        NetworkProviderOptions opt = new NetworkProviderOptions();
-        opt.networkId = 31337;
-        opt.web3j = web3j;
-        opt.credentials = creds;
-        opt.contractGasProvider = gasPro;
+        NetworkProviderOptions opt = new NetworkProviderOptions(31337, web3j, creds, gasPro);
         subscriber = new Subscriber(opt);
 
         System.arraycopy("testProvider".getBytes(), 0, title, 0, 12);
-        // System.arraycopy("testEndpoint".getBytes(), 0, endpoint, 0, 12);
         System.arraycopy("Ramanujan".getBytes(), 0, endpoint, 0, 9);
 
         byte[] param1 = new byte[32];

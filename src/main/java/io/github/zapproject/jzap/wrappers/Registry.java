@@ -113,14 +113,6 @@ public class Registry extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // protected Registry(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected Registry(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     protected Registry(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "REGISTRY");
     }
@@ -426,11 +418,7 @@ public class Registry extends BaseContract {
     public static Registry load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Registry(contractAddress, web3j, credentials, contractGasProvider);
     }
-
-    // public static Registry load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new Registry(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    
     public static Registry load(NetworkProviderOptions type) throws Exception {
         return new Registry(type);
     }
@@ -443,18 +431,6 @@ public class Registry extends BaseContract {
     public static RemoteCall<Registry> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Registry.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Registry> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Registry.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Registry> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Registry.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
     @Override

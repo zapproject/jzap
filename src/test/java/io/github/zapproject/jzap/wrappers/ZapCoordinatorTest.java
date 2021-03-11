@@ -39,12 +39,9 @@ class ZapCoordinatorTest {
         creds2 = Credentials.create("0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a");
         gasPro = new DefaultGasProvider();
 
-        // database = Database.deploy(web3j, creds, gasPro).send();
         coord1 = ZapCoordinator.deploy(web3j, creds, gasPro).send();
         coord2 = ZapCoordinator.deploy(web3j, creds, gasPro).send();
         coordinator = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds, gasPro);
-        // coordinator = ZapCoordinator.load(new BaseContractType(ZapCoordinator.BINARY, 3117, "", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
-        // coord2 = ZapCoordinator.load("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", web3j, creds2, gasPro);
     }
 
     @Test
@@ -65,7 +62,6 @@ class ZapCoordinatorTest {
         assertNotNull(txTransfer = coord1.transferOwnership(coord2.getContractAddress()).send());
 
         assertNotNull(coordinator.getOwnershipTransferredEvents(txTransfer));
-        // System.out.println("#### TRANSFER OWNERSHIP ####: " + txReceipt.getTransactionHash());
     }
 
     @Disabled 
@@ -77,14 +73,12 @@ class ZapCoordinatorTest {
     @Test 
     void testZapCoordinatorUpdateContract() throws Exception {
         assertNotNull(txUpdate = coordinator.updateContract("NewZapCoordinator", coord2.getContractAddress()).send());
-        // assertNotNull(txReceipt.getLogs());
-        // System.out.println("#### UPDATECONTRACTS ####: " + coordinator.getContract("NewZapCoordinator").getResult());
+        
         assertNotNull(coordinator.getUpdatedContractEvents(txUpdate));
     }
     
     @Test
     void testZapCoordinatorAddImmutableContract() throws Exception {
-        // disabled as web3j deploy functions deploy unrecognized contracts and conflicts with other Contract tests, but has been tested independently
         database = Database.deploy(web3j, creds, gasPro).send();
         assertNotNull(coordinator.addImmutableContract("NewDatabase", database.getContractAddress()).send());
     }
@@ -92,19 +86,16 @@ class ZapCoordinatorTest {
     @Test
     void testZapCoordinatorGetContractName() throws Exception {
         assertEquals("ARBITER", coordinator.getContractName(BigInteger.valueOf(0)).send());
-        // System.out.println("#### GetContractNAME()####: " + coordinator.getContractName(BigInteger.valueOf(0)).send());
     }
 
     @Test
     void testZapCoordinatorGetContract() throws Exception {
         assertNotNull(coordinator.getContract("ARBITER").send());
-        // System.out.println("#### GetContract()####: " + coordinator.getContract("ZapCoordinator").getTransactionHash());
     }
 
     @Test
     void testZapCoordinatorLoadedContracts() throws Exception {
         assertEquals("ARBITER", coordinator.loadedContracts(BigInteger.valueOf(0)).send());
-        // System.out.println("#### LOADEDCONTRACTS ####: " + coordinator.loadedContracts(BigInteger.valueOf(0)).send());
     }
 
     @Disabled

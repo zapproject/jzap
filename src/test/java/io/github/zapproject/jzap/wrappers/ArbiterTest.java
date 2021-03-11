@@ -69,7 +69,6 @@ class ArbiterTest {
 
         List<Arbiter.DataPurchaseEventResponse> events = arbiter.getDataPurchaseEvents(txPurchase);
         assertNotNull(events.get(0).provider);
-        // System.out.println("######### EVENT _ PROVIDER #######: " + events.get(0).provider);
     }
 
     // @Test

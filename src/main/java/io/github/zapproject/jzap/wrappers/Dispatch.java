@@ -133,15 +133,7 @@ public class Dispatch extends BaseContract {
     static {
         _addresses = new HashMap<String, String>();
     }
-
-    // protected Dispatch(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected Dispatch(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    
     protected Dispatch(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "DISPATCH");
     }
@@ -509,10 +501,6 @@ public class Dispatch extends BaseContract {
         return new Dispatch(contractAddress, web3j, credentials, contractGasProvider);
     }
 
-    // public static Dispatch load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new Dispatch(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
     public static Dispatch load(NetworkProviderOptions type) throws Exception {
         return new Dispatch(type);
     }
@@ -525,18 +513,6 @@ public class Dispatch extends BaseContract {
     public static RemoteCall<Dispatch> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Dispatch.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Dispatch> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Dispatch.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Dispatch> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Dispatch.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
     @Override

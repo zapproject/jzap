@@ -64,6 +64,7 @@ public class Provider {
         return pubKey;
     } 
 
+    @SuppressWarnings("unchecked")
     public CurveType getCurve(byte[] endpoint) throws Exception {
         CurveType curve = new CurveType();
         curve.curve = registry.getProviderCurve(providerOwner, endpoint).send();
@@ -75,6 +76,7 @@ public class Provider {
         return registry.getProviderParameter(providerOwner, key).send();
     }
 
+    @SuppressWarnings("unchecked")
     public List<byte[]> getAllProviderParams() throws Exception {
         return registry.getAllProviderParams(providerOwner).send();
     }
@@ -83,10 +85,12 @@ public class Provider {
         return registry.getEndpointBroker(providerOwner, endpoint).send();
     }
 
+    @SuppressWarnings("unchecked")
     public List<byte[]> getEndpointParams(byte[] endpoint) throws Exception {
         return registry.getEndpointParams(providerOwner, endpoint).send();
     }
 
+    @SuppressWarnings("unchecked")
     public List<byte[]> getEndpoints() throws Exception {
         return registry.getProviderEndpoints(providerOwner).send();
     }
