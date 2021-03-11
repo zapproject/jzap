@@ -86,7 +86,7 @@ public class Arbiter extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
     
-    /***
+    /**
      * Initializes a subclass of BaseContract that can access the methods of the Arbiter contract.
      * @param type      wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
      */
@@ -94,7 +94,7 @@ public class Arbiter extends BaseContract {
         super(BINARY, type, "ARBITER");
     }
 
-    /***
+    /**
      * Initializes a subclass of BaseContract that can access the methods of the Arbiter contract.
      * @param contractAddress       Deployed Arbiter contract address
      * @param web3j                 Web3j instance to interact with contracts
@@ -105,6 +105,10 @@ public class Arbiter extends BaseContract {
         super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));
     }
 
+    /**
+     * Listen for data purchase events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     @SuppressWarnings("unchecked")
     public List<DataPurchaseEventResponse> getDataPurchaseEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(DATAPURCHASE_EVENT, transactionReceipt);
@@ -123,6 +127,10 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listen for data subscription events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<DataSubscriptionEndEventResponse> getDataSubscriptionEndEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(DATASUBSCRIPTIONEND_EVENT, transactionReceipt);
         ArrayList<DataSubscriptionEndEventResponse> responses = new ArrayList<DataSubscriptionEndEventResponse>(valueList.size());
@@ -137,6 +145,10 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listen for ownership transferred events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, transactionReceipt);
         ArrayList<OwnershipTransferredEventResponse> responses = new ArrayList<OwnershipTransferredEventResponse>(valueList.size());
@@ -150,6 +162,10 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listen for params passed events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     @SuppressWarnings("unchecked")
     public List<ParamsPassedEventResponse> getParamsPassedEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(PARAMSPASSED_EVENT, transactionReceipt);
@@ -211,6 +227,13 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Broadcast parameters from sender to offchain receiver
+     * @param   receiver    Address to receive parameters
+     * @param   endpoint    Data endpoint of the provider
+     * @param   params      Params passed to receiver
+     * @return  A remote function call to Arbiter contract which returns a transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> passParams(String receiver, byte[] endpoint, List<byte[]> params) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_PASSPARAMS, 
@@ -223,14 +246,14 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
-    /***
+    /**
      * Initializes a subscription with a given provider, endpoint, and endpoint parameters.
-     * @param {SubscriptionInit} r.  {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS}
-     * @param {address} r.provider - Address of the data provider
-     * @param {string} r.endpoint - Data endpoint of the provider
-     * @param {Array<string>} r.endpoint_params - Params passed to endpoint
-     * @param {number} r.blocks - Number of blocks that the subscription will last for
-     * @param {number} r.provider - Public key of provider
+     * @param   providerAddress   Address of the data provider
+     * @param   endpoint          Data endpoint of the provider
+     * @param   endpointParams    Params passed to endpoint
+     * @param   publicKey         Public key of provider
+     * @param   blocks            Number of blocks that the subscription will last for
+     * @return  A remote function call to Arbiter contract which returns a transaction receipt
      */
     public RemoteFunctionCall<TransactionReceipt> initiateSubscription(String providerAddress, byte[] endpoint, List<byte[]> endpointParams, BigInteger publicKey, BigInteger blocks) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
@@ -246,6 +269,13 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Gets the subscription status for a given provider, subscriber, and endpoint
+     * @param   providerAddress     Address of the data provider
+     * @param   subscriberAddress   Addres of the subscriber
+     * @param   endpoint            Data endpoint of the provider
+     * @return  A remote function call to Arbiter contract which returns a subscription tuple
+     */
     public RemoteFunctionCall<Tuple3<BigInteger, BigInteger, BigInteger>> getSubscription(String providerAddress, String subscriberAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETSUBSCRIPTION, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(providerAddress), 
@@ -265,6 +295,12 @@ public class Arbiter extends BaseContract {
                 });
     }
 
+    /**
+     * Ends a currently active subscription for a given subscriber and endpoint from the provider.
+     * @param   subscriberAddress    Address of the data subscriber
+     * @param   endpoint             Data endpoint of the provider
+     * @return  A remote function call to Arbiter contract which returns a transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> endSubscriptionProvider(String subscriberAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ENDSUBSCRIPTIONPROVIDER, 
@@ -274,6 +310,12 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Ends a currently active subscription for a given subscriber and endpoint from the subscriber.
+     * @param   providerAddress   Address of the data provider
+     * @param   endpoint          Data endpoint of the provider
+     * @return  A remote call function to Arbiter contract which returns a transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> endSubscriptionSubscriber(String providerAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ENDSUBSCRIPTIONSUBSCRIBER, 
@@ -283,6 +325,13 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Get subscriber dots remaining for specified provider endpoint
+     * @param   providerAddress     Address of the data provider
+     * @param   subscriberAddress   Address of the data subscriber
+     * @param   endpoint            Data endpoint of the provider
+     * @return  A remote call function to Arbiter contract which returns number of dots remaining
+     */
     public RemoteFunctionCall<BigInteger> getDots(String providerAddress, String subscriberAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETDOTS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(providerAddress), 
@@ -292,6 +341,13 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Get first subscription block number
+     * @param   providerAddress     Address of the data provider
+     * @param   subscriberAddress   Address of the data subscriber
+     * @param   endpoint            Data endpoint of the provider
+     * @return  A remote call function to Arbiter contract which returns first subscribed block number
+     */
     public RemoteFunctionCall<BigInteger> getBlockStart(String providerAddress, String subscriberAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETBLOCKSTART, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(providerAddress), 
@@ -301,6 +357,13 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Get subscription last block number
+     * @param   providerAddress     Address of the data provider
+     * @param   subscriberAddress   Address of the data subscriber
+     * @param   endpoint            Data endpoint of the provider
+     * @return  A remote call function to Arbiter contract which returns block number that subscription will end
+     */
     public RemoteFunctionCall<BigInteger> getPreBlockEnd(String providerAddress, String subscriberAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPREBLOCKEND, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(providerAddress), 
@@ -310,19 +373,42 @@ public class Arbiter extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Wrapper to initializing a subclass of BaseContract that can access the methods of the Arbiter contract.
+     * @param   contractAddress     Address of the deployed Arbiter contract
+     * @param   web3j               Instance of Web3j to interact with contracts
+     * @param   contractGasProvider Contract gas data
+     * @return  Loaded Arbiter contract  
+     */
     public static Arbiter load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Arbiter(contractAddress, web3j, credentials, contractGasProvider);
     }
 
+    /**
+     * Wrapper to initializing a subclass of BaseContract that can access the methods of the Arbiter contract.
+     * @param   type wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
+     * @return  Loaded Arbiter contract
+     */
     public static Arbiter load(NetworkProviderOptions type) throws Exception {
         return new Arbiter(type);
     }
 
+    /**
+     * Deploys a new Arbiter contract for testing purposes
+     * @param   web3j               Instance of Web3j to interact with contracts
+     * @param   credentials         Credentials account data
+     * @param   contractGasProvider Contract gas data
+     * @param   c                   Address of ZapCoordinator contract
+     * @return  A remote function call which returns a new Arbiter contract
+     */
     public static RemoteCall<Arbiter> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Arbiter.class, web3j, credentials, contractGasProvider, BINARY, encodedConstructor);
     }
 
+    /**
+     * Deploys a new Arbiter contract for testing purposes
+     */
     public static RemoteCall<Arbiter> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Arbiter.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
@@ -332,6 +418,9 @@ public class Arbiter extends BaseContract {
         return _addresses.get(networkId);
     }
 
+    /**
+     * Event object for data purchase events
+     */
     public static class DataPurchaseEventResponse extends BaseEventResponse {
         public String provider;
 
@@ -346,6 +435,9 @@ public class Arbiter extends BaseContract {
         public byte[] endpoint;
     }
 
+    /**
+     * Event object for data subscription events
+     */
     public static class DataSubscriptionEndEventResponse extends BaseEventResponse {
         public String provider;
 
@@ -354,12 +446,18 @@ public class Arbiter extends BaseContract {
         public BigInteger terminator;
     }
 
+    /**
+     * Event object for ownership transferred events
+     */
     public static class OwnershipTransferredEventResponse extends BaseEventResponse {
         public String previousOwner;
 
         public String newOwner;
     }
 
+    /**
+     * Event object for params passed events
+     */
     public static class ParamsPassedEventResponse extends BaseEventResponse {
         public String sender;
 
