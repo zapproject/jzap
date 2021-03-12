@@ -29,13 +29,7 @@ import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 
 /**
- * <p>Auto generated code.
- * <p><strong>Do not modify!</strong>
- * <p>Please use the <a href="https://docs.web3j.io/command_line.html">web3j command line tools</a>,
- * or the org.web3j.codegen.SolidityFunctionWrapperGenerator in the 
- * <a href="https://github.com/web3j/web3j/tree/master/codegen">codegen module</a> to update.
- *
- * <p>Generated with web3j version 1.4.0.
+ * Manage Providers and Curves registration
  */
 @SuppressWarnings("rawtypes")
 public class Registry extends BaseContract {
@@ -113,22 +107,30 @@ public class Registry extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-    // protected Registry(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected Registry(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    /**
+     * Contructor for Registry
+     * @param type Wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
+     */
     protected Registry(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "REGISTRY");
     }
 
+    /**
+     * Contructor for Registry
+     * @param   contractAddress     Address of deployed contract
+     * @param   web3j               Instance of Web3j interacting with contracts
+     * @param   credentials         Credentials account data
+     * @param   contractGasProvider Contract gas data
+     */
     protected Registry(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));
     }
 
+    /**
+     * Listens to new curve events emitted by Registry contract
+     * @param   transactionReceipt  Log of transactions done on the contract
+     * @return  List of new curve events
+     */
     public List<NewCurveEventResponse> getNewCurveEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(NEWCURVE_EVENT, transactionReceipt);
         ArrayList<NewCurveEventResponse> responses = new ArrayList<NewCurveEventResponse>(valueList.size());
@@ -144,6 +146,11 @@ public class Registry extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to new provider events emitted by Registry contract
+     * @param   transactionReceipt  Log of transactions done on the contract
+     * @return  List of new provider events
+     */
     public List<NewProviderEventResponse> getNewProviderEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(NEWPROVIDER_EVENT, transactionReceipt);
         ArrayList<NewProviderEventResponse> responses = new ArrayList<NewProviderEventResponse>(valueList.size());
@@ -157,6 +164,11 @@ public class Registry extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to ownership transferred events emitted by Registry contract
+     * @param   transactionReceipt  Log of transactions done on the contract
+     * @return  List of ownership transferred events
+     */
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, transactionReceipt);
         ArrayList<OwnershipTransferredEventResponse> responses = new ArrayList<OwnershipTransferredEventResponse>(valueList.size());
@@ -208,6 +220,12 @@ public class Registry extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Initializes a brand endpoint in the Registry contract, creating an Oracle entry if needed.
+     * @param   publicKey   A public key identifier for this oracle
+     * @param   title       A descriptor describing what data this oracle provide
+     * @return  A remote function call to Registry contract which return the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> initiateProvider(BigInteger publicKey, byte[] title) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_INITIATEPROVIDER, 
@@ -217,6 +235,13 @@ public class Registry extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Initialies a piecewise curve for a given provider's endpoint
+     * @param   endpoint    Data endpoint of the provider
+     * @param   curve       A piecewise curve
+     * @param   broker      The address allowed to bond/unbond; if 0, any address allowed
+     * @return  A remote function call to Registry contract which return the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> initiateProviderCurve(byte[] endpoint, List<BigInteger> curve, String broker) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_INITIATEPROVIDERCURVE, 
@@ -229,6 +254,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Converts a String to byte[32]
+     * @param   source  String to convert
+     * @return  A remote function call which returns the converted byte[32]
+     */
     public RemoteFunctionCall<byte[]> stringToBytes32(String source) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_STRINGTOBYTES32, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(source)), 
@@ -236,6 +266,12 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
+    /**
+     * Set the parameter of a provider
+     * @param   key     The key to be set
+     * @param   value   The value to set the key to
+     * @return  A remote function call to Registry contract which return the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> setProviderParameter(byte[] key, byte[] value) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SETPROVIDERPARAMETER, 
@@ -245,6 +281,12 @@ public class Registry extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Get a parameter from a provider
+     * @param   provider    Address of the provider
+     * @param   key         The key identifier of the provider
+     * @return  A remote function call which returns the value of the key
+     */
     public RemoteFunctionCall<byte[]> getProviderParameter(String provider, byte[] key) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPROVIDERPARAMETER, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider), 
@@ -253,6 +295,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
+    /**
+     * Get all the parameters of a provider
+     * @param   provider    Address of the provider
+     * @return  A remote function call which returns a list of keys
+     */
     public RemoteFunctionCall<List> getAllProviderParams(String provider) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETALLPROVIDERPARAMS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider)), 
@@ -268,6 +315,12 @@ public class Registry extends BaseContract {
                 });
     }
 
+    /**
+     * Initializes endpoint params for an endpoint. Can only be called by the owner of this oracle
+     * @param   endpoint        Data endpoint of this provider
+     * @param   endpointParams  The parameters that this endpoint accepts as query arguments
+     * @return  A remote function call to Registry contract which return the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> setEndpointParams(byte[] endpoint, List<byte[]> endpointParams) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SETENDPOINTPARAMS, 
@@ -287,6 +340,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Clear endpoint
+     * @param   endpoint    Data endpoint of this provider
+     * @return  A remote function call to Registry contract which return the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> clearEndpoint(byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CLEARENDPOINT, 
@@ -295,6 +353,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Gets the specified provider's public key
+     * @param    provider    Address of this provider
+     * @return  A remote function call which returns the public key of specified provider  
+     */
     public RemoteFunctionCall<BigInteger> getProviderPublicKey(String provider) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPROVIDERPUBLICKEY, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider)), 
@@ -302,6 +365,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Gets the specified provider's title
+     * @param   provider    Addres of this provider
+     * @return  A remote function call which returns the title of this provider
+     */
     public RemoteFunctionCall<byte[]> getProviderTitle(String provider) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPROVIDERTITLE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider)), 
@@ -309,6 +377,12 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
+    /**
+     * Get a provider's endpoint's curve from the Registry contract
+     * @param   provider    Addres of this provider
+     * @param   endpoint    Data endpoint of this provider
+     * @return  A remote function call which returns the curve
+     */
     public RemoteFunctionCall<List> getProviderCurve(String provider, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPROVIDERCURVE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider), 
@@ -325,6 +399,12 @@ public class Registry extends BaseContract {
                 });
     }
 
+    /**
+     * Get the provider curve length
+     * @param   provider    Addres of this provider
+     * @param   endpoint    Data endpoint of this provider
+     * @return  A remote function call which returns the curve length of this provider
+     */
     public RemoteFunctionCall<BigInteger> getProviderCurveLength(String provider, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPROVIDERCURVELENGTH, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider), 
@@ -333,6 +413,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Checks whether this provider is initiated
+     * @param   oracleAddress   Address of this provider
+     * @return  A remote function call which returns whether this provider is initiated
+     */
     public RemoteFunctionCall<Boolean> isProviderInitiated(String oracleAddress) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISPROVIDERINITIATED, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress)), 
@@ -340,6 +425,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
+    /**
+     * Gets the public key of this provider
+     * @param   provider    Address of this provider
+     * @return  A remote function call which returns the public key of this provider
+     */
     public RemoteFunctionCall<BigInteger> getPublicKey(String provider) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPUBLICKEY, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider)), 
@@ -347,6 +437,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Gets the title of this provider
+     * @param   provider    Address of this provider
+     * @return  A remote function call which returns the title of this provider
+     */
     public RemoteFunctionCall<byte[]> getTitle(String provider) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETTITLE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider)), 
@@ -354,6 +449,11 @@ public class Registry extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
+    /**
+     * Get the endpoints of a given provider
+     * @param   provider    Addres of this provider
+     * @return  A remote funcation call which returns a list of endpoints of the provider
+     */
     public RemoteFunctionCall<List> getProviderEndpoints(String provider) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPROVIDERENDPOINTS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider)), 
@@ -369,6 +469,12 @@ public class Registry extends BaseContract {
                 });
     }
 
+    /**
+     * Get the endpoint params at a certain index of a provider's endpoint
+     * @param   provider    Address of this provider
+     * @param   endpoint    Data endpoint of this provider
+     * @return  A remote function call which returns the endpoint params of this provider
+     */
     public RemoteFunctionCall<List> getEndpointParams(String provider, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETENDPOINTPARAMS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(provider), 
@@ -385,12 +491,28 @@ public class Registry extends BaseContract {
                 });
     }
 
+    /**
+     * Get a provider endpoint's broker address
+     * @param   oracleAddress   Address of this provider
+     * @param   endpoint        Data endpoint of this provider
+     * @return  A remote function call which returns the broker address of this endpoint
+     */
     public RemoteFunctionCall<String> getEndpointBroker(String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETENDPOINTBROKER, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
                 new org.web3j.abi.datatypes.generated.Bytes32(endpoint)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
+    }
+
+    /**
+     * Get the endpoint params at a certain index of a provider's endpoint
+     * @param   provider    Address of this provider
+     * @param   endpoint    Data endpoint of this parameter
+     * @return  Whether this endpoint is set
+     */
+    public boolean isEndpointSet(String provider, byte[] endpoint) throws Exception {
+        return !getCurveUnset(provider, endpoint).send();
     }
 
     public RemoteFunctionCall<Boolean> getCurveUnset(String provider, byte[] endpoint) {
@@ -423,38 +545,41 @@ public class Registry extends BaseContract {
                 });
     }
 
+    /**
+     * Wrapper to initialize a deployed Registry contract
+     * @param   contractAddress     Address of deployed contract
+     * @param   web3j               Instance of Web3j interacting with contracts
+     * @param   credentials         Credentials account data
+     * @param   contractGasProvider Contract gas data
+     * @return  Registry contract
+     */
     public static Registry load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Registry(contractAddress, web3j, credentials, contractGasProvider);
     }
-
-    // public static Registry load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new Registry(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    
+    /**
+     * Wrapper to initialize a deployed Registry contract
+     * @param   type Wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
+     * @return  Registry contract
+     */
     public static Registry load(NetworkProviderOptions type) throws Exception {
         return new Registry(type);
     }
 
+    /**
+     * Deploys a new Registry contract for testing
+     */
     public static RemoteCall<Registry> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Registry.class, web3j, credentials, contractGasProvider, BINARY, encodedConstructor);
     }
 
+    /**
+     * Deplots a new Registry contract for testing
+     */
     public static RemoteCall<Registry> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Registry.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Registry> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Registry.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Registry> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Registry.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
     @Override
@@ -466,6 +591,9 @@ public class Registry extends BaseContract {
         return _addresses.get(networkId);
     }
 
+    /**
+     * Wrapper object for new curve events
+     */
     public static class NewCurveEventResponse extends BaseEventResponse {
         public String provider;
 
@@ -476,12 +604,18 @@ public class Registry extends BaseContract {
         public List<BigInteger> curve;
     }
 
+    /**
+     * Wrapper object for new provider events
+     */
     public static class NewProviderEventResponse extends BaseEventResponse {
         public String provider;
 
         public byte[] title;
     }
 
+    /**
+     * Wrapper object for ownership transferred events
+     */
     public static class OwnershipTransferredEventResponse extends BaseEventResponse {
         public String previousOwner;
 

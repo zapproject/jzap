@@ -27,7 +27,6 @@ class ArbiterTest {
 
     private TransactionReceipt txPurchase;
     private TransactionReceipt txEnd;
-    private TransactionReceipt txParams;
 
     @SuppressWarnings("unchecked")
     @BeforeAll
@@ -69,7 +68,6 @@ class ArbiterTest {
 
         List<Arbiter.DataPurchaseEventResponse> events = arbiter.getDataPurchaseEvents(txPurchase);
         assertNotNull(events.get(0).provider);
-        // System.out.println("######### EVENT _ PROVIDER #######: " + events.get(0).provider);
     }
 
     // @Test

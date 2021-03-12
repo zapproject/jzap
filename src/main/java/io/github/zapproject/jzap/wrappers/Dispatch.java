@@ -28,13 +28,7 @@ import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 
 /**
- * <p>Auto generated code.
- * <p><strong>Do not modify!</strong>
- * <p>Please use the <a href="https://docs.web3j.io/command_line.html">web3j command line tools</a>,
- * or the org.web3j.codegen.SolidityFunctionWrapperGenerator in the 
- * <a href="https://github.com/web3j/web3j/tree/master/codegen">codegen module</a> to update.
- *
- * <p>Generated with web3j version 1.4.0.
+ * Provides an interface to the Dispatch contract for enabling data queries and responses
  */
 @SuppressWarnings("rawtypes")
 public class Dispatch extends BaseContract {
@@ -133,23 +127,30 @@ public class Dispatch extends BaseContract {
     static {
         _addresses = new HashMap<String, String>();
     }
-
-    // protected Dispatch(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected Dispatch(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    
+    /**
+     * Initializes a subclass of BaseContract that can access the methods of the Dispatch contract
+     * @param type wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
+     */
     protected Dispatch(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "DISPATCH");
     }
 
+    /**
+     * Initializes a subclass of BaseContract that can access the methods of the Dispatch contract
+     * @param contractAddress       Addres of deployed Dispatch contract
+     * @param web3j                 Instance of Web3j interacts with deployed contracts
+     * @param credentials           Credential account data
+     * @param contractGasProvider   Contract gas data
+     */
     protected Dispatch(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));
     }
 
+    /**
+     * Listens to cancel request events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<CanceledRequestEventResponse> getCanceledRequestEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(CANCELEDREQUEST_EVENT, transactionReceipt);
         ArrayList<CanceledRequestEventResponse> responses = new ArrayList<CanceledRequestEventResponse>(valueList.size());
@@ -164,6 +165,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to fulfill query events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<FulfillQueryEventResponse> getFulfillQueryEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(FULFILLQUERY_EVENT, transactionReceipt);
         ArrayList<FulfillQueryEventResponse> responses = new ArrayList<FulfillQueryEventResponse>(valueList.size());
@@ -178,6 +183,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to incoming events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<IncomingEventResponse> getIncomingEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(INCOMING_EVENT, transactionReceipt);
         ArrayList<IncomingEventResponse> responses = new ArrayList<IncomingEventResponse>(valueList.size());
@@ -196,6 +205,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to offchain response events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<OffchainResponseEventResponse> getOffchainResponseEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OFFCHAINRESPONSE_EVENT, transactionReceipt);
         ArrayList<OffchainResponseEventResponse> responses = new ArrayList<OffchainResponseEventResponse>(valueList.size());
@@ -211,6 +224,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listen to offchain response events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<OffchainResponseIntEventResponse> getOffchainResponseIntEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OFFCHAINRESPONSEINT_EVENT, transactionReceipt);
         ArrayList<OffchainResponseIntEventResponse> responses = new ArrayList<OffchainResponseIntEventResponse>(valueList.size());
@@ -226,6 +243,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to offchain result1 events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<OffchainResult1EventResponse> getOffchainResult1Events(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OFFCHAINRESULT1_EVENT, transactionReceipt);
         ArrayList<OffchainResult1EventResponse> responses = new ArrayList<OffchainResult1EventResponse>(valueList.size());
@@ -241,6 +262,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to offchain result2 events
+     * @param transactionReceipt Log of transactions done wtih contracts
+     */
     public List<OffchainResult2EventResponse> getOffchainResult2Events(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OFFCHAINRESULT2_EVENT, transactionReceipt);
         ArrayList<OffchainResult2EventResponse> responses = new ArrayList<OffchainResult2EventResponse>(valueList.size());
@@ -257,6 +282,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to offchain result3 events
+     * @param transactionReceipt Log of transactions done wtih contracts
+     */
     public List<OffchainResult3EventResponse> getOffchainResult3Events(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OFFCHAINRESULT3_EVENT, transactionReceipt);
         ArrayList<OffchainResult3EventResponse> responses = new ArrayList<OffchainResult3EventResponse>(valueList.size());
@@ -274,6 +303,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to offchain result4 events
+     * @param transactionReceipt Log of transactions done wtih contracts
+     */
     public List<OffchainResult4EventResponse> getOffchainResult4Events(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OFFCHAINRESULT4_EVENT, transactionReceipt);
         ArrayList<OffchainResult4EventResponse> responses = new ArrayList<OffchainResult4EventResponse>(valueList.size());
@@ -292,6 +325,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to ownership transferred events
+     * @param transactionReceipt Log of transactions done wtih contracts
+     */
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, transactionReceipt);
         ArrayList<OwnershipTransferredEventResponse> responses = new ArrayList<OwnershipTransferredEventResponse>(valueList.size());
@@ -305,6 +342,10 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens to offchain revert cancelation events
+     * @param transactionReceipt Log of transactions done wtih contracts
+     */
     public List<RevertCancelationEventResponse> getRevertCancelationEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(REVERTCANCELATION_EVENT, transactionReceipt);
         ArrayList<RevertCancelationEventResponse> responses = new ArrayList<RevertCancelationEventResponse>(valueList.size());
@@ -371,6 +412,14 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Queries data from a subscriber to oa given provider's endpoint
+     * @param   provider        Address of the data provider
+     * @param   userQuery       Subscriber given query string to be handled by provider
+     * @param   endpoint        Data endpoint of provider, meant to determine how query is handled
+     * @param   endpointParams  Params passed to data provider's endpoint
+     * @return  A remote function call to Dispatch contract which returns the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> query(String provider, String userQuery, byte[] endpoint, List<byte[]> endpointParams) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_QUERY, 
@@ -384,6 +433,11 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Cancel a query with it's ID
+     * @param   id  ID of query to cancel
+     * @return  A remote function call to Dispatch contract which returns the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> cancelQuery(BigInteger id) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CANCELQUERY, 
@@ -392,6 +446,12 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Provider responds to a byte32 query received 
+     * @param   id          ID of query
+     * @param   response    List of responses returned by provider, length determines which dispatch response is called
+     * @return  A remote function call to Dispatch contract which returns the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> respondBytes32Array(BigInteger id, List<byte[]> response) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPONDBYTES32ARRAY, 
@@ -403,6 +463,12 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Provider responds to a int (BigInteger) array query received
+     * @param   id          ID of query
+     * @param   response    List of BigInteger reponses returned by provider
+     * @return  A remote function call to Dispatch contract which returns a transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> respondIntArray(BigInteger id, List<BigInteger> response) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPONDINTARRAY, 
@@ -414,6 +480,12 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Provider responds to a query received
+     * @param   id          ID of query
+     * @param   response    A response returned by provider
+     * @return  A remote function call to Dispatch contract which returns the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND1, 
@@ -423,6 +495,13 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Provider responds to a query received
+     * @param   id          ID of query
+     * @param   response1   First response returned by provider
+     * @param   response2   Second response returned by provider
+     * @return  A remote function call to Dispatch contract which returns the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response1, String response2) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND2, 
@@ -433,6 +512,14 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Provider responds to a query received
+     * @param   id          ID of query
+     * @param   response1   First response returned by provider
+     * @param   response2   Second response returned by provider
+     * @param   response3   Third response returned by provider
+     * @return  A remote function call to Dispatch contract which returns the transaction receipt  
+     */
     public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response1, String response2, String response3) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND3, 
@@ -444,6 +531,14 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * @param   id          ID of query
+     * @param   response1   First response returned by provider
+     * @param   response2   Second response returned by provider
+     * @param   response3   Third response returned by provider
+     * @param   response4   Forth response returned by provider
+     * @return  A remote function call to Dispatch contract which returns the transaction receipt 
+     */
     public RemoteFunctionCall<TransactionReceipt> respond(BigInteger id, String response1, String response2, String response3, String response4) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_RESPOND4, 
@@ -456,6 +551,11 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Get provider of this query id
+     * @param   id  ID of query
+     * @return  A remote function call to Dispatch contract which returns the provider's address
+     */
     public RemoteFunctionCall<String> getProvider(BigInteger id) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETPROVIDER, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id)), 
@@ -463,6 +563,11 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
+    /**
+     * Get subscriber's address that submitted the query
+     * @param   id  ID of query
+     * @return  A remote function call to Dispatch contract which returns the subscriber's address
+     */
     public RemoteFunctionCall<String> getSubscriber(BigInteger id) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETSUBSCRIBER, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id)), 
@@ -470,6 +575,11 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
+    /**
+     * Get endpoint of the query
+     * @param   id  ID of query
+     * @return  A remote function call to Dispatch contract which returns the endpoint of the query
+     */
     public RemoteFunctionCall<byte[]> getEndpoint(BigInteger id) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETENDPOINT, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id)), 
@@ -477,6 +587,11 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
+    /**
+     * Get status of query
+     * @param   id  ID of query
+     * @return  A remote function call to Dispatch contract which returns the status of the query
+     */
     public RemoteFunctionCall<BigInteger> getStatus(BigInteger id) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETSTATUS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id)), 
@@ -484,6 +599,11 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Get status if a query is cancelled
+     * @param   id  ID of query
+     * @return  A remote funnction call to Dispatch contract which returns the status if a query is cancelled
+     */
     public RemoteFunctionCall<BigInteger> getCancel(BigInteger id) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETCANCEL, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id)), 
@@ -498,6 +618,11 @@ public class Dispatch extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
+    /**
+     * Get information about onchain or offchain subscriber of this query
+     * @param   id  ID of query
+     * @return  A remote function call to Dispatch contract which returns if offchain or onchain
+     */
     public RemoteFunctionCall<Boolean> getSubscriberOnchain(BigInteger id) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETSUBSCRIBERONCHAIN, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(id)), 
@@ -508,10 +633,6 @@ public class Dispatch extends BaseContract {
     public static Dispatch load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Dispatch(contractAddress, web3j, credentials, contractGasProvider);
     }
-
-    // public static Dispatch load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new Dispatch(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
 
     public static Dispatch load(NetworkProviderOptions type) throws Exception {
         return new Dispatch(type);
@@ -527,18 +648,6 @@ public class Dispatch extends BaseContract {
         return deployRemoteCall(Dispatch.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
     }
 
-    @Deprecated
-    public static RemoteCall<Dispatch> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Dispatch.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Dispatch> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Dispatch.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
     @Override
     protected String getStaticDeployedAddress(String networkId) {
         return _addresses.get(networkId);
@@ -548,6 +657,9 @@ public class Dispatch extends BaseContract {
         return _addresses.get(networkId);
     }
 
+    /**
+     * Event object for canceled request events
+     */
     public static class CanceledRequestEventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -556,6 +668,9 @@ public class Dispatch extends BaseContract {
         public String provider;
     }
 
+    /**
+     * Event object for fulfill query events
+     */
     public static class FulfillQueryEventResponse extends BaseEventResponse {
         public String subscriber;
 
@@ -564,6 +679,9 @@ public class Dispatch extends BaseContract {
         public byte[] endpoint;
     }
 
+    /**
+     * Event object for incoming events
+     */
     public static class IncomingEventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -580,6 +698,9 @@ public class Dispatch extends BaseContract {
         public Boolean onchainSubscriber;
     }
 
+    /**
+     * Event object for offchain response events
+     */
     public static class OffchainResponseEventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -590,6 +711,9 @@ public class Dispatch extends BaseContract {
         public List<byte[]> response;
     }
 
+    /**
+     * Event object for offchain response int events
+     */
     public static class OffchainResponseIntEventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -600,6 +724,9 @@ public class Dispatch extends BaseContract {
         public List<BigInteger> response;
     }
 
+    /**
+     * Event object for offchain result1 events
+     */
     public static class OffchainResult1EventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -610,6 +737,9 @@ public class Dispatch extends BaseContract {
         public String response1;
     }
 
+    /**
+     * Event object for offchain result2 events
+     */
     public static class OffchainResult2EventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -622,6 +752,9 @@ public class Dispatch extends BaseContract {
         public String response2;
     }
 
+    /**
+     * Event object for offchain result3 events
+     */
     public static class OffchainResult3EventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -636,6 +769,9 @@ public class Dispatch extends BaseContract {
         public String response3;
     }
 
+    /**
+     * Event object for offchain result4 events
+     */
     public static class OffchainResult4EventResponse extends BaseEventResponse {
         public BigInteger id;
 
@@ -652,12 +788,18 @@ public class Dispatch extends BaseContract {
         public String response4;
     }
 
+    /**
+     * Event object for ownership transferred events
+     */
     public static class OwnershipTransferredEventResponse extends BaseEventResponse {
         public String previousOwner;
 
         public String newOwner;
     }
 
+    /**
+     * Event object for rever cancelation events
+     */
     public static class RevertCancelationEventResponse extends BaseEventResponse {
         public BigInteger id;
 
