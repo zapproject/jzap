@@ -173,8 +173,6 @@ class ProviderTest {
     @Order(4)
     void testProviderRespond() throws Exception {
         ResponseArgs args = new ResponseArgs();
-        args.contractGasProvider = gasPro;
-        args.credentials = creds;
         args.dynamic = false;
         args.queryID = new BigInteger("0");
         args.responseParams = new ArrayList<String>();

@@ -4,17 +4,17 @@ import java.math.BigInteger;
 import java.util.List;
 
 
-class ResponseArgs extends DefaultTx {
+class ResponseArgs {
     public BigInteger queryID;
     public List<String> responseParams;
     public boolean dynamic;
 }
 
-class cancelQuery extends DefaultTx {
+class cancelQuery {
     public BigInteger queryId;
 }
 
-class QueryArgs extends DefaultTx {
+class QueryArgs {
     public String provider;
     public String query;
     public byte[] endpoint;

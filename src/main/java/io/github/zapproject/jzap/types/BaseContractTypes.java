@@ -42,7 +42,7 @@ class NetworkProviderOptions {
     }
 }
 
-class TransferType extends DefaultTx {
+class TransferType {
     public String to;
     public BigInteger amount;
 }

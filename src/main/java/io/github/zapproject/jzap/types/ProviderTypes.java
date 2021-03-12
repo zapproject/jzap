@@ -4,12 +4,12 @@ import java.math.BigInteger;
 import java.util.List;
 
 
-class InitProvider extends DefaultTx {
+class InitProvider {
     public BigInteger publicKey;
     public byte[] title;
 }
 
-class InitCurve extends DefaultTx {
+class InitCurve {
     public byte[] endpoint;
     public List<BigInteger> term;
     public String broker;
@@ -31,21 +31,21 @@ class ListenQuery {
     public BigInteger fromBlock;
 }
 
-class Response extends DefaultTx {
+class Response {
     public BigInteger queryId;
     public List<BigInteger> responseParams;
     public boolean dynamic;
 }
 
-class SetProviderParams extends DefaultTx {
+class SetProviderParams {
     public byte[] key;
     public byte[] value;
 }
 
-class SetProviderTitle extends DefaultTx {
+class SetProviderTitle {
     public byte[] title;
 }
 
-class EndpointMethods extends DefaultTx {
+class EndpointMethods {
     public byte[] endpoint;
 }

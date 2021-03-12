@@ -10,12 +10,12 @@ interface SubscriberHandler {
     public void handleSubscription();
 }
 
-class TokenBondType extends DefaultTx {
+class TokenBondType {
     public byte[] endpoint;
     public BigInteger dots;
 }
 
-class BondType extends DefaultTx {
+class BondType {
     public String subscriber;
     public String provider;
     public byte[] endpoint;
@@ -26,37 +26,37 @@ class DelegateBondType extends BondType {
     public String subscriber;
 }
 
-class UnbondType extends DefaultTx {
+class UnbondType {
     public String provider;
     public byte[] endpoint;
     public BigInteger dots;
 }
 
-class SubscribeType extends DefaultTx {
+class SubscribeType {
     public String provider;
     public byte[] endpoint;
     public BigInteger dots;
     public List<byte[]> endpointParams;
 }
 
-class ApproveType extends DefaultTx {
+class ApproveType {
     public String provider;
     public BigInteger zapNum;
 }
 
-class BondArgs extends DefaultTx {
+class BondArgs {
     public String provider;
     public byte[] endpoint;
     public BigInteger dots;
 }
 
-class UnbondArgs extends DefaultTx {
+class UnbondArgs {
     public String provider;
     public byte[] endpoint;
     public BigInteger dots;
 }
 
-class DelegateBondArgs extends DefaultTx {
+class DelegateBondArgs {
     public String provider;
     public String subscriber;
     public byte[] endpoint;
@@ -77,7 +77,7 @@ class CalcBondRateType {
     public BigInteger zapNum;
 }
 
-class BondFilter extends Filter {
+class BondFilter {
     public BigInteger numDots;
     public BigInteger numZap;
 }
