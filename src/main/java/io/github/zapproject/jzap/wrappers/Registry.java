@@ -120,7 +120,7 @@ public class Registry extends BaseContract {
      * @param   contractAddress     Address of deployed contract
      * @param   web3j               Instance of Web3j interacting with contracts
      * @param   credentials         Credentials account data
-     * @param   contractGasProvider Contract gas dataContractGasProvider contractGasProvider}
+     * @param   contractGasProvider Contract gas data
      */
     protected Registry(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));

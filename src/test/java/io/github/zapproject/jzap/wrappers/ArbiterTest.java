@@ -27,7 +27,6 @@ class ArbiterTest {
 
     private TransactionReceipt txPurchase;
     private TransactionReceipt txEnd;
-    private TransactionReceipt txParams;
 
     @SuppressWarnings("unchecked")
     @BeforeAll
