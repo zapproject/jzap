@@ -84,7 +84,7 @@
 							<executable>compile.sh</executable>
 					</configuration>
 				</execution>
-				<execution>
+				<!-- <execution>
 					<id>JSON to JAVA</id>
 					<phase>process-classes</phase>
 					<goals>
@@ -93,7 +93,7 @@
 					<configuration>
 							<executable>generateWrappers.sh</executable>
 					</configuration>
-				</execution>
+				</execution> -->
 		</executions>
       </plugin>
 
