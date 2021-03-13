@@ -71,20 +71,20 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-			<artifactId>exec-maven-plugin</artifactId>
-			<groupId>org.codehaus.mojo</groupId>
-			<executions>
-				<execution>
-					<id>Sol to JSON</id>
-					<phase>validate</phase>
-					<goals>
-							<goal>exec</goal>
-					</goals>
-					<configuration>
-							<executable>compile.sh</executable>
-					</configuration>
-				</execution>
-				<execution>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<executions>
+					<execution>
+						<id>Sol to JSON</id>
+						<phase>validate</phase>
+						<goals>
+								<goal>exec</goal>
+						</goals>
+						<configuration>
+								<executable>compile.sh</executable>
+						</configuration>
+					</execution>
+				<!-- <execution>
 					<id>JSON to JAVA</id>
 					<phase>process-classes</phase>
 					<goals>
@@ -93,9 +93,9 @@
 					<configuration>
 							<executable>generateWrappers.sh</executable>
 					</configuration>
-				</execution>
-		</executions>
-      </plugin>
+				</execution> -->
+				</executions>
+      		</plugin>
 
 		</plugins>
 	</build>
@@ -110,6 +110,9 @@
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-source-plugin</artifactId>
 			<version>2.2.1</version>
+			<configuration>
+				<skipTests>true</skipTests>
+			</configuration>
 			<executions>
 				<execution>
 				<id>attach-sources</id>

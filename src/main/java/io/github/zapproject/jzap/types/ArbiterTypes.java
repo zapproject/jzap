@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 
-class SubscriptionInit extends DefaultTx {
+class SubscriptionInit {
 	public String provider;
 	public byte[] endpoint;
 	public List<byte[]> endpointParams;
@@ -13,7 +13,7 @@ class SubscriptionInit extends DefaultTx {
 }
 
 
- class SubscriptionEnd extends DefaultTx {
+ class SubscriptionEnd {
 	public String address;
     public String subscriber;
     public byte[] endpoint;
@@ -27,14 +27,14 @@ class SubscriptionType {
 }
 
 
-class SubscriptionParams extends DefaultTx {
+class SubscriptionParams {
 	public String receiver;
 	public byte[] endpoint;
 	public List<byte[]> params;
 }
 
 
-class DataPurchaseEvent extends Filter {
+class DataPurchaseEvent {
 	public BigInteger publicKey;
 	public BigInteger amount;
 	public byte[] endpoint;
@@ -42,7 +42,7 @@ class DataPurchaseEvent extends Filter {
 }
 
 
-class SubscriptionEndEvent extends Filter {
+class SubscriptionEndEvent {
 	public String terminator;
 }
 

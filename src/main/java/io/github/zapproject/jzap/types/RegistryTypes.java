@@ -3,11 +3,11 @@ package io.github.zapproject.jzap;
 import java.util.List;
 
 
-class EndpointParams extends DefaultTx {
+class EndpointParams {
     public byte[] endpoint;
     public List<byte[]> endpointParams;
 }
 
-class Endpoint extends DefaultTx {
+class Endpoint {
     public byte[] endpoint;
 }
