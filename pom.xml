@@ -74,49 +74,31 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<groupId>org.codehaus.mojo</groupId>
 				<executions>
-					<!-- <execution>
-						<id>Deploy Hardhat</id>
+					<execution>
+						<id>Hardhat Docker</id>
 						<phase>compile</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>start.sh</executable>
+							<executable>docker.sh</executable>
 						</configuration>
 					</execution>
 					<execution>
-						<id>Wait</id>
+						<id>Wait for hardhat</id>
 						<phase>test-compile</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>wait.sh</executable>
-						</configuration>
-					</execution> -->
-					<!-- <execution>
-						<id>Sol to JSON</id>
-						<phase>validate</phase>
-						<goals>
-								<goal>exec</goal>
-						</goals>
-						<configuration>
-								<executable>compile.sh</executable>
+							<executable>sleep</executable>
+							<arguments>
+								<argument>60</argument>
+							</arguments>
 						</configuration>
 					</execution>
-				<execution>
-					<id>JSON to JAVA</id>
-					<phase>process-classes</phase>
-					<goals>
-							<goal>exec</goal>
-					</goals>
-					<configuration>
-							<executable>generateWrappers.sh</executable>
-					</configuration>
-				</execution> -->
 				</executions>
       		</plugin>
-
 		</plugins>
 	</build>
 

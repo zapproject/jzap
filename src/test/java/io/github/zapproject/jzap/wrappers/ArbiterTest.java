@@ -31,7 +31,7 @@ class ArbiterTest {
     @SuppressWarnings("unchecked")
     @BeforeAll
     static void setup() throws Exception {
-        web3j = Web3j.build(new HttpService());
+        web3j = Web3j.build(new HttpService("http://172.17.0.2:8545"));
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         creds2 = Credentials.create("0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6");
         gasPro = new DefaultGasProvider();
