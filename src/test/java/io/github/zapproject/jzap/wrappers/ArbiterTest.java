@@ -13,7 +13,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ArbiterTest {
+class ArbiterIntegrationTest {
     private static Arbiter arbiter;
     private static Bondage bondage;
     private static Registry registry;

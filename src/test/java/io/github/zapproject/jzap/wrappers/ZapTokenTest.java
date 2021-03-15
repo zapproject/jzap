@@ -14,7 +14,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ZapTokenTest {
+class ZapTokenIntegrationTest {
     private static ZapToken token;
     private static Web3j web3j;
     private static Credentials creds;

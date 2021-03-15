@@ -14,7 +14,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class BondageTest {
+class BondageIntegrationTest {
     private static Bondage bondage;
     
     private static Web3j web3j;

@@ -20,11 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProviderTest {
+class ProviderIntegrationTest {
     static Provider provider;
 
     static Web3j web3j;
     static Credentials creds;
+    static Credentials creds2;
     static ContractGasProvider gasPro;
 
     static byte[] title = new byte[32];
@@ -43,6 +44,7 @@ class ProviderTest {
     static void setup() throws Exception {
         web3j = Web3j.build(new HttpService("http://172.17.0.2:8545"));
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
+        creds2 = Credentials.create("0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6");
         gasPro = new DefaultGasProvider();
 
         NetworkProviderOptions opt = new NetworkProviderOptions(31337, web3j, creds, gasPro);
@@ -174,11 +176,12 @@ class ProviderTest {
     void testProviderRespond() throws Exception {
         ResponseArgs args = new ResponseArgs();
         args.dynamic = false;
-        args.queryID = new BigInteger("0");
         args.responseParams = new ArrayList<String>();
         args.responseParams.add("respond1");
+        // Bondage bond = Bondage.load("0x8a791620dd6260079bf849dc5567adc3f2fdc318", web3j, creds2, gasPro);
         Dispatch dis = Dispatch.load("0x5fc8d32690cc91d4c39d9d3abcbd16989f875707", web3j, creds, gasPro);
     
+        // bond.bond(creds.getAddress(), endpoint, new BigInteger("999")).send();
         txQueries = dis.query(creds.getAddress(), "query", endpoint2, params).send();
         List <Dispatch.IncomingEventResponse> events = provider.listenQueries(txQueries);
         args.queryID = events.get(events.size()-1).id;

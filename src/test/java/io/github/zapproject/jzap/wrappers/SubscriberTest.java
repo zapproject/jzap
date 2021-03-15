@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class SubscriberTest {
+class SubscriberIntegrationTest {
     static Subscriber subscriber;
 
     static Web3j web3j;

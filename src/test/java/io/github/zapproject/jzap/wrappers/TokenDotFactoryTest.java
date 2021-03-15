@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TokenDotFactoryTest {
+class TokenDotFactoryIntegrationTest {
     static TokenDotFactory dotFactory;
 
     static Web3j web3j;

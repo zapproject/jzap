@@ -28,9 +28,13 @@ Troubleshoot: @ http://docs.web3j.io/latest/quickstart/
 npm i -g truffle
 ```
 
-##### 4. (OPTIONAL) Import your desired contracts into contracts/
+##### 4. Install Docker
+https://docs.docker.com/engine/install/ 
 
-##### 5. Compile and run using spring boot
+
+##### 5. (OPTIONAL) Import your desired contracts into contracts/
+
+##### 6. Compile and run using spring boot
 
 ```
 mvn spring-boot:run
@@ -39,6 +43,13 @@ mvn spring-boot:run
 
 
 ## Running build and tests
+
+##### 1. Unit Tests
+mvn test
+
+##### 2. Integration Tests
+./start.sh
+
 
 ## Packages
 
