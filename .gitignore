@@ -33,5 +33,5 @@ build
 .classpath
 .vscode/
 
-# Compiled Java Contract JSON
-# build/contracts/
+# Script output file
+containerID.txt
