@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.github.zapproject</groupId>
 	<artifactId>jzap</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.6</version>
 	<name>JZap</name>
 	<description>Java ZAP API to allow Java developers to interact with the ZAP Smart contract</description>
 	<properties>
@@ -55,6 +55,23 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<!--to be imported on other projects-->
+							<classifier>app-to-import</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
