@@ -7,6 +7,30 @@
 	<version>0.0.6</version>
 	<name>JZap</name>
 	<description>Java ZAP API to allow Java developers to interact with the ZAP Smart contract</description>
+	
+	<licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://raw.githubusercontent.com/zapproject/jzap/main/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+	<scm>
+        <connection>scm:git:git://github.com/zapproject/jzap.git</connection>
+        <developerConnection>scm:git:git://github.com/zapproject/jzap.git</developerConnection>
+        <url>https://github.com/zapproject/jzap</url>
+        <tag>HEAD</tag>
+    </scm>
+
+	<url>https://github.com/zapproject/jzap</url>
+	
+	<developers>
+        <developer>
+            <id>alex</id>
+        </developer>
+    </developers>
+
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -48,23 +72,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<phase>package</phase>
-						<configuration>
-							<!--to be imported on other projects-->
-							<classifier>app-to-import</classifier>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>

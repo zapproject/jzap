@@ -1,1 +1,1 @@
-mvn verify -Psurefire
+mvn clean verify -Psurefire
