@@ -11,7 +11,7 @@ public class NetworkProviderOptions {
     public Credentials credentials;
     public ContractGasProvider contractGasProvider;
 
-    NetworkProviderOptions(int networkId, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
+    public NetworkProviderOptions(int networkId, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
         this.networkId = networkId;
         this.web3j = web3j;
         this.credentials = credentials;

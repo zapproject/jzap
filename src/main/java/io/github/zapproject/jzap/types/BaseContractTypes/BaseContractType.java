@@ -12,7 +12,7 @@ public class BaseContractType {
     public Credentials credentials;
     public ContractGasProvider contractGasProvider;
 
-    BaseContractType(
+    public BaseContractType(
         String bytecode,
         String address, 
         Web3j web3j, 
