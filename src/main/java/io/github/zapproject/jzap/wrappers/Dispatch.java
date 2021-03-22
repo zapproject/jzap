@@ -1,11 +1,14 @@
 package io.github.zapproject.jzap;
 
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import org.web3j.abi.EventEncoder;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -19,9 +22,12 @@ import org.web3j.abi.datatypes.generated.Int256;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
@@ -165,6 +171,27 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    public Flowable<CanceledRequestEventResponse> canceledRequestEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, CanceledRequestEventResponse>() {
+            @Override
+            public CanceledRequestEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(CANCELEDREQUEST_EVENT, log);
+                CanceledRequestEventResponse typedResponse = new CanceledRequestEventResponse();
+                typedResponse.log = log;
+                typedResponse.id = (BigInteger) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<CanceledRequestEventResponse> canceledRequestEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(CANCELEDREQUEST_EVENT));
+        return canceledRequestEventFlowable(filter);
+    }
+
     /**
      * Listens to fulfill query events
      * @param transactionReceipt Log of transactions done with contracts
@@ -182,6 +209,28 @@ public class Dispatch extends BaseContract {
         }
         return responses;
     }
+
+    public Flowable<FulfillQueryEventResponse> fulfillQueryEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, FulfillQueryEventResponse>() {
+            @Override
+            public FulfillQueryEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(FULFILLQUERY_EVENT, log);
+                FulfillQueryEventResponse typedResponse = new FulfillQueryEventResponse();
+                typedResponse.log = log;
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<FulfillQueryEventResponse> fulfillQueryEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(FULFILLQUERY_EVENT));
+        return fulfillQueryEventFlowable(filter);
+    }
+
 
     /**
      * Listens to incoming events
@@ -205,6 +254,31 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    public Flowable<IncomingEventResponse> incomingEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, IncomingEventResponse>() {
+            @Override
+            public IncomingEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(INCOMING_EVENT, log);
+                IncomingEventResponse typedResponse = new IncomingEventResponse();
+                typedResponse.log = log;
+                typedResponse.id = (BigInteger) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.query = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getNonIndexedValues().get(1).getValue();
+                typedResponse.endpointParams = (List<byte[]>) eventValues.getNonIndexedValues().get(2).getValue();
+                typedResponse.onchainSubscriber = (Boolean) eventValues.getNonIndexedValues().get(3).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<IncomingEventResponse> incomingEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(INCOMING_EVENT));
+        return incomingEventFlowable(filter);
+    }
+
     /**
      * Listens to offchain response events
      * @param transactionReceipt Log of transactions done with contracts
@@ -222,6 +296,28 @@ public class Dispatch extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
+    }
+
+    public Flowable<OffchainResponseEventResponse> offchainResponseEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResponseEventResponse>() {
+            @Override
+            public OffchainResponseEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(OFFCHAINRESPONSE_EVENT, log);
+                OffchainResponseEventResponse typedResponse = new OffchainResponseEventResponse();
+                typedResponse.log = log;
+                typedResponse.id = (BigInteger) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.response = (List<byte[]>) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<OffchainResponseEventResponse> offchainResponseEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESPONSE_EVENT));
+        return offchainResponseEventFlowable(filter);
     }
 
     /**
@@ -243,6 +339,28 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    public Flowable<OffchainResponseIntEventResponse> offchainResponseIntEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResponseIntEventResponse>() {
+            @Override
+            public OffchainResponseIntEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(OFFCHAINRESPONSEINT_EVENT, log);
+                OffchainResponseIntEventResponse typedResponse = new OffchainResponseIntEventResponse();
+                typedResponse.log = log;
+                typedResponse.id = (BigInteger) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.response = (List<BigInteger>) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<OffchainResponseIntEventResponse> offchainResponseIntEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESPONSEINT_EVENT));
+        return offchainResponseIntEventFlowable(filter);
+    }
+
     /**
      * Listens to offchain result1 events
      * @param transactionReceipt Log of transactions done with contracts
@@ -260,6 +378,28 @@ public class Dispatch extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
+    }
+
+    public Flowable<OffchainResult1EventResponse> offchainResult1EventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResult1EventResponse>() {
+            @Override
+            public OffchainResult1EventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(OFFCHAINRESULT1_EVENT, log);
+                OffchainResult1EventResponse typedResponse = new OffchainResult1EventResponse();
+                typedResponse.log = log;
+                typedResponse.id = (BigInteger) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.response1 = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<OffchainResult1EventResponse> offchainResult1EventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESULT1_EVENT));
+        return offchainResult1EventFlowable(filter);
     }
 
     /**
