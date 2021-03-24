@@ -41,8 +41,11 @@ public class Artifacts {
         if (dir)
             map = om.readValue(new File(path), LinkedHashMap.class);
         else{
-            map =  om.readValue(new File("src/main/java/io/github/zapproject/jzap/artifacts/contracts/" + path + ".json"), 
-                LinkedHashMap.class);
+            // map =  om.readValue(new File("src/main/resources/contracts/" + path + ".json"), 
+            //     LinkedHashMap.class);
+ 
+            map = om.readValue(this.getClass().getClassLoader().getResourceAsStream("contracts/" + path + ".json"),
+                    LinkedHashMap.class);
         }
         /*
             ObjectMapper is having issues with type reference as it expects Objects that are of same data type
