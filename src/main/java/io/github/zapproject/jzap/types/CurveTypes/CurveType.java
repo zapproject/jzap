@@ -4,6 +4,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 
-class CurveType {
+public class CurveType {
     public List<BigInteger> curve;
 }

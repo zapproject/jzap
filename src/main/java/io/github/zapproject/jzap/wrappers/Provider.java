@@ -114,7 +114,7 @@ public class Provider {
      * @return  Whether this endpoint has been created for this provider
      */
     public boolean isEndpointCreated(byte[] endpoint) throws Exception {
-        return !registry.getEndpointBroker(providerOwner, endpoint).send().isEmpty();
+        return !registry.getEndpointBroker(providerOwner, endpoint).send().trim().isBlank();
     }
 
     /**
