@@ -1,7 +1,9 @@
 package io.github.zapproject.jzap;
 
+import io.reactivex.Flowable;
 import java.math.BigInteger;
 import java.util.List;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 
@@ -168,6 +170,16 @@ public class Subscriber {
      */
     public List<Dispatch.OffchainResponseEventResponse> listenToOffchainResponse(TransactionReceipt txReceipt) {
         return dispatch.getOffchainResponseEvents(txReceipt);
+    }
+
+    /**
+     * Listens to all offchain responses events
+     * @param   DefaultBlockParameter   Start block to listening for events
+     * @param   DefaultBlockParameter   End block to listening for events
+     * @return  Flowable of a offchain response event
+     */
+    public Flowable<Dispatch.OffchainResponseEventResponse> listenToOffchainResponse(DefaultBlockParameter start, DefaultBlockParameter end) {
+        return dispatch.offchainResponseEventFlowable(start, end);
     }
 
     /**

@@ -187,7 +187,7 @@ public class Dispatch extends BaseContract {
     }
 
     public Flowable<CanceledRequestEventResponse> canceledRequestEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
-        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        EthFilter filter = new EthFilter(startBlock, endBlock, this.address);
         filter.addSingleTopic(EventEncoder.encode(CANCELEDREQUEST_EVENT));
         return canceledRequestEventFlowable(filter);
     }
