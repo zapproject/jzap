@@ -1,8 +1,10 @@
 package io.github.zapproject.jzap;
 
+import io.reactivex.Flowable;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 
@@ -296,6 +298,16 @@ public class Provider {
      */
     public List<Dispatch.IncomingEventResponse> listenQueries(TransactionReceipt txReceipt) {
         return dispatch.getIncomingEvents(txReceipt);
+    }
+
+    /**
+     * Listen to query events emitted by the Dispatch contract
+     * @param   DefaultBlockParameter   Start block to listening for events
+     * @param   DefaultBlockParameter   End block to listening for events
+     * @return  List of incoming events
+     */
+    public Flowable<Dispatch.IncomingEventResponse> listenQueries(DefaultBlockParameter start, DefaultBlockParameter end) {
+        return dispatch.incomingEventFlowable(start, end);
     }
 
     /**
