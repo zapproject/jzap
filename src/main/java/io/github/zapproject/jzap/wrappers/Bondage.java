@@ -1,11 +1,14 @@
 package io.github.zapproject.jzap;
 
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import org.web3j.abi.EventEncoder;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -16,13 +19,17 @@ import org.web3j.abi.datatypes.generated.Bytes32;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
+
 
 /**
  * Provides an interface to the Bondage contract for enabling bond and unbonds to Oracles
@@ -150,6 +157,29 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<BoundEventResponse> boundEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, BoundEventResponse>() {
+            @Override
+            public BoundEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(BOUND_EVENT, log);
+                BoundEventResponse typedResponse = new BoundEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numZap = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<BoundEventResponse> boundEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(BOUND_EVENT));
+        return boundEventFlowable(filter);
+    }
+
     /**
      * Listen for escrowed events
      * @param transactionReceipt Log of transactions done with contracts
@@ -167,6 +197,28 @@ public class Bondage extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
+    }
+
+    public Flowable<EscrowedEventResponse> escrowedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, EscrowedEventResponse>() {
+            @Override
+            public EscrowedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(ESCROWED_EVENT, log);
+                EscrowedEventResponse typedResponse = new EscrowedEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<EscrowedEventResponse> escrowedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(ESCROWED_EVENT));
+        return escrowedEventFlowable(filter);
     }
 
     /**
@@ -205,6 +257,28 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<ReleasedEventResponse> releasedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ReleasedEventResponse>() {
+            @Override
+            public ReleasedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RELEASED_EVENT, log);
+                ReleasedEventResponse typedResponse = new ReleasedEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ReleasedEventResponse> releasedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RELEASED_EVENT));
+        return releasedEventFlowable(filter);
+    }
+
     /**
      * Listen for returned events
      * @param transactionReceipt Log of transactions done with contracts
@@ -224,6 +298,28 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<ReturnedEventResponse> returnedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ReturnedEventResponse>() {
+            @Override
+            public ReturnedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RETURNED_EVENT, log);
+                ReturnedEventResponse typedResponse = new ReturnedEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ReturnedEventResponse> returnedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RETURNED_EVENT));
+        return returnedEventFlowable(filter);
+    }
+    
     /**
      * Listen for unbound events
      * @param transactionReceipt Log of transactions done with contracts
@@ -243,6 +339,28 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<UnboundEventResponse> unboundEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, UnboundEventResponse>() {
+            @Override
+            public UnboundEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(UNBOUND_EVENT, log);
+                UnboundEventResponse typedResponse = new UnboundEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<UnboundEventResponse> unboundEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(UNBOUND_EVENT));
+        return unboundEventFlowable(filter);
+    }
+    
     public RemoteFunctionCall<String> arbiterAddress() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ARBITERADDRESS, 
                 Arrays.<Type>asList(), 

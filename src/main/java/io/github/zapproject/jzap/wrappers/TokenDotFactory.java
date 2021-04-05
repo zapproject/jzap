@@ -1,5 +1,7 @@
 package io.github.zapproject.jzap;
 
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
+import org.web3j.abi.EventEncoder;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -19,13 +22,17 @@ import org.web3j.abi.datatypes.generated.Bytes32;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
+
 
 
 @SuppressWarnings("rawtypes")
@@ -122,6 +129,27 @@ public class TokenDotFactory extends BaseContract {
         return responses;
     }
 
+    public Flowable<BondedEventResponse> bondedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, BondedEventResponse>() {
+            @Override
+            public BondedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(BONDED_EVENT, log);
+                BondedEventResponse typedResponse = new BondedEventResponse();
+                typedResponse.log = log;
+                typedResponse.specifier = (byte[]) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.sender = (String) eventValues.getIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<BondedEventResponse> bondedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(BONDED_EVENT));
+        return bondedEventFlowable(filter);
+    }
+
     /**
      * Listens to token created events
      * @param   transactionReceipt Log of transactions done with contract
@@ -137,6 +165,25 @@ public class TokenDotFactory extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
+    }
+    
+    public Flowable<DotTokenCreatedEventResponse> dotTokenCreatedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, DotTokenCreatedEventResponse>() {
+            @Override
+            public DotTokenCreatedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(DOTTOKENCREATED_EVENT, log);
+                DotTokenCreatedEventResponse typedResponse = new DotTokenCreatedEventResponse();
+                typedResponse.log = log;
+                typedResponse.tokenAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<DotTokenCreatedEventResponse> dotTokenCreatedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(DOTTOKENCREATED_EVENT));
+        return dotTokenCreatedEventFlowable(filter);
     }
 
     /**
@@ -174,6 +221,27 @@ public class TokenDotFactory extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
+    }
+
+    public Flowable<UnbondedEventResponse> unbondedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, UnbondedEventResponse>() {
+            @Override
+            public UnbondedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(UNBONDED_EVENT, log);
+                UnbondedEventResponse typedResponse = new UnbondedEventResponse();
+                typedResponse.log = log;
+                typedResponse.specifier = (byte[]) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.sender = (String) eventValues.getIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<UnbondedEventResponse> unbondedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(UNBONDED_EVENT));
+        return unbondedEventFlowable(filter);
     }
 
     public RemoteFunctionCall<String> coord() {

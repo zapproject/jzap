@@ -1,5 +1,6 @@
 package io.github.zapproject.jzap;
 
+import io.github.zapproject.jzap.ApproveType;
 import io.reactivex.Flowable;
 import java.math.BigInteger;
 import java.util.List;
