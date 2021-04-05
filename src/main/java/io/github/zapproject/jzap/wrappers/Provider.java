@@ -281,14 +281,34 @@ public class Provider {
     public List<Arbiter.DataPurchaseEventResponse> listenSubscribes(TransactionReceipt txReceipt) {
         return arbiter.getDataPurchaseEvents(txReceipt);
     }
+    
+    /**
+     * Listen for start subscription event from the Arbiter contract
+     * @param   start Start block to listening for events
+     * @param   end   End block to listening for events
+     * @return  List of incoming events as Flowable
+     */
+    public Flowable<Arbiter.DataPurchaseEventResponse> listenSubscribes(DefaultBlockParameter start, DefaultBlockParameter end) {
+        return arbiter.dataPurchaseEventFlowable(start, end);
+    }
 
     /**
-     * Listen to unscription events emmited by the Arbiter contract
+     * Listen to unsubscribe events emmited by the Arbiter contract
      * @param   txReceipt   Log of transactions done on this contract
      * @return  List of data subscription end events
      */
     public List<Arbiter.DataSubscriptionEndEventResponse> listenUnsubscribes(TransactionReceipt txReceipt) {
         return arbiter.getDataSubscriptionEndEvents(txReceipt);
+    }
+
+    /**
+     * Listen to unsubscribe event emmited by the Arbiter contract
+     * @param   start Start block to listening for events
+     * @param   end   End block to listening for events
+     * @return  List of incoming events as Flowable
+     */
+    public Flowable<Arbiter.DataSubscriptionEndEventResponse> listenUnsubscribes(DefaultBlockParameter start, DefaultBlockParameter end) {
+        return arbiter.dataSubscriptionEndEventFlowable(start, end);
     }
 
     /**
@@ -302,9 +322,9 @@ public class Provider {
 
     /**
      * Listen to query events emitted by the Dispatch contract
-     * @param   DefaultBlockParameter   Start block to listening for events
-     * @param   DefaultBlockParameter   End block to listening for events
-     * @return  List of incoming events
+     * @param   start Start block to listening for events
+     * @param   end   End block to listening for events
+     * @return  List of incoming events as Flowable
      */
     public Flowable<Dispatch.IncomingEventResponse> listenQueries(DefaultBlockParameter start, DefaultBlockParameter end) {
         return dispatch.incomingEventFlowable(start, end);
@@ -320,11 +340,31 @@ public class Provider {
     }
 
     /**
+     * Listens to bound bondage contract event
+     * @param   start Start block to listening for events
+     * @param   end   End block to listening for events
+     * @return  List of incoming events as Flowable
+     */
+    public Flowable<Bondage.BoundEventResponse> listenBound(DefaultBlockParameter start, DefaultBlockParameter end) {
+        return bondage.boundEventFlowable(start, end);
+    }
+
+    /**
      * Listens to unbound contract events
      * @param   txReceipt   Log of transaction done on this contract
      * @return  List of unbound events
      */
     public List<Bondage.UnboundEventResponse> listenUnbound(TransactionReceipt txReceipt) {
         return bondage.getUnboundEvents(txReceipt);
+    }
+
+    /**
+     * Listens to unbound contract event
+     * @param   start Start block to listening for events
+     * @param   end   End block to listening for events
+     * @return  List of incoming events as Flowable
+     */
+    public Flowable<Bondage.UnboundEventResponse> listenUnbound(DefaultBlockParameter start, DefaultBlockParameter end) {
+        return bondage.unboundEventFlowable(start, end);
     }
 }

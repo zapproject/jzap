@@ -1,5 +1,7 @@
 package io.github.zapproject.jzap;
 
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
+import org.web3j.abi.EventEncoder;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -20,14 +23,18 @@ import org.web3j.abi.datatypes.generated.Uint8;
 import org.web3j.abi.datatypes.generated.Uint96;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple3;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
+
 
 /**
  * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
@@ -127,6 +134,30 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
+    public Flowable<DataPurchaseEventResponse> dataPurchaseEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, DataPurchaseEventResponse>() {
+            @Override
+            public DataPurchaseEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(DATAPURCHASE_EVENT, log);
+                DataPurchaseEventResponse typedResponse = new DataPurchaseEventResponse();
+                typedResponse.log = log;
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.amount = (BigInteger) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.publicKey = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.endpointParams = (List<byte[]>) eventValues.getNonIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getNonIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<DataPurchaseEventResponse> dataPurchaseEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(DATAPURCHASE_EVENT));
+        return dataPurchaseEventFlowable(filter);
+    }
+
     /**
      * Listen for data subscription events
      * @param transactionReceipt Log of transactions done with contracts
@@ -143,6 +174,27 @@ public class Arbiter extends BaseContract {
             responses.add(typedResponse);
         }
         return responses;
+    }
+
+    public Flowable<DataSubscriptionEndEventResponse> dataSubscriptionEndEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, DataSubscriptionEndEventResponse>() {
+            @Override
+            public DataSubscriptionEndEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(DATASUBSCRIPTIONEND_EVENT, log);
+                DataSubscriptionEndEventResponse typedResponse = new DataSubscriptionEndEventResponse();
+                typedResponse.log = log;
+                typedResponse.provider = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.subscriber = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.terminator = (BigInteger) eventValues.getIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<DataSubscriptionEndEventResponse> dataSubscriptionEndEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(DATASUBSCRIPTIONEND_EVENT));
+        return dataSubscriptionEndEventFlowable(filter);
     }
 
     /**
