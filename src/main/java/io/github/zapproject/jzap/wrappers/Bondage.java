@@ -1,11 +1,14 @@
 package io.github.zapproject.jzap;
 
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import org.web3j.abi.EventEncoder;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -16,22 +19,20 @@ import org.web3j.abi.datatypes.generated.Bytes32;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.BaseEventResponse;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 
+
 /**
- * <p>Auto generated code.
- * <p><strong>Do not modify!</strong>
- * <p>Please use the <a href="https://docs.web3j.io/command_line.html">web3j command line tools</a>,
- * or the org.web3j.codegen.SolidityFunctionWrapperGenerator in the 
- * <a href="https://github.com/web3j/web3j/tree/master/codegen">codegen module</a> to update.
- *
- * <p>Generated with web3j version 1.4.0.
+ * Provides an interface to the Bondage contract for enabling bond and unbonds to Oracles
  */
 @SuppressWarnings("rawtypes")
 public class Bondage extends BaseContract {
@@ -117,23 +118,29 @@ public class Bondage extends BaseContract {
         _addresses = new HashMap<String, String>();
     }
 
-
-    // protected Bondage(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
-    // }
-
-    // protected Bondage(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    /**
+     * Initializes a subclass of BaseContract that can access the methods of the Bondage contract.
+     * @param type wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
+     */
     protected Bondage(NetworkProviderOptions type) throws Exception {
         super(BINARY, type, "BONDAGE");
     }
 
+    /**
+     * Initializes a subclass of BaseContract that can access the methods of the Bondage contract.
+     * @param contractAddress       Address of the deployed Bondage contract
+     * @param web3j                 Instance of Web3j to interact with deployed contracts
+     * @param credentials           Credentials account data
+     * @param contractGasProvider   Contract gas data
+     */
     protected Bondage(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         super(new BaseContractType(BINARY, contractAddress, web3j, credentials, contractGasProvider));
     }
 
+    /**
+     * Listen for bound events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<BoundEventResponse> getBoundEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(BOUND_EVENT, transactionReceipt);
         ArrayList<BoundEventResponse> responses = new ArrayList<BoundEventResponse>(valueList.size());
@@ -150,6 +157,33 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<BoundEventResponse> boundEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, BoundEventResponse>() {
+            @Override
+            public BoundEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(BOUND_EVENT, log);
+                BoundEventResponse typedResponse = new BoundEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numZap = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<BoundEventResponse> boundEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(BOUND_EVENT));
+        return boundEventFlowable(filter);
+    }
+
+    /**
+     * Listen for escrowed events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<EscrowedEventResponse> getEscrowedEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(ESCROWED_EVENT, transactionReceipt);
         ArrayList<EscrowedEventResponse> responses = new ArrayList<EscrowedEventResponse>(valueList.size());
@@ -165,6 +199,32 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<EscrowedEventResponse> escrowedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, EscrowedEventResponse>() {
+            @Override
+            public EscrowedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(ESCROWED_EVENT, log);
+                EscrowedEventResponse typedResponse = new EscrowedEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<EscrowedEventResponse> escrowedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(ESCROWED_EVENT));
+        return escrowedEventFlowable(filter);
+    }
+
+    /**
+     * Listen for ownership transferred events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<OwnershipTransferredEventResponse> getOwnershipTransferredEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(OWNERSHIPTRANSFERRED_EVENT, transactionReceipt);
         ArrayList<OwnershipTransferredEventResponse> responses = new ArrayList<OwnershipTransferredEventResponse>(valueList.size());
@@ -178,6 +238,10 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listen for released events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<ReleasedEventResponse> getReleasedEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RELEASED_EVENT, transactionReceipt);
         ArrayList<ReleasedEventResponse> responses = new ArrayList<ReleasedEventResponse>(valueList.size());
@@ -193,6 +257,32 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<ReleasedEventResponse> releasedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ReleasedEventResponse>() {
+            @Override
+            public ReleasedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RELEASED_EVENT, log);
+                ReleasedEventResponse typedResponse = new ReleasedEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ReleasedEventResponse> releasedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RELEASED_EVENT));
+        return releasedEventFlowable(filter);
+    }
+
+    /**
+     * Listen for returned events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<ReturnedEventResponse> getReturnedEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RETURNED_EVENT, transactionReceipt);
         ArrayList<ReturnedEventResponse> responses = new ArrayList<ReturnedEventResponse>(valueList.size());
@@ -208,6 +298,32 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<ReturnedEventResponse> returnedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ReturnedEventResponse>() {
+            @Override
+            public ReturnedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RETURNED_EVENT, log);
+                ReturnedEventResponse typedResponse = new ReturnedEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ReturnedEventResponse> returnedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RETURNED_EVENT));
+        return returnedEventFlowable(filter);
+    }
+    
+    /**
+     * Listen for unbound events
+     * @param transactionReceipt Log of transactions done with contracts
+     */
     public List<UnboundEventResponse> getUnboundEvents(TransactionReceipt transactionReceipt) {
         List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(UNBOUND_EVENT, transactionReceipt);
         ArrayList<UnboundEventResponse> responses = new ArrayList<UnboundEventResponse>(valueList.size());
@@ -223,6 +339,28 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    public Flowable<UnboundEventResponse> unboundEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, UnboundEventResponse>() {
+            @Override
+            public UnboundEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(UNBOUND_EVENT, log);
+                UnboundEventResponse typedResponse = new UnboundEventResponse();
+                typedResponse.log = log;
+                typedResponse.holder = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.oracle = (String) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.endpoint = (byte[]) eventValues.getIndexedValues().get(2).getValue();
+                typedResponse.numDots = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<UnboundEventResponse> unboundEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(UNBOUND_EVENT));
+        return unboundEventFlowable(filter);
+    }
+    
     public RemoteFunctionCall<String> arbiterAddress() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ARBITERADDRESS, 
                 Arrays.<Type>asList(), 
@@ -275,6 +413,14 @@ public class Bondage extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Bonds a given number of dots from a subscriber to a provider's endpoint
+     * Note: this requires that at least zapNum has been approved from the subscriber to be transferred by the Bondage contract
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint of the provider
+     * @param   numDots         Number of dots to bond to this provider
+     * @return  A remote function all to Bondage contract which returns a transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> bond(String oracleAddress, byte[] endpoint, BigInteger numDots) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_BOND, 
@@ -285,6 +431,13 @@ public class Bondage extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Unbonds a given number of dots from a provider's endpoint and transfers the appropriate amount of Zap to the subscriber.
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint of the provider
+     * @param   numDots         Number of dots to unbond from the contract
+     * @return  A remote function call to Bondage contract which returns the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> unbond(String oracleAddress, byte[] endpoint, BigInteger numDots) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_UNBOND, 
@@ -295,6 +448,14 @@ public class Bondage extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Bonds a given number of dots from an account to a subscriber.&nbsp;This would be used to bond to a provider on behalf of another account, such as a smart contract.
+     * @param   holderaddress   Address of the intended holder of the dots (subscriber)
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint fo the provider
+     * @param   numDots         Number of dots to bond is this provider
+     * @return  A remote function call to Bondage contract which returns the transaction receipt
+     */
     public RemoteFunctionCall<TransactionReceipt> delegateBond(String holderAddress, String oracleAddress, byte[] endpoint, BigInteger numDots) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_DELEGATEBOND, 
@@ -339,6 +500,13 @@ public class Bondage extends BaseContract {
         return executeRemoteCallTransaction(function);
     }
 
+    /**
+     * Calculates the amount of Zap required to bond a given number of dots to a provider's endpoint
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint of the provider to calculate zap
+     * @param   numDots         Number of dots to calculate the price (in Zap) for
+     * @return  A remote function call to Bondage contract which returns the price (in Zap) for the given number of dots
+     */
     public RemoteFunctionCall<BigInteger> calcZapForDots(String oracleAddress, byte[] endpoint, BigInteger numDots) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_CALCZAPFORDOTS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
@@ -348,6 +516,13 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Calculates the amount of Zap required to bond a given number of dots to a provider's endpoint
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint of the provider
+     * @param   totalBound      Dots that suvscriber want to use
+     * @return  A remote function call to Bondage contract which returns the price (in Zap wei) for next x dots to bond
+     */
     public RemoteFunctionCall<BigInteger> currentCostOfDot(String oracleAddress, byte[] endpoint, BigInteger totalBound) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_CURRENTCOSTOFDOT, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
@@ -357,6 +532,12 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Get maximum dots that can be bound for an endpoint of a provider
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endoint of the provider
+     * @return  A remote function call to Bondage contract which returns the number of maximum dots that can be bound
+     */
     public RemoteFunctionCall<BigInteger> dotLimit(String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_DOTLIMIT, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
@@ -365,6 +546,12 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Gets the total amount of the Zap that has been bonded to a provider's endpoint
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint of the provider
+     * @return  A remote function call to Bondage contract which returns the amount of Zap (wei) that are bound to this endpoint
+     */
     public RemoteFunctionCall<BigInteger> getZapBound(String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETZAPBOUND, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
@@ -373,6 +560,12 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Checks if the provider is initialized
+     * @param   holderAddress   Address of the data subscriber
+     * @param   oracleAddress   Address of the data provider
+     * @return  A remote function call to Bondage contract which returns whether the provider is initialized
+     */
     public RemoteFunctionCall<Boolean> isProviderInitialized(String holderAddress, String oracleAddress) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISPROVIDERINITIALIZED, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(holderAddress), 
@@ -381,6 +574,12 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
+    /**
+     * Get broker addrses for this provider's endpoint
+     * @param   oracleAddress   Addres of the data provider
+     * @param   endpoint        Data endpoint of the provider
+     * @return  A remote function call to Bondage contract which returns the broker's address for this endpoint
+     */
     public RemoteFunctionCall<String> getEndpointBroker(String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETENDPOINTBROKER, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
@@ -389,6 +588,13 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
+    /**
+     * Get number of dots escrow
+     * @param   holderAddress   Address of the data subscriber
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint of the provider
+     * @return  A remote function call to Bondage contract which returns the number of escrow dots
+     */
     public RemoteFunctionCall<BigInteger> getNumEscrow(String holderAddress, String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETNUMESCROW, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(holderAddress), 
@@ -398,6 +604,12 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Get provider's number of Zap
+     * @param   oracleAddress   Address of the provider
+     * @param   endpoint        Data endpoint of the provider
+     * @return  A remote function call to Bondage contract which returns the number of provider's zap
+     */
     public RemoteFunctionCall<BigInteger> getNumZap(String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETNUMZAP, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
@@ -406,6 +618,12 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Gets the number of dots that have been issued by a provider's endpoint
+     * @param   oracleAddress   Addres of the data provider
+     * @param   endpoint        Data enpoint of the provider
+     * @return  A remote function call to Bondage contract which returns the number of dots issued
+     */
     public RemoteFunctionCall<BigInteger> getDotsIssued(String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETDOTSISSUED, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(oracleAddress), 
@@ -414,6 +632,13 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
+    /**
+     * Gets the number of dots that are bounded to a provider's endpoint for the current subscriber
+     * @param   holderAddress   Address of the data subscriber
+     * @param   oracleAddress   Address of the data provider
+     * @param   endpoint        Data endpoint of the provider
+     * @return  A remote function call to Bondage contract which returns number of dots to this provider's endpoint
+     */
     public RemoteFunctionCall<BigInteger> getBoundDots(String holderAddress, String oracleAddress, byte[] endpoint) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETBOUNDDOTS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(holderAddress), 
@@ -438,48 +663,39 @@ public class Bondage extends BaseContract {
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
-    // @Deprecated
-    // public static Bondage load(String contractAddress, Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Bondage(contractAddress, web3j, credentials, gasPrice, gasLimit);
-    // }
-
-    // @Deprecated
-    // public static Bondage load(String contractAddress, Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-    //     return new Bondage(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
-    // }
-
+    /**
+     * Wrapper for loading deployed Bondage contract
+     * @param   contractAddress     Address of the Bondage contract
+     * @param   web3j               Instance of Web3j interfacting with deployed contract
+     * @param   credentials         Credentials account data
+     * @param   contractGasProvider Contract gas data
+     */
     public static Bondage load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider) throws Exception {
         return new Bondage(contractAddress, web3j, credentials, contractGasProvider);
     }
 
-    // public static Bondage load(String contractAddress, Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-    //     return new Bondage(contractAddress, web3j, transactionManager, contractGasProvider);
-    // }
-
+    /**
+     * Wrapper for loading deployed Bondage contract
+     * @param type wrapper class NetworkProviderOptions for {int networkID, org.web3j.protocol.Web3j web3j, org.web3j.crypto.Credentials credentials, org.web3j.tx.gas.ContractGasProvider contractGasProvider}
+     */
     public static Bondage load(NetworkProviderOptions type) throws Exception {
         return new Bondage(type);
     }
 
+    /**
+     * Deploys a new Bondage contract for testing
+     */
     public static RemoteCall<Bondage> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Bondage.class, web3j, credentials, contractGasProvider, BINARY, encodedConstructor);
     }
 
+    /**
+     * Deploys a new Bondage contract for testing
+     */
     public static RemoteCall<Bondage> deploy(Web3j web3j, TransactionManager transactionManager, ContractGasProvider contractGasProvider, String c) {
         String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
         return deployRemoteCall(Bondage.class, web3j, transactionManager, contractGasProvider, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Bondage> deploy(Web3j web3j, Credentials credentials, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Bondage.class, web3j, credentials, gasPrice, gasLimit, BINARY, encodedConstructor);
-    }
-
-    @Deprecated
-    public static RemoteCall<Bondage> deploy(Web3j web3j, TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit, String c) {
-        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(c)));
-        return deployRemoteCall(Bondage.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, encodedConstructor);
     }
 
     @Override
@@ -491,6 +707,9 @@ public class Bondage extends BaseContract {
         return _addresses.get(networkId);
     }
 
+    /**
+     * Event object for bound events
+     */
     public static class BoundEventResponse extends BaseEventResponse {
         public String holder;
 
@@ -503,6 +722,9 @@ public class Bondage extends BaseContract {
         public BigInteger numDots;
     }
 
+    /**
+     * Event object for escrowed events
+     */
     public static class EscrowedEventResponse extends BaseEventResponse {
         public String holder;
 
@@ -513,12 +735,18 @@ public class Bondage extends BaseContract {
         public BigInteger numDots;
     }
 
+    /**
+     * Event object for ownership transferred events
+     */
     public static class OwnershipTransferredEventResponse extends BaseEventResponse {
         public String previousOwner;
 
         public String newOwner;
     }
 
+    /**
+     * Event object for released events
+     */
     public static class ReleasedEventResponse extends BaseEventResponse {
         public String holder;
 
@@ -529,6 +757,9 @@ public class Bondage extends BaseContract {
         public BigInteger numDots;
     }
 
+    /**
+     * Event object for returned events
+     */
     public static class ReturnedEventResponse extends BaseEventResponse {
         public String holder;
 
@@ -539,6 +770,9 @@ public class Bondage extends BaseContract {
         public BigInteger numDots;
     }
 
+    /**
+     * Event objects for unbound events
+     */
     public static class UnboundEventResponse extends BaseEventResponse {
         public String holder;
 

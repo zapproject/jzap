@@ -14,7 +14,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class BondageTest {
+class BondageIntegrationTest {
     private static Bondage bondage;
     
     private static Web3j web3j;
@@ -32,7 +32,7 @@ class BondageTest {
 
     @BeforeAll
     static void setup() throws Exception {
-        web3j = Web3j.build(new HttpService());
+        web3j = Web3j.build(new HttpService("http://172.17.0.2:8545"));
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         creds2 = Credentials.create("0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6");
         gasPro = new DefaultGasProvider();
@@ -92,14 +92,12 @@ class BondageTest {
     @Order(7)
     void testBondageZapForDots() throws Exception {
         assertNotNull(bondage.calcZapForDots(creds.getAddress(), endpoint, new BigInteger("1")).send());
-        // System.out.println("#### ZAPFORDOTS #####: " + bondage.calcZapForDots(creds.getAddress(), endpoint, new BigInteger("1")).send());
     }
 
     @Test
     @Order(8)
     void testBondageCurrentCostOfDots() throws Exception {
         assertNotNull(bondage.currentCostOfDot(creds.getAddress(), endpoint, new BigInteger("100")).send());
-        // System.out.println("##### COSTOFDOTS #####: " + bondage.currentCostOfDot(creds.getAddress(), endpoint, new BigInteger("100")).send());
     }
 
     @Test
@@ -112,7 +110,6 @@ class BondageTest {
     @Order(10)
     void testBondageDotLimit() throws Exception {
         assertNotNull(bondage.dotLimit(creds.getAddress(), endpoint).send());
-        // System.out.println("##### DOTLIMIT ####: " + bondage.dotLimit(creds.getAddress(), endpoint).send());
     }
 
     @Test

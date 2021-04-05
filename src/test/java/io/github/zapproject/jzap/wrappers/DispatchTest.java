@@ -15,7 +15,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class DispatchTest {
+class DispatchIntegrationTest {
     private static Dispatch dispatch;
 
     private static Web3j web3j;
@@ -31,7 +31,7 @@ class DispatchTest {
 
     @BeforeAll
     static void setup() throws Exception {
-        web3j = Web3j.build(new HttpService());
+        web3j = Web3j.build(new HttpService("http://172.17.0.2:8545"));
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         gasPro = new DefaultGasProvider();
 
@@ -52,7 +52,6 @@ class DispatchTest {
         assertNotNull(txIncoming = dispatch.query(creds.getAddress(), query, endpoint, params).send());
         
         List <Dispatch.IncomingEventResponse> list = dispatch.getIncomingEvents(txIncoming);
-        // System.out.println("##### EVENT #####: " + list.get(list.size()-1).id);
         id = list.get(0).id;
     }
 
@@ -118,7 +117,6 @@ class DispatchTest {
     // @Order(10)
     void testDispatchGetEndpoint() throws Exception {
         assertNotNull(dispatch.getEndpoint(id).send());
-        // System.out.println("##### ENDPOINT #####: " + new String(dispatch.getEndpoint(new BigInteger("0")).send(), StandardCharsets.UTF_8));
     }
 
     @Test
@@ -143,7 +141,6 @@ class DispatchTest {
     // @Order(14)
     void testDispatchGetSubscriberOnchain() throws Exception {
         assertNotNull(dispatch.getSubscriberOnchain(id).send());
-        // System.out.println("##### subONCHAIN #####: " + dispatch.getSubscriberOnchain(new BigInteger("0")).send());
     }
 
     @Disabled

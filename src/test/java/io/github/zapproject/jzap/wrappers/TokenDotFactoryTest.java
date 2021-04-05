@@ -17,13 +17,10 @@ import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TokenDotFactoryTest {
+class TokenDotFactoryIntegrationTest {
     static TokenDotFactory dotFactory;
 
     static Web3j web3j;
@@ -44,17 +41,13 @@ class TokenDotFactoryTest {
 
     @BeforeAll
     static void setup() throws Exception {
-        web3j = Web3j.build(new HttpService());
+        web3j = Web3j.build(new HttpService("http://172.17.0.2:8545"));
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         gasPro = new DefaultGasProvider();
 
         System.arraycopy("testProvider".getBytes(), 0, title, 0, 12);
 
-        NetworkProviderOptions opt = new NetworkProviderOptions();
-        opt.networkId = 31337;
-        opt.web3j = web3j;
-        opt.credentials = creds;
-        opt.contractGasProvider = gasPro;
+        NetworkProviderOptions opt = new NetworkProviderOptions(31337, web3j, creds, gasPro);
         TokenFactory factory = TokenFactory.deploy(web3j, creds, gasPro).send();
         dotFactory = TokenDotFactory.deploy(web3j, creds, gasPro, "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", factory.getContractAddress(), new BigInteger("100"), title).send();
 

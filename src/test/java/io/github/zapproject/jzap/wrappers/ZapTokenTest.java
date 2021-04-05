@@ -14,7 +14,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ZapTokenTest {
+class ZapTokenIntegrationTest {
     private static ZapToken token;
     private static Web3j web3j;
     private static Credentials creds;
@@ -27,7 +27,7 @@ class ZapTokenTest {
 
     @BeforeAll
     static void setup() throws Exception {
-        web3j = Web3j.build(new HttpService());
+        web3j = Web3j.build(new HttpService("http://172.17.0.2:8545"));
         creds = Credentials.create("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
         creds2 = Credentials.create("0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6");
         gasPro = new DefaultGasProvider();
@@ -40,7 +40,6 @@ class ZapTokenTest {
     @Order(1)
     void testZapTokenIncreaseApproval() throws Exception {
         assertNotNull(txApprove = token.increaseApproval(creds2.getAddress(), BigInteger.valueOf(1000)).send());
-        // System.out.println("#### APPROVAL ####: " + txApprove.getLogs());
 
         assertNotNull(token.getApprovalEvents(txApprove));
     }
