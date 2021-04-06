@@ -1,4 +1,4 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.types.ProviderTypes;
 
 import java.math.BigInteger;
 

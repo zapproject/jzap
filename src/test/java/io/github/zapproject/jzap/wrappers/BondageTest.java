@@ -1,4 +1,4 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.wrappers;
 
 import java.math.BigInteger;
 import org.junit.jupiter.api.BeforeAll;

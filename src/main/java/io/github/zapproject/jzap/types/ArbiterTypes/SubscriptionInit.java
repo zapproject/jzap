@@ -1,4 +1,4 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.types.ArbiterTypes;
 
 import java.math.BigInteger;
 import java.util.List;

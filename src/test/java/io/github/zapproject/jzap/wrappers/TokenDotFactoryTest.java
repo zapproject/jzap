@@ -1,5 +1,6 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.wrappers;
 
+import io.github.zapproject.jzap.types.BaseContractTypes.NetworkProviderOptions;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
