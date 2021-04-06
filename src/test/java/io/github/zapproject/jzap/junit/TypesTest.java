@@ -1,10 +1,19 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.junit;
 
+import io.github.zapproject.jzap.types.ArbiterTypes.SubscriptionInit;
+import io.github.zapproject.jzap.types.BondageTypes.TokenBondType;
+import io.github.zapproject.jzap.types.CurveTypes.CurveType;
+import io.github.zapproject.jzap.types.DispatchTypes.ResponseArgs;
+import io.github.zapproject.jzap.types.ProviderTypes.InitProvider;
+import io.github.zapproject.jzap.types.RegistryTypes.Endpoint;
+import io.github.zapproject.jzap.types.TokenDotFactoryTypes.NextEndpoint;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

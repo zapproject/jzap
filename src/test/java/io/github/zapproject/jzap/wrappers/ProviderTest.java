@@ -1,5 +1,11 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.wrappers;
 
+import io.github.zapproject.jzap.types.BaseContractTypes.NetworkProviderOptions;
+import io.github.zapproject.jzap.types.BondageTypes.BondageArgs;
+import io.github.zapproject.jzap.types.DispatchTypes.ResponseArgs;
+import io.github.zapproject.jzap.types.ProviderTypes.InitCurve;
+import io.github.zapproject.jzap.types.ProviderTypes.InitProvider;
+import io.github.zapproject.jzap.types.RegistryTypes.EndpointParams;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;

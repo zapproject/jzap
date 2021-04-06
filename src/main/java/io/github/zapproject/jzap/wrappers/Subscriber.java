@@ -1,6 +1,13 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.wrappers;
 
-import io.github.zapproject.jzap.ApproveType;
+import io.github.zapproject.jzap.types.BaseContractTypes.NetworkProviderOptions;
+import io.github.zapproject.jzap.types.BondageTypes.ApproveType;
+import io.github.zapproject.jzap.types.BondageTypes.BondType;
+import io.github.zapproject.jzap.types.BondageTypes.BondageArgs;
+import io.github.zapproject.jzap.types.BondageTypes.DelegateBondType;
+import io.github.zapproject.jzap.types.BondageTypes.SubscribeType;
+import io.github.zapproject.jzap.types.BondageTypes.UnbondType;
+import io.github.zapproject.jzap.types.DispatchTypes.QueryArgs;
 import io.reactivex.Flowable;
 import java.math.BigInteger;
 import java.util.List;

@@ -1,8 +1,8 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.artifacts.src;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.util.LinkedHashMap;
-
 
 
 public class Artifacts {
@@ -14,7 +14,6 @@ public class Artifacts {
         String networks;
         String address;
         LinkedHashMap map;
-
 
         switch (name) {
             case "ARBITER" : path = "Arbiter"; break;
@@ -41,9 +40,6 @@ public class Artifacts {
         if (dir)
             map = om.readValue(new File(path), LinkedHashMap.class);
         else{
-            // map =  om.readValue(new File("src/main/resources/contracts/" + path + ".json"), 
-            //     LinkedHashMap.class);
- 
             map = om.readValue(this.getClass().getClassLoader().getResourceAsStream("contracts/" + path + ".json"),
                     LinkedHashMap.class);
         }

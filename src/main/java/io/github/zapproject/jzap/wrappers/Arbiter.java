@@ -1,5 +1,8 @@
-package io.github.zapproject.jzap;
+package io.github.zapproject.jzap.wrappers;
 
+import io.github.zapproject.jzap.BaseContract;
+import io.github.zapproject.jzap.types.BaseContractTypes.BaseContractType;
+import io.github.zapproject.jzap.types.BaseContractTypes.NetworkProviderOptions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import java.math.BigInteger;

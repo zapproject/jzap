@@ -1,7 +1,11 @@
 package io.github.zapproject.jzap;
 
+import io.github.zapproject.jzap.artifacts.src.Artifacts;
+import io.github.zapproject.jzap.types.BaseContractTypes.BaseContractType;
+import io.github.zapproject.jzap.types.BaseContractTypes.NetworkProviderOptions;
 import org.web3j.protocol.Web3j;
 import org.web3j.tx.Contract;
+
 
 
 public abstract class BaseContract extends Contract {
@@ -12,7 +16,7 @@ public abstract class BaseContract extends Contract {
     public int networkId;
     public Artifacts artifact = new Artifacts();
 
-    BaseContract(BaseContractType type) {
+    public BaseContract(BaseContractType type) {
         super(
             type.bytecode,
             type.address,
@@ -26,7 +30,7 @@ public abstract class BaseContract extends Contract {
         this.web3j = type.web3j;
     }
 
-    BaseContract(String bytecode, NetworkProviderOptions type, String artifactName) throws Exception {
+    public BaseContract(String bytecode, NetworkProviderOptions type, String artifactName) throws Exception {
         super(
             bytecode,
             new Artifacts().getAddress(artifactName, type.networkId),
