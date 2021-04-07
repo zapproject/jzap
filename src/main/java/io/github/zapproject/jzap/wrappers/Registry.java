@@ -156,6 +156,11 @@ public class Registry extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a new curve event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A NewCurveEventResponse as a Flowable
+     */
     public Flowable<NewCurveEventResponse> newCurveEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, NewCurveEventResponse>() {
             @Override
@@ -172,6 +177,12 @@ public class Registry extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a new curve event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A NewCurveEventResponse as a Flowable
+     */
     public Flowable<NewCurveEventResponse> newCurveEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(NEWCURVE_EVENT));
@@ -196,6 +207,11 @@ public class Registry extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a new provider event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A NewProviderEventResponse as a Flowable
+     */
     public Flowable<NewProviderEventResponse> newProviderEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, NewProviderEventResponse>() {
             @Override
@@ -210,6 +226,12 @@ public class Registry extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a new provider event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A NewProviderEventResponse as a Flowable
+     */
     public Flowable<NewProviderEventResponse> newProviderEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(NEWPROVIDER_EVENT));

@@ -144,7 +144,7 @@ public class Curve {
     }
 
     public static List<Integer> converToCurve(int end, String curve) {
-        return ""
+        return new ArrayList();
     }
 
 }

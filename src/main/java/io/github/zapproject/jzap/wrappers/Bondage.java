@@ -160,6 +160,11 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a bound event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A BoundEventResponse as a Flowable
+     */
     public Flowable<BoundEventResponse> boundEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, BoundEventResponse>() {
             @Override
@@ -177,6 +182,12 @@ public class Bondage extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a bound event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A BoundEventResponse as a Flowable
+     */
     public Flowable<BoundEventResponse> boundEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(BOUND_EVENT));
@@ -202,6 +213,11 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a excrowed event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A EscrowedEventResponse as a Flowable
+     */
     public Flowable<EscrowedEventResponse> escrowedEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, EscrowedEventResponse>() {
             @Override
@@ -218,6 +234,12 @@ public class Bondage extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a escrowed event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A EscrowedEventResponse as a Flowable
+     */
     public Flowable<EscrowedEventResponse> escrowedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(ESCROWED_EVENT));
@@ -260,6 +282,11 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a released event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A ReleasedEventResponse as a Flowable
+     */
     public Flowable<ReleasedEventResponse> releasedEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ReleasedEventResponse>() {
             @Override
@@ -276,6 +303,12 @@ public class Bondage extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a released event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A ReleasedEventResponse as a Flowable
+     */
     public Flowable<ReleasedEventResponse> releasedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(RELEASED_EVENT));
@@ -301,6 +334,11 @@ public class Bondage extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a returned event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A ReturnedEventResponse as a Flowable
+     */
     public Flowable<ReturnedEventResponse> returnedEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ReturnedEventResponse>() {
             @Override
@@ -317,6 +355,12 @@ public class Bondage extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a released event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A ReleasedEventResponse as a Flowable
+     */
     public Flowable<ReturnedEventResponse> returnedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(RETURNED_EVENT));
