@@ -137,6 +137,11 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a data purchase event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A DataPurchaseEventResponse as a Flowable
+     */
     public Flowable<DataPurchaseEventResponse> dataPurchaseEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, DataPurchaseEventResponse>() {
             @Override
@@ -155,6 +160,12 @@ public class Arbiter extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a data purchase event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A DataPurchaseEventResponse as a Flowable
+     */
     public Flowable<DataPurchaseEventResponse> dataPurchaseEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(DATAPURCHASE_EVENT));
@@ -179,6 +190,11 @@ public class Arbiter extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a data subscription event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A DataSubscriptionEventResponse as a Flowable
+     */
     public Flowable<DataSubscriptionEndEventResponse> dataSubscriptionEndEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, DataSubscriptionEndEventResponse>() {
             @Override
@@ -194,6 +210,12 @@ public class Arbiter extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a data subscription event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A DataSubscriptionEventResponse as a Flowable
+     */
     public Flowable<DataSubscriptionEndEventResponse> dataSubscriptionEndEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(DATASUBSCRIPTIONEND_EVENT));

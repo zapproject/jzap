@@ -139,7 +139,11 @@ public class ZapToken extends BaseContract {
         return responses;
     }
 
-
+    /**
+     * Listens for a approval event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A ApprovalEventResponse as a Flowable
+     */
     public Flowable<ApprovalEventResponse> approvalEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ApprovalEventResponse>() {
             @Override
@@ -155,6 +159,12 @@ public class ZapToken extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a approval event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A ApprovalEventResponse as a Flowable
+     */
     public Flowable<ApprovalEventResponse> approvalEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(APPROVAL_EVENT));
@@ -179,6 +189,11 @@ public class ZapToken extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a mint event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A MintEventResponse as a Flowable
+     */
     public Flowable<MintEventResponse> mintEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, MintEventResponse>() {
             @Override
@@ -193,6 +208,12 @@ public class ZapToken extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a mint event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A MintEventResponse as a Flowable
+     */
     public Flowable<MintEventResponse> mintEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(MINT_EVENT));
@@ -215,6 +236,11 @@ public class ZapToken extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a mint finished event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A MintFinishedEventResponse as a Flowable
+     */
     public Flowable<MintFinishedEventResponse> mintFinishedEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, MintFinishedEventResponse>() {
             @Override
@@ -227,6 +253,12 @@ public class ZapToken extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a mint finished event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A MintFinishedEventResponse as a Flowable
+     */
     public Flowable<MintFinishedEventResponse> mintFinishedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(MINTFINISHED_EVENT));
@@ -270,6 +302,11 @@ public class ZapToken extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a transfer event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A TransferEventResponse as a Flowable
+     */
     public Flowable<TransferEventResponse> transferEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, TransferEventResponse>() {
             @Override
@@ -285,6 +322,12 @@ public class ZapToken extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a transfer event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A TransferEventResponse as a Flowable
+     */
     public Flowable<TransferEventResponse> transferEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(TRANSFER_EVENT));

@@ -157,7 +157,7 @@ public class Dispatch extends BaseContract {
     }
 
     /**
-     * Listens to cancel request events
+     * Listens to canceled request events
      * @param transactionReceipt Log of transactions done with contracts
      */
     public List<CanceledRequestEventResponse> getCanceledRequestEvents(TransactionReceipt transactionReceipt) {
@@ -174,6 +174,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a canceled request event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A CanceledRequestEventResponse as a Flowable
+     */
     public Flowable<CanceledRequestEventResponse> canceledRequestEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, CanceledRequestEventResponse>() {
             @Override
@@ -189,6 +194,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a canceled request event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A CanceledRequestEventResponse as a Flowable
+     */
     public Flowable<CanceledRequestEventResponse> canceledRequestEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, this.address);
         filter.addSingleTopic(EventEncoder.encode(CANCELEDREQUEST_EVENT));
@@ -213,6 +224,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a fulfill query event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A FulfillQueryEventResponse as a Flowable
+     */
     public Flowable<FulfillQueryEventResponse> fulfillQueryEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, FulfillQueryEventResponse>() {
             @Override
@@ -228,6 +244,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a fulfill query event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A FulfillQueryEventResponse as a Flowable
+     */
     public Flowable<FulfillQueryEventResponse> fulfillQueryEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(FULFILLQUERY_EVENT));
@@ -257,6 +279,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a incoming event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A IncomingEventResponse as a Flowable
+     */
     public Flowable<IncomingEventResponse> incomingEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, IncomingEventResponse>() {
             @Override
@@ -276,6 +303,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a incoming event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A IncomingEventResponse as a Flowable
+     */
     public Flowable<IncomingEventResponse> incomingEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(INCOMING_EVENT));
@@ -301,6 +334,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a offchain response event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A OffchainResponseEventResponse as a Flowable
+     */
     public Flowable<OffchainResponseEventResponse> offchainResponseEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResponseEventResponse>() {
             @Override
@@ -317,6 +355,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a offchain response event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A OffchainResponseEventResponse as a Flowable
+     */
     public Flowable<OffchainResponseEventResponse> offchainResponseEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESPONSE_EVENT));
@@ -342,6 +386,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a offchain response int event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A OffchainResponseIntEventResponse as a Flowable
+     */
     public Flowable<OffchainResponseIntEventResponse> offchainResponseIntEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResponseIntEventResponse>() {
             @Override
@@ -358,6 +407,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a offchain response int event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A OffchainResponseIntEventResponse as a Flowable
+     */
     public Flowable<OffchainResponseIntEventResponse> offchainResponseIntEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESPONSEINT_EVENT));
@@ -383,6 +438,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a offchain result1 event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A OffchainResult1EventResponse as a Flowable
+     */
     public Flowable<OffchainResult1EventResponse> offchainResult1EventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResult1EventResponse>() {
             @Override
@@ -399,6 +459,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a offchain result1 event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A OffchainResult1EventResponse as a Flowable
+     */
     public Flowable<OffchainResult1EventResponse> offchainResult1EventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESULT1_EVENT));
@@ -426,6 +492,11 @@ public class Dispatch extends BaseContract {
     }
 
 
+    /**
+     * Listens for a offchain result2 event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A OffchainResult2EventResponse as a Flowable
+     */
     public Flowable<OffchainResult2EventResponse> offchainResult2EventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResult2EventResponse>() {
             @Override
@@ -443,6 +514,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a offchain result2 event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A OffchainResult2EventResponse as a Flowable
+     */
     public Flowable<OffchainResult2EventResponse> offchainResult2EventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESULT2_EVENT));
@@ -470,6 +547,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a offchain result3 event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A OffchainResult3EventResponse as a Flowable
+     */
     public Flowable<OffchainResult3EventResponse> offchainResult3EventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResult3EventResponse>() {
             @Override
@@ -488,6 +570,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a offchain result3 event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A OffchainResult3EventResponse as a Flowable
+     */
     public Flowable<OffchainResult3EventResponse> offchainResult3EventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESULT3_EVENT));
@@ -516,6 +604,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a offchain result4 event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A OffchainResult4EventResponse as a Flowable
+     */
     public Flowable<OffchainResult4EventResponse> offchainResult4EventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, OffchainResult4EventResponse>() {
             @Override
@@ -535,6 +628,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a offchain result4 event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A OffchainResult4EventResponse as a Flowable
+     */
     public Flowable<OffchainResult4EventResponse> offchainResult4EventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(OFFCHAINRESULT4_EVENT));
@@ -576,6 +675,11 @@ public class Dispatch extends BaseContract {
         return responses;
     }
 
+    /**
+     * Listens for a revert cancelation event
+     * @param   filter  EthFilter which specifies which range of blocks to listen on a given contract address
+     * @return  A ReverCancelationEventResponse as a Flowable
+     */
     public Flowable<RevertCancelationEventResponse> revertCancelationEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(new Function<Log, RevertCancelationEventResponse>() {
             @Override
@@ -591,6 +695,12 @@ public class Dispatch extends BaseContract {
         });
     }
 
+    /**
+     * Listens for a revert cancelation event
+     * @param   startBlock  Starting block to begin listening on
+     * @param   endBlock    Ending block to stop listening on
+     * @return  A ReverCancelationEventResponse as a Flowable
+     */
     public Flowable<RevertCancelationEventResponse> revertCancelationEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
         EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
         filter.addSingleTopic(EventEncoder.encode(REVERTCANCELATION_EVENT));
